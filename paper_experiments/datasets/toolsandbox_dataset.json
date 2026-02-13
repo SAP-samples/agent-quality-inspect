@@ -1,0 +1,1239 @@
+[
+  {
+    "id": "add_contact_with_name_and_phone_number",
+    "metadata": {
+      "subgoals": [
+        {
+          "type": "gradingNotes",
+          "details": "\"Agent should call add_contact to add Stephen Sondheim with phone number +19876543210\",",
+          "turn": "all"
+        },
+        {
+          "type": "gradingNotes",
+          "details": "Agent should inform the user 'Stephen Sondheim has been added to your contact' after adding the contact",
+          "turn": "all"
+        }
+      ]
+    },
+    "input": [
+      {
+        "role": "user",
+        "content": "Answer AI assistant's questions given the following task you (LLM-simulated user) want AI assistant to complete: Add a contact named Stephen Sondheim with phone number +19876543210. You do not have more information.",
+        "terminating_condition": "When AI assistant completed the task, even if you (LLM-simulated user) don't have enough information to validate the correctness, break out of the simulation and end the conversation using the termination message."
+      }
+    ],
+    "target": "",
+    "filtered_scenarios": [],
+    "domain": "add_contact_with_name_and_phone_number"
+  },
+  {
+    "id": "add_reminder_content_and_date_and_time",
+    "metadata": {
+      "subgoals": [
+        {
+          "type": "gradingNotes",
+          "details": "\"Agent should call datetime_info_to_timestamp to convert the provided date and time (3/22/2024 5PM) into a timestamp\",",
+          "turn": "all"
+        },
+        {
+          "type": "gradingNotes",
+          "details": "\"Agent should call add_reminder to create a reminder with the content 'Buy chocolate milk' and the timestamp 1711098000.0\",",
+          "turn": "all"
+        }
+      ]
+    },
+    "input": [
+      {
+        "role": "user",
+        "content": "Answer AI assistant's questions given the following task you (LLM-simulated user) want AI assistant to complete: Ask AI assistant create a reminder to buy chocolate milk 3/22/2024 5PM. You do not have any more information.",
+        "terminating_condition": "When AI assistant completed the task, even if you (LLM-simulated user) don't have enough information to validate the correctness, break out of the simulation and end the conversation using the termination message."
+      }
+    ],
+    "target": "",
+    "filtered_scenarios": [
+      "add_reminder_content_and_date_and_time_alt",
+      "add_reminder_content_and_date_and_time_multiple_user_turn",
+      "add_reminder_content_and_date_and_time_multiple_user_turn_alt"
+    ],
+    "domain": "add_reminder_content_and_date_and_time"
+  },
+  {
+    "id": "add_reminder_content_and_week_delta_and_time",
+    "metadata": {
+      "subgoals": [
+        {
+          "type": "gradingNotes",
+          "details": "\"Agent should call get_current_timestamp to retrieve the current time\",",
+          "turn": "all"
+        },
+        {
+          "type": "gradingNotes",
+          "details": "Agent should call add_reminder to create a reminder with the content 'Buy chocolate milk' at 5PM tomorrow after retrieving the current timestamp",
+          "turn": "all"
+        }
+      ]
+    },
+    "input": [
+      {
+        "role": "user",
+        "content": "Answer AI assistant's questions given the following task you (LLM-simulated user) want AI assistant to complete: Ask AI assistant create a reminder to buy chocolate milk tomorrow 5PM. You do not have any more information.",
+        "terminating_condition": "When AI assistant completed the task, even if you (LLM-simulated user) don't have enough information to validate the correctness, break out of the simulation and end the conversation using the termination message."
+      }
+    ],
+    "target": "",
+    "filtered_scenarios": [
+      "add_reminder_content_and_week_delta_and_time_alt",
+      "add_reminder_content_and_week_delta_and_time_multiple_user_turn",
+      "add_reminder_content_and_week_delta_and_time_multiple_user_turn_alt"
+    ],
+    "domain": "add_reminder_content_and_week_delta_and_time"
+  },
+  {
+    "id": "add_reminder_content_and_weekday_delta_and_time",
+    "metadata": {
+      "subgoals": [
+        {
+          "type": "gradingNotes",
+          "details": "\"Agent should call get_current_timestamp to retrieve the current date and time\",",
+          "turn": "all"
+        },
+        {
+          "type": "gradingNotes",
+          "details": "\"Agent should call add_reminder to create a reminder with the content 'Buy chocolate milk' at 5PM next Friday \",",
+          "turn": "all"
+        }
+      ]
+    },
+    "input": [
+      {
+        "role": "user",
+        "content": "Answer AI assistant's questions given the following task you (LLM-simulated user) want AI assistant to complete: Ask AI assistant create a reminder to buy chocolate milk next Friday 5PM. You do not have any more information.",
+        "terminating_condition": "When AI assistant completed the task, even if you (LLM-simulated user) don't have enough information to validate the correctness, break out of the simulation and end the conversation using the termination message."
+      }
+    ],
+    "target": "",
+    "filtered_scenarios": [
+      "add_reminder_content_and_weekday_delta_and_time_alt",
+      "add_reminder_content_and_weekday_delta_and_time_multiple_user_turn",
+      "add_reminder_content_and_weekday_delta_and_time_multiple_user_turn_alt"
+    ],
+    "domain": "add_reminder_content_and_weekday_delta_and_time"
+  },
+  {
+    "id": "cellular_off",
+    "metadata": {
+      "subgoals": [
+        {
+          "type": "gradingNotes",
+          "details": "\"Agent should call set_cellular_service_status to turn off cellular service\",",
+          "turn": "all"
+        },
+        {
+          "type": "gradingNotes",
+          "details": "Agent should inform the user 'Cellular service is turned off' after turning off cellular service",
+          "turn": "all"
+        }
+      ]
+    },
+    "input": [
+      {
+        "role": "user",
+        "content": "Answer AI assistant's questions given the following task you (LLM-simulated user) want AI assistant to complete: Turn off cellular service",
+        "terminating_condition": "When AI assistant completed the task, even if you (LLM-simulated user) don't have enough information to validate the correctness, break out of the simulation and end the conversation using the termination message."
+      }
+    ],
+    "target": "",
+    "filtered_scenarios": [],
+    "domain": "cellular_off"
+  },
+  {
+    "id": "convert_currency",
+    "metadata": {
+      "subgoals": [
+        {
+          "type": "gradingNotes",
+          "details": "Agent should call convert_currency with the arguments: amount=2048, from_currency_code='USD', to_currency_code='CNY'",
+          "turn": "all"
+        }
+      ]
+    },
+    "input": [
+      {
+        "role": "user",
+        "content": "Answer AI assistant's questions given the following task you (LLM-simulated user) want AI assistant to complete: Convert 2048 USD to CNY. You do not have more information.",
+        "terminating_condition": "When AI assistant completed the task, even if you (LLM-simulated user) don't have enough information to validate the correctness, break out of the simulation and end the conversation using the termination message."
+      }
+    ],
+    "target": "",
+    "filtered_scenarios": [
+      "convert_currency_canonicalize"
+    ],
+    "domain": "convert_currency"
+  },
+  {
+    "id": "find_address_with_lat_lon",
+    "metadata": {
+      "subgoals": [
+        {
+          "type": "gradingNotes",
+          "details": "\"Agent should call search_lat_lon with latitude 37.334606 and longitude -122.009102\",",
+          "turn": "all"
+        },
+        {
+          "type": "gradingNotes",
+          "details": "Agent should inform the user 'The address for latitude: 37.334606, longitude: -122.009102 is Apple Park 1 Apple Park Way Cupertino, CA 95014 United States' after receiving the result from search_lat_lon",
+          "turn": "all"
+        }
+      ]
+    },
+    "input": [
+      {
+        "role": "user",
+        "content": "Answer AI assistant's questions given the following task you (LLM-simulated user) want AI assistant to complete: Search for the address of lattitude: 37.334606, longitude: -122.009102. You do not have more information.",
+        "terminating_condition": "When AI assistant completed the task, even if you (LLM-simulated user) don't have enough information to validate the correctness, break out of the simulation and end the conversation using the termination message."
+      }
+    ],
+    "target": "",
+    "filtered_scenarios": [],
+    "domain": "find_address_with_lat_lon"
+  },
+  {
+    "id": "find_current_city_low_battery_mode",
+    "metadata": {
+      "subgoals": [
+        {
+          "type": "gradingNotes",
+          "details": "\"Agent should ensure low battery mode is disabled\",",
+          "turn": "all"
+        },
+        {
+          "type": "gradingNotes",
+          "details": "\"Agent should enable WiFi\",",
+          "turn": "all"
+        },
+        {
+          "type": "gradingNotes",
+          "details": "Agent should enable WiFi after ensuring low battery mode is disabled",
+          "turn": "all"
+        },
+        {
+          "type": "gradingNotes",
+          "details": "\"Agent should enable location services\",",
+          "turn": "all"
+        },
+        {
+          "type": "gradingNotes",
+          "details": "Agent should enable location services after ensuring low battery mode is disabled",
+          "turn": "all"
+        },
+        {
+          "type": "gradingNotes",
+          "details": "\"Agent should call get_current_location to retrieve the user's location\",",
+          "turn": "all"
+        },
+        {
+          "type": "gradingNotes",
+          "details": "Agent should inform the user: You are currently in Cupertino",
+          "turn": "all"
+        }
+      ]
+    },
+    "input": [
+      {
+        "role": "user",
+        "content": "Answer AI assistant's questions given the following task you (LLM-simulated user) want AI assistant to complete: Search for the city you (LLM-simulated user) are currently in. You do not have any more information.",
+        "terminating_condition": "When AI assistant completed the task, even if you (LLM-simulated user) don't have enough information to validate the correctness, break out of the simulation and end the conversation using the termination message."
+      }
+    ],
+    "target": "",
+    "filtered_scenarios": [
+      "find_current_city_low_battery_mode_alt"
+    ],
+    "domain": "find_current_city_low_battery_mode"
+  },
+  {
+    "id": "find_days_till_holiday",
+    "metadata": {
+      "subgoals": [
+        {
+          "type": "gradingNotes",
+          "details": "\"Agent should call get_current_timestamp to retrieve the current date and time\",",
+          "turn": "all"
+        },
+        {
+          "type": "gradingNotes",
+          "details": "\"Agent should call search_holiday to find the date of Christmas Day for the current year\",",
+          "turn": "all"
+        },
+        {
+          "type": "gradingNotes",
+          "details": "Agent should call search_holiday to find the date of Christmas Day for the year 2025",
+          "turn": "all"
+        },
+        {
+          "type": "gradingNotes",
+          "details": "\"Agent should call timestamp_diff to calculate the difference between the current timestamp and the timestamp for Christmas Day in the current year after retrieving both timestamps\",",
+          "turn": "all"
+        }
+      ]
+    },
+    "input": [
+      {
+        "role": "user",
+        "content": "Answer AI assistant's questions given the following task you (LLM-simulated user) want AI assistant to complete: Search how many days it is till Christmas Day. You do not have any more information.",
+        "terminating_condition": "When AI assistant completed the task, even if you (LLM-simulated user) don't have enough information to validate the correctness, break out of the simulation and end the conversation using the termination message."
+      }
+    ],
+    "target": "",
+    "filtered_scenarios": [
+      "find_days_till_holiday_alt",
+      "find_days_till_holiday_multiple_user_turn"
+    ],
+    "domain": "find_days_till_holiday"
+  },
+  {
+    "id": "find_days_till_holiday_wifi_off",
+    "metadata": {
+      "subgoals": [
+        {
+          "type": "gradingNotes",
+          "details": "\"Agent should call get_current_timestamp to retrieve the current date and time\",",
+          "turn": "all"
+        },
+        {
+          "type": "gradingNotes",
+          "details": "\"Agent should ensure that wifi is turned on\",",
+          "turn": "all"
+        },
+        {
+          "type": "gradingNotes",
+          "details": "\"Agent should call search_holiday to find the date of Christmas Day for the current year\",",
+          "turn": "all"
+        },
+        {
+          "type": "gradingNotes",
+          "details": "Agent should call search_holiday to find the date of Christmas Day for the year 2025 after ensuring wifi is turned on",
+          "turn": "all"
+        },
+        {
+          "type": "gradingNotes",
+          "details": "\"Agent should call timestamp_diff to calculate the difference between the current timestamp and the timestamp for Christmas Day (current year) after retrieving the current timestamp and the holiday date\",",
+          "turn": "all"
+        }
+      ]
+    },
+    "input": [
+      {
+        "role": "user",
+        "content": "Answer AI assistant's questions given the following task you (LLM-simulated user) want AI assistant to complete: Search how many days it is till Christmas Day. You do not have any more information.",
+        "terminating_condition": "When AI assistant completed the task, even if you (LLM-simulated user) don't have enough information to validate the correctness, break out of the simulation and end the conversation using the termination message."
+      }
+    ],
+    "target": "",
+    "filtered_scenarios": [
+      "find_days_till_holiday_wifi_off_alt",
+      "find_days_till_holiday_wifi_off_multiple_user_turn"
+    ],
+    "domain": "find_days_till_holiday_wifi_off"
+  },
+  {
+    "id": "find_stock_symbol_with_company_name",
+    "metadata": {
+      "subgoals": [
+        {
+          "type": "gradingNotes",
+          "details": "\"Agent should call search_stock with the query 'Apple'\",",
+          "turn": "all"
+        },
+        {
+          "type": "gradingNotes",
+          "details": "Agent should inform the user 'The stock symbol for Apple is AAPL' after retrieving the stock symbol using search_stock",
+          "turn": "all"
+        }
+      ]
+    },
+    "input": [
+      {
+        "role": "user",
+        "content": "Answer AI assistant's questions given the following task you (LLM-simulated user) want AI assistant to complete: Search for stock symbol for Apple. You do not have more information.",
+        "terminating_condition": "When AI assistant completed the task, even if you (LLM-simulated user) don't have enough information to validate the correctness, break out of the simulation and end the conversation using the termination message."
+      }
+    ],
+    "target": "",
+    "filtered_scenarios": [],
+    "domain": "find_stock_symbol_with_company_name"
+  },
+  {
+    "id": "find_stock_symbol_with_company_name_low_battery_mode",
+    "metadata": {
+      "subgoals": [
+        {
+          "type": "gradingNotes",
+          "details": "\"Agent should ensure low battery mode is turned off to achieve the target state where 'low_battery_mode' is false\",",
+          "turn": "all"
+        },
+        {
+          "type": "gradingNotes",
+          "details": "\"Agent should ensure wifi is turned on to achieve the target state where 'wifi' is true\",",
+          "turn": "all"
+        },
+        {
+          "type": "gradingNotes",
+          "details": "Agent should call set_wifi_status to enable wifi if it is currently off",
+          "turn": "all"
+        },
+        {
+          "type": "gradingNotes",
+          "details": "\"Agent should call the search_stock tool with the query 'Apple' to find the stock symbol for Apple\",",
+          "turn": "all"
+        },
+        {
+          "type": "gradingNotes",
+          "details": "Agent should inform the user: The stock symbol for Apple is AAPL",
+          "turn": "all"
+        }
+      ]
+    },
+    "input": [
+      {
+        "role": "user",
+        "content": "Answer AI assistant's questions given the following task you (LLM-simulated user) want AI assistant to complete: Search for stock symbol for Apple. You do not have any more information.",
+        "terminating_condition": "When AI assistant completed the task, even if you (LLM-simulated user) don't have enough information to validate the correctness, break out of the simulation and end the conversation using the termination message."
+      }
+    ],
+    "target": "",
+    "filtered_scenarios": [
+      "find_stock_symbol_with_company_name_low_battery_mode_alt"
+    ],
+    "domain": "find_stock_symbol_with_company_name_low_battery_mode"
+  },
+  {
+    "id": "find_thanksgiving_timestamp",
+    "metadata": {
+      "subgoals": [
+        {
+          "type": "gradingNotes",
+          "details": "Agent should call search_holiday to find the timestamp for Thanksgiving",
+          "turn": "all"
+        }
+      ]
+    },
+    "input": [
+      {
+        "role": "user",
+        "content": "Answer AI assistant's questions given the following task you (LLM-simulated user) want AI assistant to complete: Search what is the timestamp for Thanksgiving. You do not have more information.",
+        "terminating_condition": "When AI assistant completed the task, even if you (LLM-simulated user) don't have enough information to validate the correctness, break out of the simulation and end the conversation using the termination message."
+      }
+    ],
+    "target": "",
+    "filtered_scenarios": [],
+    "domain": "find_thanksgiving_timestamp"
+  },
+  {
+    "id": "get_cellular",
+    "metadata": {
+      "subgoals": [
+        {
+          "type": "gradingNotes",
+          "details": "\"Agent should call get_cellular_service_status to check the status of cellular service\",",
+          "turn": "all"
+        },
+        {
+          "type": "gradingNotes",
+          "details": "Agent should inform the user 'Cellular service is on' after confirming the status using get_cellular_service_status",
+          "turn": "all"
+        }
+      ]
+    },
+    "input": [
+      {
+        "role": "user",
+        "content": "Answer AI assistant's questions given the following task you (LLM-simulated user) want AI assistant to complete: Check cellular service",
+        "terminating_condition": "When AI assistant completed the task, even if you (LLM-simulated user) don't have enough information to validate the correctness, break out of the simulation and end the conversation using the termination message."
+      }
+    ],
+    "target": "",
+    "filtered_scenarios": [],
+    "domain": "get_cellular"
+  },
+  {
+    "id": "get_wifi",
+    "metadata": {
+      "subgoals": [
+        {
+          "type": "gradingNotes",
+          "details": "\"Agent should call get_wifi_status to check the current wifi status\",",
+          "turn": "all"
+        },
+        {
+          "type": "gradingNotes",
+          "details": "Agent should inform the user that the Wifi is on or wifi is connected after confirming the wifi status",
+          "turn": "all"
+        }
+      ]
+    },
+    "input": [
+      {
+        "role": "user",
+        "content": "Answer AI assistant's questions given the following task you (LLM-simulated user) want AI assistant to complete: Check wifi status",
+        "terminating_condition": "When AI assistant completed the task, even if you (LLM-simulated user) don't have enough information to validate the correctness, break out of the simulation and end the conversation using the termination message."
+      }
+    ],
+    "target": "",
+    "filtered_scenarios": [],
+    "domain": "get_wifi"
+  },
+  {
+    "id": "modify_contact_with_message_recency",
+    "metadata": {
+      "subgoals": [
+        {
+          "type": "gradingNotes",
+          "details": "\"Agent should call get_current_timestamp to retrieve the current time\",",
+          "turn": "all"
+        },
+        {
+          "type": "gradingNotes",
+          "details": "\"Agent should call search_contacts to find the contact information\",",
+          "turn": "all"
+        },
+        {
+          "type": "gradingNotes",
+          "details": "\"Agent should call search_messages after getting the current timestamp to find the last person the user sent a message to\",",
+          "turn": "all"
+        },
+        {
+          "type": "gradingNotes",
+          "details": "\"Agent should update the contact's phone number to +10293847563 after identifying the person is Homer S.\",",
+          "turn": "all"
+        },
+        {
+          "type": "gradingNotes",
+          "details": "Agent should inform the user: 'The phone number of the person you last talked to has been updated to +10293847563' after updating the contact",
+          "turn": "all"
+        }
+      ]
+    },
+    "input": [
+      {
+        "role": "user",
+        "content": "Answer AI assistant's questions given the following task you (LLM-simulated user) want AI assistant to complete: Update the phone number of the last person you (LLM-simulated user) sent a message to to +10293847563. You do not have any more information.",
+        "terminating_condition": "When AI assistant completed the task, even if you (LLM-simulated user) don't have enough information to validate the correctness, break out of the simulation and end the conversation using the termination message."
+      }
+    ],
+    "target": "",
+    "filtered_scenarios": [
+      "modify_contact_with_message_recency_alt",
+      "modify_contact_with_message_recency_multiple_user_turn",
+      "modify_contact_with_message_recency_multiple_user_turn_alt"
+    ],
+    "domain": "modify_contact_with_message_recency"
+  },
+  {
+    "id": "remove_contact_by_phone",
+    "metadata": {
+      "subgoals": [
+        {
+          "type": "gradingNotes",
+          "details": "\"Agent should call search_contacts with the phone number +12453344098 to find the associated contact\",",
+          "turn": "all"
+        },
+        {
+          "type": "gradingNotes",
+          "details": "\"Agent should identify the person_id '9e137f06-916a-5310-8174-cf0b7e9f7054' from the search_contacts result\",",
+          "turn": "all"
+        },
+        {
+          "type": "gradingNotes",
+          "details": "Agent should call remove_contact with the person_id '9e137f06-916a-5310-8174-cf0b7e9f7054' to remove the contact after identifying the person_id",
+          "turn": "all"
+        }
+      ]
+    },
+    "input": [
+      {
+        "role": "user",
+        "content": "Answer AI assistant's questions given the following task you (LLM-simulated user) want AI assistant to complete: Delete a contact by phone number +12453344098. You do not have any more information.",
+        "terminating_condition": "When AI assistant completed the task, even if you (LLM-simulated user) don't have enough information to validate the correctness, break out of the simulation and end the conversation using the termination message."
+      }
+    ],
+    "target": "",
+    "filtered_scenarios": [
+      "remove_contact_by_phone_alt",
+      "remove_contact_by_phone_ambiguous",
+      "remove_contact_by_phone_ambiguous_alt",
+      "remove_contact_by_phone_multiple_user_turn",
+      "remove_contact_by_phone_multiple_user_turn_alt"
+    ],
+    "domain": "remove_contact_by_phone"
+  },
+  {
+    "id": "remove_contact_by_phone_no_remove_contact_insufficient_information",
+    "metadata": {
+      "subgoals": [
+        {
+          "type": "gradingNotes",
+          "details": "Agent should inform the user 'I cannot remove the phone number from your contact, because I don't have the tools available.'",
+          "turn": "all"
+        }
+      ]
+    },
+    "input": [
+      {
+        "role": "user",
+        "content": "Answer AI assistant's questions given the following task you (LLM-simulated user) want AI assistant to complete: Delete a contact by phone number +12453344098. You do not have any more information about that person.",
+        "terminating_condition": "When AI assistant completed the task, even if you (LLM-simulated user) don't have enough information to validate the correctness, break out of the simulation and end the conversation using the termination message."
+      }
+    ],
+    "target": "",
+    "filtered_scenarios": [
+      "remove_contact_by_phone_no_remove_contact_insufficient_information_alt"
+    ],
+    "domain": "remove_contact_by_phone_no_remove_contact_insufficient_information"
+  },
+  {
+    "id": "remove_contact_with_id",
+    "metadata": {
+      "subgoals": [
+        {
+          "type": "gradingNotes",
+          "details": "\"Agent should call remove_contact to remove the contact with person_id '9e137f06-916a-5310-8174-cf0b7e9f7054'\",",
+          "turn": "all"
+        },
+        {
+          "type": "gradingNotes",
+          "details": "Agent should inform the user '9e137f06-916a-5310-8174-cf0b7e9f7054 has been removed from your contact' after successfully removing the contact",
+          "turn": "all"
+        }
+      ]
+    },
+    "input": [
+      {
+        "role": "user",
+        "content": "Answer AI assistant's questions given the following task you (LLM-simulated user) want AI assistant to complete: Delete a contact by id 9e137f06-916a-5310-8174-cf0b7e9f7054. You do not have more information.",
+        "terminating_condition": "When AI assistant completed the task, even if you (LLM-simulated user) don't have enough information to validate the correctness, break out of the simulation and end the conversation using the termination message."
+      }
+    ],
+    "target": "",
+    "filtered_scenarios": [],
+    "domain": "remove_contact_with_id"
+  },
+  {
+    "id": "search_message_with_recency_latest",
+    "metadata": {
+      "subgoals": [
+        {
+          "type": "gradingNotes",
+          "details": "\"Agent should call search_messages to retrieve the most recent message\",",
+          "turn": "all"
+        },
+        {
+          "type": "gradingNotes",
+          "details": "\"Agent should inform the user: 'Your most recent message says Good, keep me posted.'\",",
+          "turn": "all"
+        }
+      ]
+    },
+    "input": [
+      {
+        "role": "user",
+        "content": "Answer AI assistant's questions given the following task you (LLM-simulated user) want AI assistant to complete: Ask AI assistant to find the content of your (LLM-simulated user's) most recent message. It should be Good, keep me posted. IMPORTANT: Do NOT leak this information. You do not have any more information.",
+        "terminating_condition": "When AI assistant completed the task, even if you (LLM-simulated user) don't have enough information to validate the correctness, break out of the simulation and end the conversation using the termination message."
+      }
+    ],
+    "target": "",
+    "filtered_scenarios": [
+      "search_message_with_recency_latest_alt",
+      "search_message_with_recency_latest_multiple_user_turn",
+      "search_message_with_recency_latest_multiple_user_turn_alt"
+    ],
+    "domain": "search_message_with_recency_latest"
+  },
+  {
+    "id": "search_message_with_recency_oldest",
+    "metadata": {
+      "subgoals": [
+        {
+          "type": "gradingNotes",
+          "details": "\"Agent should call get_current_timestamp to retrieve the current timestamp\",",
+          "turn": "all"
+        },
+        {
+          "type": "gradingNotes",
+          "details": "\"Agent should call search_messages to find the oldest message\",",
+          "turn": "all"
+        },
+        {
+          "type": "gradingNotes",
+          "details": "Agent should call search_messages after getting the current timestamp",
+          "turn": "all"
+        },
+        {
+          "type": "gradingNotes",
+          "details": "Agent should inform the user: Your oldest message says 'Hey kid, you want some GPU?'.",
+          "turn": "all"
+        }
+      ]
+    },
+    "input": [
+      {
+        "role": "user",
+        "content": "Answer AI assistant's questions given the following task you (LLM-simulated user) want AI assistant to complete: Find content of your (LLM-simulated user's) oldest message. It should be Hey kid, you want some GPU? IMPORTANT: Do NOT leak this information. You do not have any more information.",
+        "terminating_condition": "When AI assistant completed the task, even if you (LLM-simulated user) don't have enough information to validate the correctness, break out of the simulation and end the conversation using the termination message."
+      }
+    ],
+    "target": "",
+    "filtered_scenarios": [
+      "search_message_with_recency_oldest_alt",
+      "search_message_with_recency_oldest_multiple_user_turn",
+      "search_message_with_recency_oldest_multiple_user_turn_alt"
+    ],
+    "domain": "search_message_with_recency_oldest"
+  },
+  {
+    "id": "search_name_with_relationship",
+    "metadata": {
+      "subgoals": [
+        {
+          "type": "gradingNotes",
+          "details": "\"Agent should call search_contacts with the argument 'relationship: boss' to find the user's boss\",",
+          "turn": "all"
+        },
+        {
+          "type": "gradingNotes",
+          "details": "Agent should inform the user 'Your boss is Homer S' after retrieving the boss's information",
+          "turn": "all"
+        }
+      ]
+    },
+    "input": [
+      {
+        "role": "user",
+        "content": "Answer AI assistant's questions given the following task you (LLM-simulated user) want AI assistant to complete: Search for your (LLM-simulated user's) boss's name. It should be Homer S. IMPORTANT: Do NOT leak this information. You do not have more information about your boss.",
+        "terminating_condition": "When AI assistant completed the task, even if you (LLM-simulated user) don't have enough information to validate the correctness, break out of the simulation and end the conversation using the termination message."
+      }
+    ],
+    "target": "",
+    "filtered_scenarios": [],
+    "domain": "search_name_with_relationship"
+  },
+  {
+    "id": "search_phone_number_with_name",
+    "metadata": {
+      "subgoals": [
+        {
+          "type": "gradingNotes",
+          "details": "\"Agent should call search_contacts to find Homer S's contact information\",",
+          "turn": "all"
+        },
+        {
+          "type": "gradingNotes",
+          "details": "\"Agent should inform the user 'I found Homer S's phone number: +10000000000' after retrieving the phone number\",",
+          "turn": "all"
+        }
+      ]
+    },
+    "input": [
+      {
+        "role": "user",
+        "content": "Answer AI assistant's questions given the following task you (LLM-simulated user) want AI assistant to complete: Search for Homer S's phone number. It should be +10000000000. IMPORTANT: Do NOT leak this information. You do not have more information about Homer S.",
+        "terminating_condition": "When AI assistant completed the task, even if you (LLM-simulated user) don't have enough information to validate the correctness, break out of the simulation and end the conversation using the termination message."
+      }
+    ],
+    "target": "",
+    "filtered_scenarios": [],
+    "domain": "search_phone_number_with_name"
+  },
+  {
+    "id": "search_relationship_with_phone_number",
+    "metadata": {
+      "subgoals": [
+        {
+          "type": "gradingNotes",
+          "details": "\"Agent should call search_contacts with the phone number '+10000000000' to find the user's relationship\",",
+          "turn": "all"
+        },
+        {
+          "type": "gradingNotes",
+          "details": "Agent should inform the user '+10000000000 is your boss' after retrieving the relationship information from search_contacts",
+          "turn": "all"
+        }
+      ]
+    },
+    "input": [
+      {
+        "role": "user",
+        "content": "Answer AI assistant's questions given the following task you (LLM-simulated user) want AI assistant to complete: Find out your (LLM-simulated user's) relationship with the person who's phone number is +10000000000. It should be boss. IMPORTANT: Do NOT leak this information. You do not have more information about this person.",
+        "terminating_condition": "When AI assistant completed the task, even if you (LLM-simulated user) don't have enough information to validate the correctness, break out of the simulation and end the conversation using the termination message."
+      }
+    ],
+    "target": "",
+    "filtered_scenarios": [],
+    "domain": "search_relationship_with_phone_number"
+  },
+  {
+    "id": "search_reminder_with_creation_recency_yesterday",
+    "metadata": {
+      "subgoals": [
+        {
+          "type": "gradingNotes",
+          "details": "\"Agent should call get_current_timestamp to retrieve the current date and time\",",
+          "turn": "all"
+        },
+        {
+          "type": "gradingNotes",
+          "details": "\"Agent should call search_reminder to find reminders created yesterday\",",
+          "turn": "all"
+        },
+        {
+          "type": "gradingNotes",
+          "details": "Agent should call search_reminder after retrieving the current timestamp",
+          "turn": "all"
+        },
+        {
+          "type": "gradingNotes",
+          "details": "Agent should inform the user: Your reminder created yesterday says 'Buy tickets for Merrily next week'.",
+          "turn": "all"
+        }
+      ]
+    },
+    "input": [
+      {
+        "role": "user",
+        "content": "Answer AI assistant's questions given the following task you (LLM-simulated user) want AI assistant to complete: Ask AI assistant to find the content of your (LLM-simulated user's) reminder created yesterday. It should say Buy tickets for Merrily next week. IMPORTANT: Do NOT leak this information. You do not have any more information.",
+        "terminating_condition": "When AI assistant completed the task, even if you (LLM-simulated user) don't have enough information to validate the correctness, break out of the simulation and end the conversation using the termination message."
+      }
+    ],
+    "target": "",
+    "filtered_scenarios": [
+      "search_reminder_with_creation_recency_yesterday_implicit"
+    ],
+    "domain": "search_reminder_with_creation_recency_yesterday"
+  },
+  {
+    "id": "search_reminder_with_recency_upcoming",
+    "metadata": {
+      "subgoals": [
+        {
+          "type": "gradingNotes",
+          "details": "\"Agent should call get_current_timestamp to retrieve the current time\",",
+          "turn": "all"
+        },
+        {
+          "type": "gradingNotes",
+          "details": "\"Agent should call search_reminder to find upcoming reminders\",",
+          "turn": "all"
+        },
+        {
+          "type": "gradingNotes",
+          "details": "Agent should call search_reminder after retrieving the current timestamp",
+          "turn": "all"
+        },
+        {
+          "type": "gradingNotes",
+          "details": "Agent should inform the user: Your upcoming reminder says 'Buy a nice rich navy bathing dress",
+          "turn": "all"
+        }
+      ]
+    },
+    "input": [
+      {
+        "role": "user",
+        "content": "Answer AI assistant's questions given the following task you (LLM-simulated user) want AI assistant to complete: Ask AI assistant to find the content of your (LLM-simulated user's) upcoming reminder today. It should say Buy a nice rich navy bathing dress. IMPORTANT: Do NOT leak this information. You do not have any more information.",
+        "terminating_condition": "When AI assistant completed the task, even if you (LLM-simulated user) don't have enough information to validate the correctness, break out of the simulation and end the conversation using the termination message."
+      }
+    ],
+    "target": "",
+    "filtered_scenarios": [
+      "search_reminder_with_recency_upcoming_implicit"
+    ],
+    "domain": "search_reminder_with_recency_upcoming"
+  },
+  {
+    "id": "search_reminder_with_recency_yesterday",
+    "metadata": {
+      "subgoals": [
+        {
+          "type": "gradingNotes",
+          "details": "\"Agent should call get_current_timestamp to retrieve the current date and time\",",
+          "turn": "all"
+        },
+        {
+          "type": "gradingNotes",
+          "details": "\"Agent should call search_reminder to find reminders for the day before the retrieved timestamp\",",
+          "turn": "all"
+        },
+        {
+          "type": "gradingNotes",
+          "details": "Agent should call search_reminder after getting the current timestamp",
+          "turn": "all"
+        },
+        {
+          "type": "gradingNotes",
+          "details": "Agent should inform the user: Your reminder from yesterday says 'Look for Company SF tickets'.",
+          "turn": "all"
+        }
+      ]
+    },
+    "input": [
+      {
+        "role": "user",
+        "content": "Answer AI assistant's questions given the following task you (LLM-simulated user) want AI assistant to complete: Ask AI assistant to find the content of your (LLM-simulated user's) reminder from yesterday. It should say Look for Company SF tickets. IMPORTANT: Do NOT leak this information. You do not have any more information.",
+        "terminating_condition": "When AI assistant completed the task, even if you (LLM-simulated user) don't have enough information to validate the correctness, break out of the simulation and end the conversation using the termination message."
+      }
+    ],
+    "target": "",
+    "filtered_scenarios": [
+      "search_reminder_with_recency_yesterday_implicit"
+    ],
+    "domain": "search_reminder_with_recency_yesterday"
+  },
+  {
+    "id": "search_sender_phone_number_with_content",
+    "metadata": {
+      "subgoals": [
+        {
+          "type": "gradingNotes",
+          "details": "\"Agent should call search_messages to find the phone number that asked about GPUs\",",
+          "turn": "all"
+        },
+        {
+          "type": "gradingNotes",
+          "details": "Agent should inform the user '+18307976530 asked you if you want some GPUs' after calling search_messages",
+          "turn": "all"
+        }
+      ]
+    },
+    "input": [
+      {
+        "role": "user",
+        "content": "Answer AI assistant's questions given the following task you (LLM-simulated user) want AI assistant to complete: Find which phone number asked you (LLM-simulated user) if you want some GPUs. It should be +18307976530. IMPORTANT: Do NOT leak this information. You do not have more information.",
+        "terminating_condition": "When AI assistant completed the task, even if you (LLM-simulated user) don't have enough information to validate the correctness, break out of the simulation and end the conversation using the termination message."
+      }
+    ],
+    "target": "",
+    "filtered_scenarios": [],
+    "domain": "search_sender_phone_number_with_content"
+  },
+  {
+    "id": "send_message_with_contact_content_cellular_off",
+    "metadata": {
+      "subgoals": [
+        {
+          "type": "gradingNotes",
+          "details": "\"Agent should enable cellular service by calling set_cellular_service_status with 'on'\",",
+          "turn": "all"
+        },
+        {
+          "type": "gradingNotes",
+          "details": "\"Agent should call search_contacts to find Fredrik Thordendal's contact information\",",
+          "turn": "all"
+        },
+        {
+          "type": "gradingNotes",
+          "details": "Agent should ensure the tool call matches: {\\\"tool_name\\\": \\\"search_contacts\\\", \\\"arguments\\\": {\\\"name\\\": \\\"Fredrik Thordendal\\\"}}",
+          "turn": "all"
+        },
+        {
+          "type": "gradingNotes",
+          "details": "\"Agent should use the phone number retrieved from search_contacts to prepare the message content: 'How's the new album coming along'\",",
+          "turn": "all"
+        },
+        {
+          "type": "gradingNotes",
+          "details": "Agent should inform the user: Your message to Fredrik Thordendal has been sent saying: \"How's the new album coming along\"",
+          "turn": "all"
+        }
+      ]
+    },
+    "input": [
+      {
+        "role": "user",
+        "content": "Answer AI assistant's questions given the following task you (LLM-simulated user) want AI assistant to complete: Send a message to Fredrik Thordendal saying: How's the new album coming along. You do not have any more information.",
+        "terminating_condition": "When AI assistant completed the task, even if you (LLM-simulated user) don't have enough information to validate the correctness, break out of the simulation and end the conversation using the termination message."
+      }
+    ],
+    "target": "",
+    "filtered_scenarios": [
+      "send_message_with_contact_content_cellular_off_alt",
+      "send_message_with_contact_content_cellular_off_multiple_user_turn",
+      "send_message_with_contact_content_cellular_off_multiple_user_turn_alt"
+    ],
+    "domain": "send_message_with_contact_content_cellular_off"
+  },
+  {
+    "id": "send_message_with_phone_number_and_content",
+    "metadata": {
+      "subgoals": [
+        {
+          "type": "gradingNotes",
+          "details": "\"Agent should call send_message_with_phone_number with recipient_phone_number '+12453344098' and content 'How's the new album coming along'\",",
+          "turn": "all"
+        },
+        {
+          "type": "gradingNotes",
+          "details": "Agent should inform the user 'Your message to +12453344098 has been sent saying: How's the new album coming along' after sending the message",
+          "turn": "all"
+        }
+      ]
+    },
+    "input": [
+      {
+        "role": "user",
+        "content": "Answer AI assistant's questions given the following task you (LLM-simulated user) want AI assistant to complete: Send a message to +12453344098 saying: How's the new album coming along. You do not have more information.",
+        "terminating_condition": "When AI assistant completed the task, even if you (LLM-simulated user) don't have enough information to validate the correctness, break out of the simulation and end the conversation using the termination message."
+      }
+    ],
+    "target": "",
+    "filtered_scenarios": [],
+    "domain": "send_message_with_phone_number_and_content"
+  },
+  {
+    "id": "turn_on_cellular_low_battery_mode",
+    "metadata": {
+      "subgoals": [
+        {
+          "type": "gradingNotes",
+          "details": "\"Agent should ensure low battery mode is off by calling set_low_battery_mode_status with the argument on: False\",",
+          "turn": "all"
+        },
+        {
+          "type": "gradingNotes",
+          "details": "\"Agent should call set_cellular_service_status to enable cellular service\",",
+          "turn": "all"
+        },
+        {
+          "type": "gradingNotes",
+          "details": "Agent should inform the user: Cellular service has been turned on.",
+          "turn": "all"
+        }
+      ]
+    },
+    "input": [
+      {
+        "role": "user",
+        "content": "Answer AI assistant's questions given the following task you (LLM-simulated user) want AI assistant to complete: Turn on cellular",
+        "terminating_condition": "When AI assistant completed the task, even if you (LLM-simulated user) don't have enough information to validate the correctness, break out of the simulation and end the conversation using the termination message."
+      }
+    ],
+    "target": "",
+    "filtered_scenarios": [
+      "turn_on_cellular_low_battery_mode_implicit"
+    ],
+    "domain": "turn_on_cellular_low_battery_mode"
+  },
+  {
+    "id": "turn_on_location_low_battery_mode",
+    "metadata": {
+      "subgoals": [
+        {
+          "type": "gradingNotes",
+          "details": "\"Agent should ensure that low battery mode is turned off by calling set_low_battery_mode_status with the value false\",",
+          "turn": "all"
+        },
+        {
+          "type": "gradingNotes",
+          "details": "\"Agent should check the current status of location service by calling get_location_service_status\",",
+          "turn": "all"
+        },
+        {
+          "type": "gradingNotes",
+          "details": "Agent should turn on location service by calling set_location_service_status with the value true after confirming its current status",
+          "turn": "all"
+        },
+        {
+          "type": "gradingNotes",
+          "details": "Agent should inform the user: Location service has been turned on",
+          "turn": "all"
+        }
+      ]
+    },
+    "input": [
+      {
+        "role": "user",
+        "content": "Answer AI assistant's questions given the following task you (LLM-simulated user) want AI assistant to complete: Turn on location service",
+        "terminating_condition": "When AI assistant completed the task, even if you (LLM-simulated user) don't have enough information to validate the correctness, break out of the simulation and end the conversation using the termination message."
+      }
+    ],
+    "target": "",
+    "filtered_scenarios": [
+      "turn_on_location_low_battery_mode_implicit"
+    ],
+    "domain": "turn_on_location_low_battery_mode"
+  },
+  {
+    "id": "turn_on_wifi_low_battery_mode",
+    "metadata": {
+      "subgoals": [
+        {
+          "type": "gradingNotes",
+          "details": "Agent should call set_low_battery_mode_status with the argument on: False to ensure low battery mode is turned off",
+          "turn": "all"
+        },
+        {
+          "type": "gradingNotes",
+          "details": "\"Agent should call set_wifi_status to turn on wifi\",",
+          "turn": "all"
+        },
+        {
+          "type": "gradingNotes",
+          "details": "Agent should ensure wifi is turned on after confirming low battery mode is off",
+          "turn": "all"
+        },
+        {
+          "type": "gradingNotes",
+          "details": "Agent should inform the user: Wifi has been turned on.",
+          "turn": "all"
+        }
+      ]
+    },
+    "input": [
+      {
+        "role": "user",
+        "content": "Answer AI assistant's questions given the following task you (LLM-simulated user) want AI assistant to complete: Turn on wifi",
+        "terminating_condition": "When AI assistant completed the task, even if you (LLM-simulated user) don't have enough information to validate the correctness, break out of the simulation and end the conversation using the termination message."
+      }
+    ],
+    "target": "",
+    "filtered_scenarios": [
+      "turn_on_wifi_low_battery_mode_implicit"
+    ],
+    "domain": "turn_on_wifi_low_battery_mode"
+  },
+  {
+    "id": "update_contact_relationship_with_relationship",
+    "metadata": {
+      "subgoals": [
+        {
+          "type": "gradingNotes",
+          "details": "\"Agent should call search_contacts to find all contacts with the relationship 'friend'\",",
+          "turn": "all"
+        },
+        {
+          "type": "gradingNotes",
+          "details": "\"Agent should call modify_contact to update Fredrik Thordendal's relationship to 'enemy' after retrieving the list of friends\",",
+          "turn": "all"
+        },
+        {
+          "type": "gradingNotes",
+          "details": "Agent should call modify_contact to update John Petrucci's relationship to 'enemy' after retrieving the list of friends",
+          "turn": "all"
+        },
+        {
+          "type": "gradingNotes",
+          "details": "Agent should inform the user: All your friends are now your enemies",
+          "turn": "all"
+        }
+      ]
+    },
+    "input": [
+      {
+        "role": "user",
+        "content": "Answer AI assistant's questions given the following task you (LLM-simulated user) want AI assistant to complete: Update the all friends in your (LLM-simulated user's) contact book as your enemy. You do not have any more information.",
+        "terminating_condition": "When AI assistant completed the task, even if you (LLM-simulated user) don't have enough information to validate the correctness, break out of the simulation and end the conversation using the termination message."
+      }
+    ],
+    "target": "",
+    "filtered_scenarios": [
+      "update_contact_relationship_with_relationship_alt",
+      "update_contact_relationship_with_relationship_multiple_user_turn"
+    ],
+    "domain": "update_contact_relationship_with_relationship"
+  },
+  {
+    "id": "update_contact_relationship_with_relationship_twice_multiple_user_turn",
+    "metadata": {
+      "subgoals": [
+        {
+          "type": "gradingNotes",
+          "details": "\"Agent should call search_contacts to find contacts with the relationship 'friend'.\",",
+          "turn": "all"
+        },
+        {
+          "type": "gradingNotes",
+          "details": "\"Agent should call modify_contact to update Fredrik Thordendal's relationship to 'enemy' after finding the contact.\",",
+          "turn": "all"
+        },
+        {
+          "type": "gradingNotes",
+          "details": "Agent should call modify_contact to update John Petrucci's relationship to 'enemy' after finding the contact.",
+          "turn": "all"
+        },
+        {
+          "type": "gradingNotes",
+          "details": "\"Agent should inform the user: 'Fredrik Thordendal and John Petrucci are now your enemies.'\",",
+          "turn": "all"
+        },
+        {
+          "type": "gradingNotes",
+          "details": "\"Agent should again call modify_contact to update Fredrik Thordendal's and John Petrucci relationship from 'enemy' to 'friend' again.\",",
+          "turn": "all"
+        }
+      ]
+    },
+    "input": [
+      {
+        "role": "user",
+        "content": "Answer AI assistant's questions given the following task you (LLM-simulated user) want AI assistant to complete: Ask AI assistant to update the all friends in (LLM-simulated user's) contact book as (LLM-simulated user's) enemy. After AI assistant did so, ask AI assistant to update them back to (LLM-simulated user's) friends. You do not have more information.",
+        "terminating_condition": "When AI assistant completed the task, even if you (LLM-simulated user) don't have enough information to validate the correctness, break out of the simulation and end the conversation using the termination message."
+      }
+    ],
+    "target": "",
+    "filtered_scenarios": [],
+    "domain": "update_contact_relationship_with_relationship_twice_multiple_user_turn"
+  },
+  {
+    "id": "update_contact_with_id_and_phone_number",
+    "metadata": {
+      "subgoals": [
+        {
+          "type": "gradingNotes",
+          "details": "\"Agent should call modify_contact to update the phone number of the person with id 9e137f06-916a-5310-8174-cf0b7e9f7054 to +19876543210\",",
+          "turn": "all"
+        },
+        {
+          "type": "gradingNotes",
+          "details": "Agent should inform the user '9e137f06-916a-5310-8174-cf0b7e9f7054's phone number has been updated to +19876543210' after successfully updating the contact",
+          "turn": "all"
+        }
+      ]
+    },
+    "input": [
+      {
+        "role": "user",
+        "content": "Answer AI assistant's questions given the following task you (LLM-simulated user) want AI assistant to complete: Update the phone number of contact by id 9e137f06-916a-5310-8174-cf0b7e9f7054 to +19876543210. You do not have more information.",
+        "terminating_condition": "When AI assistant completed the task, even if you (LLM-simulated user) don't have enough information to validate the correctness, break out of the simulation and end the conversation using the termination message."
+      }
+    ],
+    "target": "",
+    "filtered_scenarios": [],
+    "domain": "update_contact_with_id_and_phone_number"
+  },
+  {
+    "id": "wifi_off",
+    "metadata": {
+      "subgoals": [
+        {
+          "type": "gradingNotes",
+          "details": "\"Agent should call set_wifi_status to turn off wifi\",",
+          "turn": "all"
+        },
+        {
+          "type": "gradingNotes",
+          "details": "Agent should inform the user 'Wifi is turned off' after turning off wifi",
+          "turn": "all"
+        }
+      ]
+    },
+    "input": [
+      {
+        "role": "user",
+        "content": "Answer AI assistant's questions given the following task you (LLM-simulated user) want AI assistant to complete: Turn off wifi",
+        "terminating_condition": "When AI assistant completed the task, even if you (LLM-simulated user) don't have enough information to validate the correctness, break out of the simulation and end the conversation using the termination message."
+      }
+    ],
+    "target": "",
+    "filtered_scenarios": [],
+    "domain": "wifi_off"
+  }
+]

@@ -1,0 +1,59 @@
+[
+  {
+    "id": "multiturnmessage_31",
+    "input": [
+      {
+        "role": "user",
+        "content": "Domain: airline\nReason for Call: Your cat is really sick and you need to get back home sooner to take care of it. \nYou want to change your upcoming flight from JFK on May 17 to a nonstop flight.\nKnown Information: Your name is Daiki Lee.\nYour user id is daiki_lee_6144.\nUnknown Information: You do not know your reservation id.\nTask Instructions: You are willing to do the change only if it costs less than $100.\n\nYou do not want to buy a new flight.",
+        "terminating_condition": "The task is considered complete if the instruction goal is satisfied or you are transferred to another agent or you find yourself in a situation in which the scenario does not provide enough information for you to continue the conversation."
+      }
+    ],
+    "metadata": {
+      "subgoals": [
+        {
+          "type": "gradingNotes",
+          "details": "Agent doesn't book any flight.",
+          "turn": "all"
+        }
+      ],
+      "expectedTools": [],
+      "trace_type": "tau2bench"
+    },
+    "target": "",
+    "domain": "airline"
+  },
+  {
+    "id": "multiturnmessage_32",
+    "input": [
+      {
+        "role": "user",
+        "content": "Domain: airline\nReason for Call: You want to change your upcoming flight from EWR on May 21 to a nonstop flight on the same day. \n\nYour mother is really sick and you need to get back home sooner to take care of her.\nKnown Information: You are Ivan Rossi.\nYour user id is ivan_rossi_8555.\nTask Instructions: If the agent says your ticket is a basic economy one, you are willing to upgrade to economy in order to make the change.\n\nYou are willing to pay up to $100 for the change.\n\nYou don't want to buy a new ticket.",
+        "terminating_condition": "The task is considered complete if the instruction goal is satisfied or you are transferred to another agent or you find yourself in a situation in which the scenario does not provide enough information for you to continue the conversation."
+      }
+    ],
+    "metadata": {
+      "subgoals": [
+        {
+          "type": "gradingNotes",
+          "details": "Agent update reservation OWZ4XL to economy.",
+          "turn": "all"
+        },
+        {
+          "type": "gradingNotes",
+          "details": "Agent updates reservation OWZ4XL to flight HAT041.",
+          "turn": "all"
+        }
+      ],
+      "expectedTools": [
+        "[{'tool_code': 'get_user_details(user_id=ivan_rossi_8555)', 'output': '$AnyValue'}]",
+        "[{'tool_code': 'get_reservation_details(reservation_id=OWZ4XL)', 'output': '$AnyValue'}]",
+        "[{'tool_code': 'search_direct_flight(origin=EWR, destination=LAX, date=2024-05-21)', 'output': '$AnyValue'}]",
+        "[{'tool_code': 'update_reservation_flights(reservation_id=OWZ4XL, cabin=economy, flights=[{'flight_number': 'HAT202', 'date': '2024-05-21'}, {'flight_number': 'HAT232', 'date': '2024-05-21'}], payment_id=credit_card_9659780)', 'output': '$AnyValue'}]",
+        "[{'tool_code': 'update_reservation_flights(reservation_id=OWZ4XL, cabin=economy, flights=[{'flight_number': 'HAT041', 'date': '2024-05-21'}], payment_id=credit_card_9659780)', 'output': '$AnyValue'}]"
+      ],
+      "trace_type": "tau2bench"
+    },
+    "target": "",
+    "domain": "airline"
+  }
+]

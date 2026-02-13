@@ -1,0 +1,41 @@
+from enum import Enum, unique
+
+@unique
+class EvaluationComponent(Enum):
+    EVALUATION_ERROR_CODE = "05"
+
+@unique
+class UserProxyComponent(Enum):
+    USER_PROXY_ERROR_CODE = "06"
+
+@unique
+class ClientComponent(Enum):
+    CLIENT_ERROR_CODE = "07"
+
+@unique
+class ToolComponent(Enum):
+    TOOL_ERROR_CODE = "08"
+
+
+#TODO: reorganize error codes for different purposes
+@unique
+class ErrorCode(Enum):
+    INVALID_LLM_JUDGE_RESULT_ERROR = "0000"
+    MAX_RETRY_EXCEEDED_ERROR = "0001"
+    INVALID_JUDGE_TRIALS_ERROR = "0002"
+    INVALID_JUDGE_RESPONSE_FORMAT_ERROR = "0003"
+    EMPTY_VALIDATION_RESULT = "0004"
+    EMPTY_PROGRESS_SCORE = "0005"
+    AUC_CALCULATION_ERROR = "0006"
+    INSUFFICIENT_JUDGE_RESPONSES_ERROR = "0007"
+    MISSING_VALUE = "0008"
+    INVALID_VALUE = "0009"
+    INVALID_USER_MESSAGE_REFLECTION = "0010"
+    INVALID_USER_PROXY_RESPONSE = "0011"
+    PPT_CALCULATION_ERROR = "0012"
+    UNSUPPORTED_ATTRIBUTION_TYPE = "0013"
+    INVALID_JSON_DECODE_ERROR = "0014"
+    UNSUCCESSFUL_LLM_SUMMARIZATION = "0015"
+    UNSUCCESSFUL_MAJORITY_VOTING = "0016"
+    CLIENT_REQUEST_ERROR = "0017"
+    
