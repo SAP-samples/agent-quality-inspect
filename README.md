@@ -1,4 +1,4 @@
-# SAP-samples/repository-template
+<!-- # SAP-samples/repository-template
 This default template for SAP Samples repositories includes files for README, LICENSE, and REUSE.toml. All repositories on github.com/SAP-samples will be created based on this template.
 
 # Containing Files
@@ -10,9 +10,9 @@ In most cases, the license for SAP sample projects is `Apache 2.0`.
 The [Reuse Tool](https://reuse.software/) must be used for your samples project. You can find the REUSE.toml in the project initial. Please replace the parts inside the single angle quotation marks < > by the specific information for your repository.
 
 3. The README.md file (this file):
-Please edit this file as it is the primary description file for your project. You can find some placeholder titles for sections below.
+Please edit this file as it is the primary description file for your project. You can find some placeholder titles for sections below. -->
 
-# [Title]
+# AgentInspect
 <!-- Please include descriptive title -->
 
 <!--- Register repository https://api.reuse.software/register, then add REUSE badge:
@@ -21,16 +21,24 @@ Please edit this file as it is the primary description file for your project. Yo
 
 ## Description
 <!-- Please include SEO-friendly description -->
+Evaluation package that allows benchmarking of agentic AIs from various sources and frameworks by producing statistical results which can be compared across different use cases and datasets.
 
 ## Requirements
+Please refer to the requirements.txt file for list of dependencies to install
 
 ## Download and Installation
+To use th package, enter your command terminal and use this command
+
+```bash
+pip install git+https://github.com/SAP-samples/agentinspect.git
+```
 
 ## Known Issues
 <!-- You may simply state "No known issues. -->
+No known issues.
 
 ## How to obtain support
-[Create an issue](https://github.com/SAP-samples/<repository-name>/issues) in this repository if you find a bug or have questions about the content.
+[Create an issue](https://github.com/SAP-samples/agentinspect/issues) in this repository if you find a bug or have questions about the content.
  
 For additional support, [ask a question in SAP Community](https://answers.sap.com/questions/ask.html).
 

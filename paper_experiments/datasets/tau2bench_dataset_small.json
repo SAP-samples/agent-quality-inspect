@@ -1,0 +1,120 @@
+[
+  {
+    "id": "multiturnmessage_3",
+    "input": [
+      {
+        "role": "user",
+        "content": "Domain: airline\nReason for Call: You want to figure out the total number of suitcases the reservation allows you to take on your upcoming flight.\n\nYou have a lot of things you need to bring with you on this trip. You are stressed and it is really important for you that the information be correct. \n\nYou're pretty sure that you're a Gold member.\nKnown Information: You are Anya Garcia.\n\nYour user id is: anya_garcia_5901.\n\nYour confirmation number is JMO1MG.\nUnknown Information: You do not know the cabin for the upcoming flight.\nTask Instructions: If this is not already the case, insist on getting the total number in numeric form, as you can see numbers better than words. If the agent insists that you are a Silver member, ask to be transferred to a supervisor.",
+        "terminating_condition": "The task is considered complete if the instruction goal is satisfied or you are transferred to another agent or you find yourself in a situation in which the scenario does not provide enough information for you to continue the conversation."
+      }
+    ],
+    "metadata": {
+      "subgoals": [
+        {
+          "type": "gradingNotes",
+          "details": "Agent detects that user is actually a Silver member.",
+          "turn": "all"
+        },
+        {
+          "type": "gradingNotes",
+          "details": "Agent communicate to user that she can bring 4 suitcases (silver member with economy flights = 2 free suitcases per passengers).",
+          "turn": "all"
+        }
+      ],
+      "expected_tool_calls": [
+        "[{'tool_code': 'get_reservation_details(reservation_id=JMO1MG)', 'output': '$AnyValue'}]",
+        "[{'tool_code': 'get_user_details(user_id=anya_garcia_5901)', 'output': '$AnyValue'}]"
+      ],
+      "trace_type": "tau2bench"
+    },
+    "target": "",
+    "domain": "airline"
+  },
+  {
+    "id": "multiturnmessage_7",
+    "input": [
+      {
+        "role": "user",
+        "content": "Domain: airline\nReason for Call: You want to cancel your upcoming flights within reservation IDs XEHM4B and 59XX6W.\nKnown Information: Your user id is 'daiki_muller_1116'.\nTask Instructions: If the agent says either of the two reservations is basic economy, ask to upgrade to economy first and then cancel the reservation.\n\nYou are very persistent and terse but clear.\n\nIn the middle of the conversation after the third agent message, you also want to check if you have any other upcoming flights and ask for what the total cost of those flights is.",
+        "terminating_condition": "The task is considered complete if the instruction goal is satisfied or you are transferred to another agent or you find yourself in a situation in which the scenario does not provide enough information for you to continue the conversation."
+      }
+    ],
+    "metadata": {
+      "subgoals": [
+        {
+          "type": "gradingNotes",
+          "details": "Agent upgrades XEHM4B to economy.",
+          "turn": "all"
+        },
+        {
+          "type": "gradingNotes",
+          "details": "Agent cancels XEHM4B.",
+          "turn": "all"
+        },
+        {
+          "type": "gradingNotes",
+          "details": "Agent cancels 59XX6W.",
+          "turn": "all"
+        },
+        {
+          "type": "gradingNotes",
+          "details": "Agent communicates that total cost of upcoming flights is $1,628.",
+          "turn": "all"
+        }
+      ],
+      "expected_tool_calls": [
+        "[{'tool_code': 'get_reservation_details(reservation_id=XEHM4B)', 'output': '$AnyValue'}]",
+        "[{'tool_code': 'get_reservation_details(reservation_id=59XX6W)', 'output': '$AnyValue'}]",
+        "[{'tool_code': 'update_reservation_flights(reservation_id=XEHM4B, cabin=economy, flights=[{'flight_number': 'HAT005', 'date': '2024-05-20'}, {'flight_number': 'HAT178', 'date': '2024-05-30'}], payment_id=credit_card_2408938)', 'output': '$AnyValue'}]",
+        "[{'tool_code': 'cancel_reservation(reservation_id=XEHM4B)', 'output': '$AnyValue'}]",
+        "[{'tool_code': 'cancel_reservation(reservation_id=59XX6W)', 'output': '$AnyValue'}]"
+      ],
+      "trace_type": "tau2bench"
+    },
+    "target": "",
+    "domain": "airline"
+  },
+  {
+    "id": "multiturnmessage_8",
+    "input": [
+      {
+        "role": "user",
+        "content": "Domain: airline\nReason for Call: You want to book a one-way flight from ORD to PHL on May 26.\nKnown Information: Your name is Sophia Silva.\n\nYour user id is sophia_silva_7557.\nUnknown Information: You do not know the flight number of your May 10 flight from ORD to PHL\nTask Instructions: You want to book the exact same flight as your recent May 10 flight from ORD to PHL.\n\nYou do not want any other flight. \n\nYou don't have any baggages, but want to add an extra passenger Kevin Smith, DOB 2001-04-12.\n\nYou are ok with economy and want aisle and a middle seat together. You are willing to pay up to $500 for the purchase.\n\nIf and only if the price is above $500, drop the second passenger and book only for yourself.\n\nIf the agent asks, you only want a one-way ticket, not roundtrip.\n\nYou don't need any travel insurance.\n\nYou want to pay using only one of your certificates.\n\nYou do not accept any other mode of payment. \n\nYour birthday is in your user profile so you prefer not to provide it.",
+        "terminating_condition": "The task is considered complete if the instruction goal is satisfied or you are transferred to another agent or you find yourself in a situation in which the scenario does not provide enough information for you to continue the conversation."
+      }
+    ],
+    "metadata": {
+      "subgoals": [
+        {
+          "type": "gradingNotes",
+          "details": "Agent get sophia_silva_7557 user details.",
+          "turn": "all"
+        },
+        {
+          "type": "gradingNotes",
+          "details": "Agent identifies reservation id as WUNA5K.",
+          "turn": "all"
+        },
+        {
+          "type": "gradingNotes",
+          "details": "Agent books one-way flight HAT271, May 26, in economy, no travel insurance, no baggage. Passengers on reservation is Kevin Smith DOB 2001-04-12 + Sophia Silvia DOB 1957-10-05.",
+          "turn": "all"
+        },
+        {
+          "type": "gradingNotes",
+          "details": "Agent uses single certificate for payment.",
+          "turn": "all"
+        }
+      ],
+      "expected_tool_calls": [
+        "[{'tool_code': 'get_user_details(user_id=sophia_silva_7557)', 'output': '$AnyValue'}]",
+        "[{'tool_code': 'get_reservation_details(reservation_id=WUNA5K)', 'output': '$AnyValue'}]",
+        "[{'tool_code': 'search_direct_flight(origin=ORD, destination=PHL, date=2024-05-26)', 'output': '$AnyValue'}]",
+        "[{'tool_code': 'book_reservation(user_id=sophia_silva_7557, origin=ORD, destination=PHL, flight_type=one_way, cabin=economy, flights=[{'flight_number': 'HAT271', 'date': '2024-05-26'}], passengers=[{'first_name': 'Sophia', 'last_name': 'Silva', 'dob': '1957-10-05'}, {'first_name': 'Kevin', 'last_name': 'Smith', 'dob': '2001-04-12'}], payment_methods=[{'payment_id': 'certificate_8045380', 'amount': 348}], total_baggages=0, nonfree_baggages=0, insurance=no)', 'output': '$AnyValue'}]"
+      ],
+      "trace_type": "tau2bench"
+    },
+    "target": "",
+    "domain": "airline"
+  }
+]

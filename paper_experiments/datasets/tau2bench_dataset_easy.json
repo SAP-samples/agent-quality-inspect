@@ -1,0 +1,141 @@
+[
+  {
+    "id": "multiturnmessage_3",
+    "input": [
+      {
+        "role": "user",
+        "content": "Domain: airline\nReason for Call: You want to figure out the total number of suitcases the reservation allows you to take on your upcoming flight.\n\nYou have a lot of things you need to bring with you on this trip. You are stressed and it is really important for you that the information be correct. \n\nYou're pretty sure that you're a Gold member.\nKnown Information: You are Anya Garcia.\n\nYour user id is: anya_garcia_5901.\n\nYour confirmation number is JMO1MG.\nUnknown Information: You do not know the cabin for the upcoming flight.\nTask Instructions: If this is not already the case, insist on getting the total number in numeric form, as you can see numbers better than words. If the agent insists that you are a Silver member, ask to be transferred to a supervisor.",
+        "terminating_condition": "The task is considered complete if the instruction goal is satisfied or you are transferred to another agent or you find yourself in a situation in which the scenario does not provide enough information for you to continue the conversation."
+      }
+    ],
+    "metadata": {
+      "subgoals": [
+        {
+          "type": "gradingNotes",
+          "details": "Agent detects that user is actually a Silver member.",
+          "turn": "all"
+        },
+        {
+          "type": "gradingNotes",
+          "details": "Agent communicate to user that she can bring 4 suitcases (silver member with economy flights = 2 free suitcases per passengers).",
+          "turn": "all"
+        }
+      ],
+      "expected_tool_calls": [
+        "[{'tool_code': 'get_reservation_details(reservation_id=JMO1MG)', 'output': '$AnyValue'}]",
+        "[{'tool_code': 'get_user_details(user_id=anya_garcia_5901)', 'output': '$AnyValue'}]"
+      ],
+      "trace_type": "tau2bench"
+    },
+    "target": "",
+    "domain": "airline"
+  },
+  {
+    "id": "multiturnmessage_15",
+    "input": [
+      {
+        "role": "user",
+        "content": "Domain: airline\nReason for Call: For your upcoming trip from ATL to PHL, you want to change for the cheapest economy flight and for the day after the original reservation.\nKnown Information: Your name is Aarav Garcia.\n\nYour user id is aarav_garcia_1177.\nTask Instructions: Since you live in Princeton, so EWR and PHL are equally convenient for you and you want to consider both.\n\nYou are happy with original payment for refund.",
+        "terminating_condition": "The task is considered complete if the instruction goal is satisfied or you are transferred to another agent or you find yourself in a situation in which the scenario does not provide enough information for you to continue the conversation."
+      }
+    ],
+    "metadata": {
+      "subgoals": [
+        {
+          "type": "gradingNotes",
+          "details": "Agent updates reservation M05KNL to economy with flights HAT110 and HAT172 on 2024-05-24.",
+          "turn": "all"
+        },
+        {
+          "type": "gradingNotes",
+          "details": "Agent uses the payment id: gift_card_8887175",
+          "turn": "all"
+        }
+      ],
+      "expected_tool_calls": [
+        "[{'tool_code': 'update_reservation_flights(reservation_id=M05KNL, cabin=economy, flights=[{'flight_number': 'HAT110', 'date': '2024-05-24'}, {'flight_number': 'HAT172', 'date': '2024-05-24'}], payment_id=gift_card_8887175)', 'output': '$AnyValue'}]"
+      ],
+      "trace_type": "tau2bench"
+    },
+    "target": "",
+    "domain": "airline"
+  },
+  {
+    "id": "multiturnmessage_19",
+    "input": [
+      {
+        "role": "user",
+        "content": "Domain: airline\nReason for Call: You will have a crazy half-day trip to Texas.\n\nIt is in your reservations but you don't remember the reservation id.\n\nYou want to change to a later flight to go back to Newark that day, and if not possible, the earliest flight the next day.\n\nYour current return flight departs 3pm.\nKnown Information: Your name is Olivia Gonzalez.\n\nYour user id is olivia_gonzalez_2305.\n\nYou currently reside in Newark.\nTask Instructions: You do not accept JFK, only EWR. \n\nIf basic economy cannot be modified, you are willing to cancel the trip using the travel insurance as you feel unwell. You will book the flight again yourself later.\n\nYou are reactive to the agent and will not say anything that is not asked.",
+        "terminating_condition": "The task is considered complete if the instruction goal is satisfied or you are transferred to another agent or you find yourself in a situation in which the scenario does not provide enough information for you to continue the conversation."
+      }
+    ],
+    "metadata": {
+      "subgoals": [
+        {
+          "type": "gradingNotes",
+          "details": "Agent cancels reservation Z7GOZK",
+          "turn": "all"
+        }
+      ],
+      "expected_tool_calls": [
+        "[{'tool_code': 'cancel_reservation(reservation_id=Z7GOZK)', 'output': '$AnyValue'}]"
+      ],
+      "trace_type": "tau2bench"
+    },
+    "target": "",
+    "domain": "airline"
+  },
+  {
+    "id": "multiturnmessage_25",
+    "input": [
+      {
+        "role": "user",
+        "content": "Domain: airline\nReason for Call: You want to make a reservation for your friend. It should be exactly the same as your current reservation.\nKnown Information: You are Ivan Muller.\n\nYour user id is ivan_muller_7015.\n\nYour friends name is Ivan Smith.\n\nHe is listed in your user profile.\nUnknown Information: You can't remember Ivan Smith's DOB but it is in your profile.\nTask Instructions: You want to use your certificate and know how much certificate balance will be left. \n\nIf more than $100 is wasted, you want to instead use your GC and CC. \n\nNo baggage and insurance.",
+        "terminating_condition": "The task is considered complete if the instruction goal is satisfied or you are transferred to another agent or you find yourself in a situation in which the scenario does not provide enough information for you to continue the conversation."
+      }
+    ],
+    "metadata": {
+      "subgoals": [
+        {
+          "type": "gradingNotes",
+          "details": "Agent books one way economy flight from DTW to SEA on 2024-05-17 with flights HAT097 and HAT251 for passenger Ivan Smith, no baggage, no insurance.",
+          "turn": "all"
+        },
+        {
+          "type": "gradingNotes",
+          "details": "Agent charges $128 to gift_card_8516878 and $247 to credit_card_3563913.",
+          "turn": "all"
+        }
+      ],
+      "expected_tool_calls": [
+        "[{'tool_code': 'book_reservation(user_id=ivan_muller_7015, origin=DTW, destination=SEA, flight_type=one_way, cabin=economy, flights=[{'flight_number': 'HAT097', 'date': '2024-05-17'}, {'flight_number': 'HAT251', 'date': '2024-05-17'}], passengers=[{'first_name': 'Ivan', 'last_name': 'Smith', 'dob': '1986-03-14'}], payment_methods=[{'payment_id': 'gift_card_8516878', 'amount': 128}, {'payment_id': 'credit_card_3563913', 'amount': 247}], total_baggages=0, nonfree_baggages=0, insurance=no)', 'output': '$AnyValue'}]"
+      ],
+      "trace_type": "tau2bench"
+    },
+    "target": "",
+    "domain": "airline"
+  },
+  {
+    "id": "multiturnmessage_31",
+    "input": [
+      {
+        "role": "user",
+        "content": "Domain: airline\nReason for Call: Your cat is really sick and you need to get back home sooner to take care of it. \nYou want to change your upcoming flight from JFK on May 17 to a nonstop flight.\nKnown Information: Your name is Daiki Lee.\nYour user id is daiki_lee_6144.\nUnknown Information: You do not know your reservation id.\nTask Instructions: You are willing to do the change only if it costs less than $100.\n\nYou do not want to buy a new flight.",
+        "terminating_condition": "The task is considered complete if the instruction goal is satisfied or you are transferred to another agent or you find yourself in a situation in which the scenario does not provide enough information for you to continue the conversation."
+      }
+    ],
+    "metadata": {
+      "subgoals": [
+        {
+          "type": "gradingNotes",
+          "details": "Agent doesn't book any flight.",
+          "turn": "all"
+        }
+      ],
+      "expected_tool_calls": [],
+      "trace_type": "tau2bench"
+    },
+    "target": "",
+    "domain": "airline"
+  }
+]
