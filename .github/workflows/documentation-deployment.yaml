@@ -8,8 +8,10 @@ on:
   workflow_dispatch:
 
 jobs: 
-  build: 
+  build:
     runs-on: [macos-latest]
+    permissions:
+      contents: write
 
     steps:
 

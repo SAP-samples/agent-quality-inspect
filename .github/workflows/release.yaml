@@ -7,6 +7,8 @@ on:
 jobs:
   unit-tests:
     runs-on: [macos-latest]
+    permissions:
+      contents: read
     steps:
       - uses: actions/checkout@v4
 
@@ -28,6 +30,8 @@ jobs:
   release-build:
     needs: unit-tests
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - uses: actions/checkout@v4
 
