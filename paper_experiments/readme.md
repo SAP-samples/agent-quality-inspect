@@ -130,7 +130,6 @@ python demo/agent-eval-dashboard/scripts/add_results.py --results-dir <path-to-e
 python demo/agent-eval-dashboard/scripts/add_results.py --results-dir paper_experiments/experiment_outputs_17042026
 
 ```
-
 2. Then, to view the dashboard locally, run the following command:
 
 ```bash
