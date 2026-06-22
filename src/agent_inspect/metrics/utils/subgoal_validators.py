@@ -11,4 +11,7 @@ class SubGoalValidator:
     @staticmethod
     def validate_sub_goal(subgoal: SubGoal) -> None:
         if not subgoal.details:
-            raise InvalidInputValueError(internal_code=ErrorCode.MISSING_VALUE.value, message="One of the SubGoals is missing details for judge to evaluate.")
+            raise InvalidInputValueError(
+                internal_code=ErrorCode.MISSING_VALUE.value,
+                message="One of the SubGoals is missing details for judge to evaluate.",
+            )

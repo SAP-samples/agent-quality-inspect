@@ -21,17 +21,3 @@ path = "agent_runners/tau2-bench/fastapi_server/**"
 precedence = "override"
 SPDX-FileCopyrightText = "2026 SAP SE or an SAP affiliate company and agent-eval contributors"
 SPDX-License-Identifier = "Apache-2.0"
-
-[[annotations]]
-path = "agent_runners/ToolSandbox/**"
-precedence = "override"
-SPDX-FileCopyrightText = "2024 Apple Inc."
-SPDX-License-Identifier = "LicenseRef-Apple-ToolSandbox"
-
-[[annotations]]
-path = "agent_runners/ToolSandbox/fastapi_server/**"
-precedence = "override"
-SPDX-FileCopyrightText = "2026 SAP SE or an SAP affiliate company and agent-eval contributors"
-SPDX-License-Identifier = "Apache-2.0"
-
-   

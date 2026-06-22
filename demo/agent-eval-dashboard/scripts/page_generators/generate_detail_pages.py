@@ -20,10 +20,13 @@ from __future__ import annotations
 import json
 import re
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Optional
 
-from .shared_styles import SHARED_CSS, esc, fmt, fmt_model, badge, slugify
-from .generate_error_analysis_pages import generate_error_analysis_pages, generate_folder_name
+from .shared_styles import SHARED_CSS, esc, fmt, fmt_model, badge
+from .generate_error_analysis_pages import (
+    generate_error_analysis_pages,
+    generate_folder_name,
+)
 
 DASHBOARD_ROOT = Path(__file__).parent.parent.parent  # demo/agent-eval-dashboard
 DETAILS_BASE = DASHBOARD_ROOT / "leaderboard" / "details"
@@ -32,6 +35,7 @@ DETAILS_BASE = DASHBOARD_ROOT / "leaderboard" / "details"
 # ---------------------------------------------------------------------------
 # Data extraction (same as original)
 # ---------------------------------------------------------------------------
+
 
 def _parse_sv_string(sv_str: str) -> dict:
     """Parse a SubGoalValidationResult repr string into the standard sv dict."""
@@ -50,7 +54,7 @@ def _parse_sv_string(sv_str: str) -> dict:
         if start == -1:
             start = sv_str.rfind("'", 0, m.start())
         if start != -1:
-            snippet = sv_str[start + 1: m.end()]
+            snippet = sv_str[start + 1 : m.end()]
             explanation = snippet[:2000]
 
     return {
@@ -69,11 +73,13 @@ def _strip_sample(s: dict) -> dict:
         else:
             exps = sv.get("explanations", [])
             explanation = exps[1] if len(exps) > 1 else (exps[0] if exps else "")
-            svs.append({
-                "subgoal": sv.get("subgoal", {}),
-                "is_completed": sv.get("is_completed", False),
-                "explanation": explanation,
-            })
+            svs.append(
+                {
+                    "subgoal": sv.get("subgoal", {}),
+                    "is_completed": sv.get("is_completed", False),
+                    "explanation": explanation,
+                }
+            )
     return {
         "sample_id": s["sample_id"],
         "status": s.get("status", ""),
@@ -109,6 +115,7 @@ def _avg(vals: list) -> Optional[float]:
 # ---------------------------------------------------------------------------
 # Summary page
 # ---------------------------------------------------------------------------
+
 
 def _build_summary_page(
     entry: dict,
@@ -156,9 +163,9 @@ def _build_summary_page(
         trial_rows += f"""
         <tr>
           <td class="num">Trial {tid}</td>
-          <td class="num">{t['total_samples']}</td>
-          <td class="num">{t['successful']}</td>
-          <td class="num">{t['failed']}</td>
+          <td class="num">{t["total_samples"]}</td>
+          <td class="num">{t["successful"]}</td>
+          <td class="num">{t["failed"]}</td>
           <td><a class="link-btn" href="trial_{tid}.html">View &rsaquo;</a></td>
         </tr>"""
 
@@ -190,7 +197,9 @@ def _build_summary_page(
                     sid_pass += 1
 
         n_sg = len(subgoal_totals)
-        sg_passed = sum(1 for k in subgoal_totals if (subgoal_counts.get(k, 0) / subgoal_totals[k]) >= 0.5)
+        sg_passed = sum(
+            1 for k in subgoal_totals if (subgoal_counts.get(k, 0) / subgoal_totals[k]) >= 0.5
+        )
         pass_rate = f"{sid_pass}/{sid_total}" if sid_total else "—"
         sample_rows += f"""
         <tr>
@@ -505,8 +514,14 @@ def _build_trial_page(
     exp_ts = entry.get("experiment_timestamp", "—")
     tid = trial["trial_id"]
 
-    prev_link = "" if tid == 0 else f'<a class="link-btn" href="trial_{tid-1}.html">← Trial {tid-1}</a>'
-    next_link = "" if tid >= n_trials - 1 else f'<a class="link-btn" href="trial_{tid+1}.html">Trial {tid+1} →</a>'
+    prev_link = (
+        "" if tid == 0 else f'<a class="link-btn" href="trial_{tid - 1}.html">← Trial {tid - 1}</a>'
+    )
+    next_link = (
+        ""
+        if tid >= n_trials - 1
+        else f'<a class="link-btn" href="trial_{tid + 1}.html">Trial {tid + 1} →</a>'
+    )
 
     samples_json = json.dumps(trial["samples"], ensure_ascii=False, separators=(",", ":"))
 
@@ -549,7 +564,7 @@ def _build_trial_page(
   <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px">
     <div>
       <span style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;color:var(--text-3)">Trial {tid} of {n_trials - 1}</span>
-      <span style="margin-left:12px;font-size:12px;color:var(--text-2)">{esc(agent)} &nbsp;·&nbsp; {trial['successful']}/{trial['total_samples']} successful &nbsp;·&nbsp; {esc(exp_ts)}</span>
+      <span style="margin-left:12px;font-size:12px;color:var(--text-2)">{esc(agent)} &nbsp;·&nbsp; {trial["successful"]}/{trial["total_samples"]} successful &nbsp;·&nbsp; {esc(exp_ts)}</span>
     </div>
     <div style="display:flex;gap:6px">
       {prev_link}
@@ -560,7 +575,7 @@ def _build_trial_page(
 
 <div class="layout">
   <div class="sidebar">
-    <div class="sidebar-header">Samples <span style="color:var(--text-3);font-weight:400">{trial['total_samples']}</span></div>
+    <div class="sidebar-header">Samples <span style="color:var(--text-3);font-weight:400">{trial["total_samples"]}</span></div>
     <div id="sample-list"></div>
   </div>
 
@@ -727,6 +742,7 @@ if (SAMPLES.length) {{
 # Orchestrator
 # ---------------------------------------------------------------------------
 
+
 def generate_detail_pages(
     entry: dict,
     dataset_name: str,
@@ -750,7 +766,7 @@ def generate_detail_pages(
     # Find trial files
     trial_files = sorted(
         source.glob("trial_*_results.json"),
-        key=lambda p: int(re.search(r"trial_(\d+)_", p.name).group(1))
+        key=lambda p: int(re.search(r"trial_(\d+)_", p.name).group(1)),
     )
 
     if not trial_files:

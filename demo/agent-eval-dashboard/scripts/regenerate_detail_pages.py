@@ -26,7 +26,7 @@ def main():
         print(f"Error: {LEADERBOARD_DATA} not found")
         return
 
-    with open(LEADERBOARD_DATA, 'r') as f:
+    with open(LEADERBOARD_DATA, "r") as f:
         data = json.load(f)
 
     datasets = data.get("datasets", {})
@@ -59,7 +59,6 @@ def main():
     error_count = 0
 
     for i, entry in enumerate(all_entries, 1):
-        entry_id = entry.get("id", "unknown")[:8]
         model = entry.get("agent_model", "unknown")
         dataset = entry.get("dataset_name", "unknown")
         source_folder = Path(entry.get("source_folder", ""))
@@ -68,7 +67,7 @@ def main():
         print(f"  Dataset: {dataset}")
 
         if not source_folder or not source_folder.exists():
-            print(f"  [skip] Source folder not found")
+            print("  [skip] Source folder not found")
             skip_count += 1
             continue
 
@@ -78,16 +77,17 @@ def main():
                 print(f"  ✓ Generated: {result.relative_to(REPO_ROOT)}")
                 success_count += 1
             else:
-                print(f"  [skip] Generation returned None")
+                print("  [skip] Generation returned None")
                 skip_count += 1
         except Exception as e:
             print(f"  ✗ Error: {e}")
             import traceback
+
             traceback.print_exc()
             error_count += 1
 
     print("\n" + "=" * 80)
-    print(f"Summary:")
+    print("Summary:")
     print(f"  Total entries: {len(all_entries)}")
     print(f"  Successfully generated: {success_count}")
     print(f"  Skipped: {skip_count}")

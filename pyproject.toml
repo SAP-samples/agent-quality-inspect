@@ -4,20 +4,28 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "agent_quality_inspect"
-version = "2.0.0a1"
+version = "2.3.6a1"
 description = "Evaluation package that allows benchmarking of agentic AIs from various sources and frameworks by producing statistical results which can be compared across different use cases and datasets."
 readme = "README.md"
 requires-python = ">=3.10"
 license = {text = "Apache-2.0"}
 authors = [
-    { name="Marcus Duigan", email="marcus.duigan@sap.com" },
-    { name="Min Pyae Moe", email="min.pyae.moe@sap.com" }
+    { name = "Min Pyae Moe", email = "min.pyae.moe@sap.com" },
+    { name="Marcus Duigan", email="marcus.duigan@sap.com" }
 ]
-dynamic = ["dependencies"]
+dependencies = [
+    "numpy==2.4.6",
+]
 
-[tool.setuptools.dynamic]
-dependencies = {file = ["requirements.txt"]}
+[project.optional-dependencies]
+azure-openai = [
+    "openai==2.29.0",
+    "backoff==2.2.1",
+]
 
 [tool.setuptools.packages.find]
 where = ["src"]
 include=["agent_inspect", "agent_inspect.*"]
+
+[tool.ruff]
+line-length = 100

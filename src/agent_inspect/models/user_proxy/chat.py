@@ -24,7 +24,7 @@ class UserProxyMessage:
     Represents an utterance from the user proxy.
     """
 
-    message_str: str 
+    message_str: str
     """
     User proxy utterance. May contain stop sequence if the conversation terminates early.
     """
@@ -48,7 +48,7 @@ class ConversationTurn:
     """
     Agent outputs, which may include responses and other related outputs stored in a list.
     """
-    user_message : UserProxyMessage
+    user_message: UserProxyMessage
     """
     User proxy output.
     """

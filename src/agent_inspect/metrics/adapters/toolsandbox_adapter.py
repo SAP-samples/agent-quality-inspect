@@ -2,7 +2,12 @@ from typing import List, Dict, Any, Optional, Tuple
 import json
 
 from agent_inspect.metrics.adapters.base_adapter import BaseAdapter
-from agent_inspect.models.metrics.agent_trace import AgentDialogueTrace, TurnTrace, Step, AgentResponse
+from agent_inspect.models.metrics.agent_trace import (
+    AgentDialogueTrace,
+    TurnTrace,
+    Step,
+    AgentResponse,
+)
 from agent_inspect.models.metrics.agent_data_sample import ToolInputParameter
 
 
@@ -11,7 +16,9 @@ class ToolsandboxAdapter(BaseAdapter):
     Adapter for converting toolsandbox conversation format to AgentDialogueTrace format.
     """
 
-    def convert_to_agent_trace(self, conversation_data: List[Dict[str, Any]]) -> AgentDialogueTrace:
+    def convert_to_agent_trace(
+        self, conversation_data: List[List[Dict[str, Any]]]
+    ) -> AgentDialogueTrace:
         """
         Convert tool_sandbox conversation format to AgentDialogueTrace format.
 
@@ -27,7 +34,9 @@ class ToolsandboxAdapter(BaseAdapter):
 
         return AgentDialogueTrace(turns=turns)
 
-    def _process_turn(self, turn_messages: List[Dict[str, Any]], turn_idx: int) -> Optional[TurnTrace]:
+    def _process_turn(
+        self, turn_messages: List[Dict[str, Any]], turn_idx: int
+    ) -> Optional[TurnTrace]:
         """
         Process a single conversation turn into a TurnTrace.
 
@@ -41,7 +50,7 @@ class ToolsandboxAdapter(BaseAdapter):
 
         agent_response, steps = self._process_assistant_messages(turn_messages, turn_idx)
 
-        #TODO: To revisit after paper submission
+        # TODO: To revisit after paper submission
         if agent_response is None:
             agent_response = AgentResponse(response="Agent did not respond.", status_code="200")
 
@@ -51,7 +60,7 @@ class ToolsandboxAdapter(BaseAdapter):
             agent_response=agent_response,
             from_id=f"turn_{turn_idx - 1}" if turn_idx > 0 else None,
             steps=steps,
-            latency_in_ms=None
+            latency_in_ms=None,
         )
 
     def _extract_user_input(self, turn_messages: List[Dict[str, Any]]) -> Optional[str]:
@@ -66,8 +75,9 @@ class ToolsandboxAdapter(BaseAdapter):
                 return message.get("content")
         return None
 
-    def _process_assistant_messages(self, turn_messages: List[Dict[str, Any]], turn_idx: int) -> Tuple[
-        Optional[AgentResponse], List[Step]]:
+    def _process_assistant_messages(
+        self, turn_messages: List[Dict[str, Any]], turn_idx: int
+    ) -> Tuple[Optional[AgentResponse], List[Step]]:
         """
         Process assistant messages to extract response and tool steps.
 
@@ -84,7 +94,9 @@ class ToolsandboxAdapter(BaseAdapter):
                 # Process tool calls first
                 tool_calls = message.get("tool_calls", [])
                 if tool_calls:
-                    new_steps = self._process_tool_calls(tool_calls, turn_messages, turn_idx, step_counter)
+                    new_steps = self._process_tool_calls(
+                        tool_calls, turn_messages, turn_idx, step_counter
+                    )
                     steps.extend(new_steps)
                     step_counter += len(new_steps)
 
@@ -95,8 +107,13 @@ class ToolsandboxAdapter(BaseAdapter):
 
         return agent_response, steps
 
-    def _process_tool_calls(self, tool_calls: List[Dict[str, Any]], turn_messages: List[Dict[str, Any]],
-                            turn_idx: int, step_offset: int) -> List[Step]:
+    def _process_tool_calls(
+        self,
+        tool_calls: List[Dict[str, Any]],
+        turn_messages: List[Dict[str, Any]],
+        turn_idx: int,
+        step_offset: int,
+    ) -> List[Step]:
         """
         Process tool calls into Step objects.
 
@@ -110,7 +127,11 @@ class ToolsandboxAdapter(BaseAdapter):
 
         for step_idx, tool_call in enumerate(tool_calls):
             tool_input_args = self._parse_tool_arguments(tool_call)
-            tool_output = self._find_tool_output(tool_call.get("id"), turn_messages)
+            tool_output = (
+                self._find_tool_output(str(tool_call.get("id")), turn_messages)
+                if tool_call.get("id")
+                else None
+            )
             parent_ids = self._get_parent_ids(step_offset + step_idx, steps)
 
             step = Step(
@@ -122,7 +143,7 @@ class ToolsandboxAdapter(BaseAdapter):
                 agent_thought=None,
                 input_token_consumption=None,
                 output_token_consumption=None,
-                reasoning_token_consumption=None
+                reasoning_token_consumption=None,
             )
             steps.append(step)
 
@@ -145,15 +166,14 @@ class ToolsandboxAdapter(BaseAdapter):
             except json.JSONDecodeError:
                 # Fallback for invalid JSON
                 tool_input_args.append(
-                    ToolInputParameter(
-                        name="arguments",
-                        value=tool_call["function"]["arguments"]
-                    )
+                    ToolInputParameter(name="arguments", value=tool_call["function"]["arguments"])
                 )
 
         return tool_input_args
 
-    def _find_tool_output(self, tool_call_id: str, turn_messages: List[Dict[str, Any]]) -> Optional[str]:
+    def _find_tool_output(
+        self, tool_call_id: str, turn_messages: List[Dict[str, Any]]
+    ) -> Optional[str]:
         """
         Find the tool output for a given tool call ID.
 
@@ -162,9 +182,7 @@ class ToolsandboxAdapter(BaseAdapter):
         :return: Tool output content or None
         """
         for message in turn_messages:
-            if (message.get("role") == "tool" and
-                    message.get("tool_call_id") == tool_call_id):
-
+            if message.get("role") == "tool" and message.get("tool_call_id") == tool_call_id:
                 tool_output = message.get("content", "")
                 tool_details = message.get("tool_details")
 

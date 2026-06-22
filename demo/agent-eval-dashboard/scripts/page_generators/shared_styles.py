@@ -144,10 +144,13 @@ def esc(s: str) -> str:
     """Escape HTML special characters."""
     if s is None:
         return ""
-    return (str(s).replace("&", "&amp;")
-             .replace("<", "&lt;")
-             .replace(">", "&gt;")
-             .replace('"', "&quot;"))
+    return (
+        str(s)
+        .replace("&", "&amp;")
+        .replace("<", "&lt;")
+        .replace(">", "&gt;")
+        .replace('"', "&quot;")
+    )
 
 
 def fmt(v, dp=3) -> str:
@@ -180,7 +183,8 @@ def badge(v) -> str:
 def slugify(s: str) -> str:
     """Convert string to URL-safe slug."""
     import re
+
     s = str(s).lower().strip()
-    s = re.sub(r'[^\w\s-]', '', s)
-    s = re.sub(r'[-\s]+', '_', s)
+    s = re.sub(r"[^\w\s-]", "", s)
+    s = re.sub(r"[-\s]+", "_", s)
     return s

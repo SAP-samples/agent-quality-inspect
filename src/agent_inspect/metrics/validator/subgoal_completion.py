@@ -1,19 +1,27 @@
 from typing import Callable, List, Optional, Dict, Any
 
-from agent_inspect.exception.error_codes import ErrorCode
-from agent_inspect.exception import InvalidInputValueError
 from agent_inspect.clients.llm_client import LLMClient
-from agent_inspect.metrics.constants import INCLUDE_JUDGE_EXPLANATION, AGENT_INPUT, TOOL_CALL, \
-    AGENT_THOUGHT, AGENT_OUTPUT, TEMPLATE_SUBGOAL, INCLUDE_PROMPT_SENT_TO_LLMJ
-from agent_inspect.metrics.scorer.templates import \
-    DEFAULT_MODEL_GRADED_FACT_SINGLE_TURN_REMOVE_HALLUCINATION_CHECK_TEMPLATE_ONE_SUBGOAL, \
-    DEFAULT_MODEL_GRADED_FACT_MULTI_TURN_AT_CURRENT_TURN_REMOVE_HALLUCINATION_CHECK_TEMPLATE_ONE_SUBGOAL, \
-    DEFAULT_MODEL_GRADED_FACT_DYNAMIC_SUMMARY_REMOVE_HALLUCINATION_CHECK_TEMPLATE_ONE_SUBGOAL, \
-    DEFAULT_MODEL_GRADED_FACT_DYNAMIC_SUMMARY_WITHOUT_INSTRUCT_REMOVE_HALLUCINATION_CHECK_TEMPLATE_ONE_SUBGOAL
+from agent_inspect.metrics.constants import (
+    INCLUDE_JUDGE_EXPLANATION,
+    AGENT_INPUT,
+    TOOL_CALL,
+    AGENT_THOUGHT,
+    AGENT_OUTPUT,
+    TEMPLATE_SUBGOAL,
+    INCLUDE_PROMPT_SENT_TO_LLMJ,
+)
+from agent_inspect.metrics.validator.templates import (
+    DEFAULT_MODEL_GRADED_FACT_SINGLE_TURN_REMOVE_HALLUCINATION_CHECK_TEMPLATE_ONE_SUBGOAL,
+    DEFAULT_MODEL_GRADED_FACT_MULTI_TURN_AT_CURRENT_TURN_REMOVE_HALLUCINATION_CHECK_TEMPLATE_ONE_SUBGOAL,
+    DEFAULT_MODEL_GRADED_FACT_DYNAMIC_SUMMARY_REMOVE_HALLUCINATION_CHECK_TEMPLATE_ONE_SUBGOAL,
+    DEFAULT_MODEL_GRADED_FACT_DYNAMIC_SUMMARY_WITHOUT_INSTRUCT_REMOVE_HALLUCINATION_CHECK_TEMPLATE_ONE_SUBGOAL,
+)
 from agent_inspect.models.metrics.agent_data_sample import SubGoal
 from agent_inspect.models.metrics.agent_trace import TurnTrace
-from agent_inspect.models.metrics.validation_result import SubGoalValidationResult
-from agent_inspect.metrics.utils.metrics_utils import get_config_or_default
+from agent_inspect.models.metrics.validation_result import (
+    SubGoalValidationResult,
+)
+from agent_inspect.core.utils import get_config_or_default
 from agent_inspect.metrics.utils.subgoal_validators import SubGoalValidator
 from agent_inspect.metrics.utils.trace_validators import TraceValidator
 from agent_inspect.metrics.validator.validator import Validator
@@ -21,11 +29,11 @@ from agent_inspect.metrics.validator.validator import Validator
 
 class SubGoalCompletionValidator(Validator):
     """
-    Validator based on LLM-as-a-judge to assess whether the agent has completed the specified subgoal. 
+    Validator based on LLM-as-a-judge to assess whether the agent has completed the specified subgoal.
 
     .. math::
 
-        LLM_{judge}(i, g_{i, j}, \\tau_i ) = 1 \ \\mathrm{if \ agent \ accomplish} \ g_{i,j}, \\mathrm{and} \ 0 \ \\mathrm{otherwise}, 
+        LLM_{judge}(i, g_{i, j}, \\tau_i ) = 1 \\ \\mathrm{if \\ agent \\ accomplish} \\ g_{i,j}, \\mathrm{and} \\ 0 \\ \\mathrm{otherwise},
 
     where :math:`g_{i,j}` is the :math:`j`-th grading note for the task sample :math:`i` and
     :math:`\\tau_i` is the agent trajectory consisting of tool calls, agent responses, and user inputs.
@@ -40,11 +48,13 @@ class SubGoalCompletionValidator(Validator):
         - **max_retry_judge_trials**: an :obj:`~typing.int` value indicating the maximum number of retry attempts for each judge trial in case of errors related to LLM as a judge. Default to ``5``. This will be ignored if ``optimize_judge_trials`` is set to ``True``.
         - **include_entire_prompt_in_validation_result**: a :obj:`~typing.bool` flag to indicate whether to include the entire prompt sent to LLM-as-a-judge in the SubGoalValidationResult. Use this in the debugging tool UI for display. Default to ``False``.
     """
+
     def __init__(self, llm_client: LLMClient, config: Optional[Dict[str, Any]] = None):
         super().__init__(llm_client, config)
 
-
-    async def validate(self, turn_traces: List[TurnTrace], sub_goal: SubGoal) -> SubGoalValidationResult:
+    async def validate(
+        self, turn_traces: List[TurnTrace], sub_goal: SubGoal, **kwargs
+    ) -> SubGoalValidationResult:
         """
         Returns the LLM-as-a-judge binary score given the subgoal and the agent's trace up to the current turn in a ``static`` conversation setting.
 
@@ -56,7 +66,7 @@ class SubGoalCompletionValidator(Validator):
 
         >>> from agent_inspect.metrics.validator import SubGoalCompletionValidator
         >>> from agent_inspect.metrics.constants import INCLUDE_JUDGE_EXPLANATION, OPTIMIZE_JUDGE_TRIALS
-        >>> from agent_inspect.clients import AzureOpenAIClient
+        >>> from agent_inspect.clients.azure_openai_client import AzureOpenAIClient
         >>> import asyncio
         >>>
         >>> data_subgoal = load_subgoal(sample_path) # Load subgoal
@@ -75,44 +85,62 @@ class SubGoalCompletionValidator(Validator):
         >>> print(validator_result.is_completed)
         """
 
-        TraceValidator.validate_turn_traces(turn_traces)
+        TraceValidator.validate_turn_traces_content(turn_traces)
+        TraceValidator.validate_agent_trace_if_empty(turn_traces)
         SubGoalValidator.validate_sub_goal(sub_goal)
 
-        include_judge_explanation = get_config_or_default(config=self.config, config_key=INCLUDE_JUDGE_EXPLANATION,
-                                                          default=False)
-        include_entire_prompt_in_validation_result = get_config_or_default(config=self.config, config_key=INCLUDE_PROMPT_SENT_TO_LLMJ, default=False)
+        include_judge_explanation = get_config_or_default(
+            config=self.config, config_key=INCLUDE_JUDGE_EXPLANATION, default=False
+        )
+        include_entire_prompt_in_validation_result = get_config_or_default(
+            config=self.config, config_key=INCLUDE_PROMPT_SENT_TO_LLMJ, default=False
+        )
         # TODO: allow judge custom template
         prompt = self.generate_prompt_from_sub_goal_and_turn_traces(sub_goal, turn_traces)
-        majority_voted_score, judge_explanations = await self.get_majority_voted_score_from_judge_responses(prompt=prompt)
+        (
+            majority_voted_score,
+            judge_explanations,
+        ) = await self.get_majority_voted_score_from_judge_responses(prompt=prompt)
 
         is_completed = True if majority_voted_score == 1 else False
         explanations = []
         if is_completed:
-            explanations.append(f"Check: \"{sub_goal.details}\" has passed successfully.")
+            explanations.append(f'Check: "{sub_goal.details}" has passed successfully.')
         else:
-            explanations.append(f"Check: \"{sub_goal.details}\" has failed.")
+            explanations.append(f'Check: "{sub_goal.details}" has failed.')
         if include_judge_explanation:
             explanations.extend(judge_explanations)
 
         if include_entire_prompt_in_validation_result:
-            return SubGoalValidationResult(is_completed=is_completed, sub_goal=sub_goal, explanations=explanations, prompt_sent_to_llmj=prompt)
-        return SubGoalValidationResult(is_completed=is_completed, sub_goal=sub_goal, explanations=explanations)
-    
+            return SubGoalValidationResult(
+                is_completed=is_completed,
+                sub_goal=sub_goal,
+                explanations=explanations,
+                prompt_sent_to_llmj=prompt,
+            )
+        return SubGoalValidationResult(
+            is_completed=is_completed, sub_goal=sub_goal, explanations=explanations
+        )
 
-    async def validate_dynamic(self, turn_traces: List[TurnTrace], sub_goal: SubGoal, user_instruction: str) -> SubGoalValidationResult:
+    async def validate_dynamic(
+        self,
+        turn_traces: List[TurnTrace],
+        sub_goal: SubGoal,
+        user_instruction: str | None,
+    ) -> SubGoalValidationResult:
         """
-                Returns the LLM-as-a-judge binary score given the subgoal, user task instructions (optional), and the agent's trace up to the current turn in a ``dynamic`` conversation setting.
+        Returns the LLM-as-a-judge binary score given the subgoal, user task instructions (optional), and the agent's trace up to the current turn in a ``dynamic`` conversation setting.
 
         :param turn_traces: a :obj:`~typing.List` [:obj:`~agent_inspect.models.metrics.agent_trace.TurnTrace`] object constructed with the agent trajectory information from the first turn up to the current turn.
         :param sub_goal: a :obj:`~agent_inspect.models.metrics.agent_data_sample.SubGoal` object representing a grading note in the form of a natural language text.
-        :param user_instruction: a :obj:`~typing.str` object representing the user task instructions. Provide user task instruction through this variable to use judge template with user summary instruction. Otherwise, set it as empty string to use judge template without any user summary instruction.
+        :param user_instruction: a :obj:`~typing.str` object representing the user task instructions. Provide user task instruction through this variable to use judge template with user summary instruction. Otherwise, set it as empty string or None to use judge template without any user summary instruction.
         :return: a :obj:`~agent_inspect.models.metrics.validation_result.SubGoalValidationResult` object containing the judge binary score, the subgoal details, and the judge explanations.
 
         Example:
 
         >>> from agent_inspect.metrics.validator import SubGoalCompletionValidator
         >>> from agent_inspect.metrics.constants import INCLUDE_JUDGE_EXPLANATION, OPTIMIZE_JUDGE_TRIALS
-        >>> from agent_inspect.clients import AzureOpenAIClient
+        >>> from agent_inspect.clients.azure_openai_client import AzureOpenAIClient
         >>> import asyncio
         >>>
         >>> data_subgoal, user_instruct = load_subgoal_user_instruct(sample_path) # Load subgoal and user instructions
@@ -132,39 +160,60 @@ class SubGoalCompletionValidator(Validator):
         >>> print(validator_result.is_completed)
         """
 
-        TraceValidator.validate_turn_traces(turn_traces)
+        TraceValidator.validate_turn_traces_content(turn_traces)
+        TraceValidator.validate_agent_trace_if_empty(turn_traces)
         SubGoalValidator.validate_sub_goal(sub_goal)
 
-        include_user_instruction = user_instruction and user_instruction.strip() != ""
-
-        include_judge_explanation = get_config_or_default(config=self.config, config_key=INCLUDE_JUDGE_EXPLANATION,
-                                                          default=False)
-        template_subgoal = get_config_or_default(
-            config=self.config, config_key=TEMPLATE_SUBGOAL,
-            default=DEFAULT_MODEL_GRADED_FACT_DYNAMIC_SUMMARY_REMOVE_HALLUCINATION_CHECK_TEMPLATE_ONE_SUBGOAL if include_user_instruction else DEFAULT_MODEL_GRADED_FACT_DYNAMIC_SUMMARY_WITHOUT_INSTRUCT_REMOVE_HALLUCINATION_CHECK_TEMPLATE_ONE_SUBGOAL)
-        include_entire_prompt_in_validation_result = get_config_or_default(config=self.config,
-                                                                           config_key=INCLUDE_PROMPT_SENT_TO_LLMJ, default=False)
-        if include_user_instruction:
-            prompt = self.generate_prompt_from_sub_goal_user_task_and_turn_traces(sub_goal, user_instruction, turn_traces, template_subgoal)
-        else:
-            prompt = self.generate_prompt_from_sub_goal_without_user_task_and_turn_traces(sub_goal, turn_traces, template_subgoal)
-
-        majority_voted_score, judge_explanations = await self.get_majority_voted_score_from_judge_responses(
-            prompt=prompt
+        include_judge_explanation = get_config_or_default(
+            config=self.config, config_key=INCLUDE_JUDGE_EXPLANATION, default=False
         )
+        include_entire_prompt_in_validation_result = get_config_or_default(
+            config=self.config, config_key=INCLUDE_PROMPT_SENT_TO_LLMJ, default=False
+        )
+
+        # Check if we have a valid user instruction and narrow type for pyright
+        if user_instruction and user_instruction.strip() != "":
+            template_subgoal = get_config_or_default(
+                config=self.config,
+                config_key=TEMPLATE_SUBGOAL,
+                default=DEFAULT_MODEL_GRADED_FACT_DYNAMIC_SUMMARY_REMOVE_HALLUCINATION_CHECK_TEMPLATE_ONE_SUBGOAL,
+            )
+            prompt = self.generate_prompt_from_sub_goal_user_task_and_turn_traces(
+                sub_goal, user_instruction, turn_traces, template_subgoal
+            )
+        else:
+            template_subgoal = get_config_or_default(
+                config=self.config,
+                config_key=TEMPLATE_SUBGOAL,
+                default=DEFAULT_MODEL_GRADED_FACT_DYNAMIC_SUMMARY_WITHOUT_INSTRUCT_REMOVE_HALLUCINATION_CHECK_TEMPLATE_ONE_SUBGOAL,
+            )
+            prompt = self.generate_prompt_from_sub_goal_without_user_task_and_turn_traces(
+                sub_goal, turn_traces, template_subgoal
+            )
+
+        (
+            majority_voted_score,
+            judge_explanations,
+        ) = await self.get_majority_voted_score_from_judge_responses(prompt=prompt)
 
         is_completed = True if majority_voted_score == 1 else False
         explanations = []
         if is_completed:
-            explanations.append(f"Check: \"{sub_goal.details}\" has passed successfully.")
+            explanations.append(f'Check: "{sub_goal.details}" has passed successfully.')
         else:
-            explanations.append(f"Check: \"{sub_goal.details}\" has failed.")
+            explanations.append(f'Check: "{sub_goal.details}" has failed.')
         if include_judge_explanation:
             explanations.extend(judge_explanations)
         if include_entire_prompt_in_validation_result:
-            return SubGoalValidationResult(is_completed=is_completed, sub_goal=sub_goal, explanations=explanations, prompt_sent_to_llmj=prompt)
-        return SubGoalValidationResult(is_completed=is_completed, sub_goal=sub_goal, explanations=explanations)
-    
+            return SubGoalValidationResult(
+                is_completed=is_completed,
+                sub_goal=sub_goal,
+                explanations=explanations,
+                prompt_sent_to_llmj=prompt,
+            )
+        return SubGoalValidationResult(
+            is_completed=is_completed, sub_goal=sub_goal, explanations=explanations
+        )
 
     @staticmethod
     def get_initial_traj_str_with_turn(i: int, start_turn: int):
@@ -191,8 +240,8 @@ class SubGoalCompletionValidator(Validator):
                         "content": {
                             "tool_name": step.tool,
                             "tool_arguments": tool_input_args,
-                            "tool_output": step.tool_output
-                        }
+                            "tool_output": step.tool_output,
+                        },
                     }
                 )
             if step.agent_thought:
@@ -201,9 +250,7 @@ class SubGoalCompletionValidator(Validator):
                         "id": step.id,
                         "parent_ids": step.parent_ids,
                         "type": AGENT_THOUGHT,
-                        "content": {
-                            "agent_thought": step.agent_thought
-                        }
+                        "content": {"agent_thought": step.agent_thought},
                     }
                 )
         return step_trajectories
@@ -215,9 +262,13 @@ class SubGoalCompletionValidator(Validator):
     @staticmethod
     def get_initial_str_without_turn(i: int, start_turn: int):
         return ""
-    
+
     @staticmethod
-    def get_trajectories_str_from_agent_trace(agent_trace_turns: list[TurnTrace], start_turn: int = 0, get_initial_traj_str_fn: Callable[[int, int], str] = get_initial_traj_str_with_turn):
+    def get_trajectories_str_from_agent_trace(
+        agent_trace_turns: list[TurnTrace],
+        start_turn: int = 0,
+        get_initial_traj_str_fn: Callable[[int, int], str] = get_initial_traj_str_with_turn,
+    ):
         """
         Turn 1:
         {"type": "Agent Input", "content": {"agent_input": "This is an agent input"}}
@@ -229,27 +280,35 @@ class SubGoalCompletionValidator(Validator):
 
         for i, turn in enumerate(agent_trace_turns):
             trajectories_str += get_initial_traj_str_fn(i, start_turn)
-            trajectories_json = [{
-                "type": AGENT_INPUT,
-                "content": {"agent_input": turn.agent_input}
-            }]
+            trajectories_json = [
+                {"type": AGENT_INPUT, "content": {"agent_input": turn.agent_input}}
+            ]
 
             if turn.steps:
-                trajectories_json.extend(SubGoalCompletionValidator._build_step_trajectories(turn.steps))
+                trajectories_json.extend(
+                    SubGoalCompletionValidator._build_step_trajectories(turn.steps)
+                )
 
             if turn.agent_response:
-                trajectories_json.append({
-                    "type": AGENT_OUTPUT,
-                    "content": {"agent_output": turn.agent_response.response}
-                })
-            
+                trajectories_json.append(
+                    {
+                        "type": AGENT_OUTPUT,
+                        "content": {"agent_output": turn.agent_response.response},
+                    }
+                )
+
             for item in trajectories_json:
                 trajectories_str += str(item) + "\n"
         return trajectories_str
 
-
     @staticmethod
-    def get_agent_input_str(agent_trace_turns: list[TurnTrace], start_turn: int = 0, get_initial_input_str_fn: Callable[[int, int], str] = get_initial_input_response_str_with_turn):
+    def get_agent_input_str(
+        agent_trace_turns: list[TurnTrace],
+        start_turn: int = 0,
+        get_initial_input_str_fn: Callable[
+            [int, int], str
+        ] = get_initial_input_response_str_with_turn,
+    ):
         """
         Turn 1: This is an input for turn 1.
         Turn 2: This is an input for turn 2.
@@ -260,9 +319,14 @@ class SubGoalCompletionValidator(Validator):
             agent_input_str += get_initial_input_str_fn(i, start_turn) + turn.agent_input + "\n"
         return agent_input_str
 
-
     @staticmethod
-    def get_agent_responses_str(agent_trace_turns: list[TurnTrace], start_turn: int = 0, get_initial_response_str_fn: Callable[[int, int], str] = get_initial_input_response_str_with_turn):
+    def get_agent_responses_str(
+        agent_trace_turns: list[TurnTrace],
+        start_turn: int = 0,
+        get_initial_response_str_fn: Callable[
+            [int, int], str
+        ] = get_initial_input_response_str_with_turn,
+    ):
         """
         Turn 1: This is a response for turn 1.
         Turn 2:
@@ -270,8 +334,11 @@ class SubGoalCompletionValidator(Validator):
         """
         agent_responses_str = ""
         for i, turn in enumerate(agent_trace_turns):
-            agent_responses_str += get_initial_response_str_fn(i, start_turn) + (
-                turn.agent_response.response if turn.agent_response else "") + "\n"
+            agent_responses_str += (
+                get_initial_response_str_fn(i, start_turn)
+                + (str(turn.agent_response.response) if turn.agent_response else "")
+                + "\n"
+            )
         return agent_responses_str
 
     @staticmethod
@@ -285,58 +352,113 @@ class SubGoalCompletionValidator(Validator):
         dialog_str = ""
         for turn in agent_trace_turns:
             dialog_str += "UserProxy: " + turn.agent_input + "\n"
-            dialog_str += "Agent: " + (turn.agent_response.response if turn.agent_response else "") + "\n"
+            dialog_str += (
+                "Agent: "
+                + (str(turn.agent_response.response) if turn.agent_response else "")
+                + "\n"
+            )
         return dialog_str
 
     @staticmethod
-    def generate_prompt_from_sub_goal_and_turn_traces(sub_goal: SubGoal, turn_traces: List[TurnTrace]):
+    def generate_prompt_from_sub_goal_and_turn_traces(
+        sub_goal: SubGoal, turn_traces: List[TurnTrace]
+    ):
         current_idx = len(turn_traces) - 1
-        get_initial_traj_str_fn = SubGoalCompletionValidator.get_initial_str_without_turn if current_idx == 0 else SubGoalCompletionValidator.get_initial_traj_str_with_turn
-        get_initial_response_str_fn = SubGoalCompletionValidator.get_initial_str_without_turn if current_idx == 0 else SubGoalCompletionValidator.get_initial_input_response_str_with_turn
-        get_initial_input_str_fn = SubGoalCompletionValidator.get_initial_str_without_turn if current_idx == 0 else SubGoalCompletionValidator.get_initial_input_response_str_with_turn
+        get_initial_traj_str_fn = (
+            SubGoalCompletionValidator.get_initial_str_without_turn
+            if current_idx == 0
+            else SubGoalCompletionValidator.get_initial_traj_str_with_turn
+        )
+        get_initial_response_str_fn = (
+            SubGoalCompletionValidator.get_initial_str_without_turn
+            if current_idx == 0
+            else SubGoalCompletionValidator.get_initial_input_response_str_with_turn
+        )
+        get_initial_input_str_fn = (
+            SubGoalCompletionValidator.get_initial_str_without_turn
+            if current_idx == 0
+            else SubGoalCompletionValidator.get_initial_input_response_str_with_turn
+        )
 
-
-        current_trajectories_str = SubGoalCompletionValidator.get_trajectories_str_from_agent_trace([turn_traces[-1]], start_turn=current_idx, get_initial_traj_str_fn=get_initial_traj_str_fn)
-        current_agent_responses_str = SubGoalCompletionValidator.get_agent_responses_str([turn_traces[-1]], start_turn=current_idx, get_initial_response_str_fn=get_initial_response_str_fn)
-        current_agent_input_str = SubGoalCompletionValidator.get_agent_input_str([turn_traces[-1]], start_turn=current_idx, get_initial_input_str_fn=get_initial_input_str_fn)     
+        current_trajectories_str = SubGoalCompletionValidator.get_trajectories_str_from_agent_trace(
+            [turn_traces[-1]],
+            start_turn=current_idx,
+            get_initial_traj_str_fn=get_initial_traj_str_fn,
+        )
+        current_agent_responses_str = SubGoalCompletionValidator.get_agent_responses_str(
+            [turn_traces[-1]],
+            start_turn=current_idx,
+            get_initial_response_str_fn=get_initial_response_str_fn,
+        )
+        current_agent_input_str = SubGoalCompletionValidator.get_agent_input_str(
+            [turn_traces[-1]],
+            start_turn=current_idx,
+            get_initial_input_str_fn=get_initial_input_str_fn,
+        )
 
         if current_idx == 0:
             template_subgoal = DEFAULT_MODEL_GRADED_FACT_SINGLE_TURN_REMOVE_HALLUCINATION_CHECK_TEMPLATE_ONE_SUBGOAL
-            prompt = template_subgoal.format(questions=current_agent_input_str,
-                                            trajectories=current_trajectories_str,
-                                            answers=current_agent_responses_str,
-                                            subgoal=sub_goal.details)
+            prompt = template_subgoal.format(
+                questions=current_agent_input_str,
+                trajectories=current_trajectories_str,
+                answers=current_agent_responses_str,
+                subgoal=sub_goal.details,
+            )
         else:
-            past_trajectories_str = SubGoalCompletionValidator.get_trajectories_str_from_agent_trace(turn_traces[:-1])
-            past_agent_responses_str = SubGoalCompletionValidator.get_agent_responses_str(turn_traces[:-1])
+            past_trajectories_str = (
+                SubGoalCompletionValidator.get_trajectories_str_from_agent_trace(turn_traces[:-1])
+            )
+            past_agent_responses_str = SubGoalCompletionValidator.get_agent_responses_str(
+                turn_traces[:-1]
+            )
             past_agent_input_str = SubGoalCompletionValidator.get_agent_input_str(turn_traces[:-1])
             template_subgoal = DEFAULT_MODEL_GRADED_FACT_MULTI_TURN_AT_CURRENT_TURN_REMOVE_HALLUCINATION_CHECK_TEMPLATE_ONE_SUBGOAL
-            prompt = template_subgoal.format(past_user_inputs=past_agent_input_str,
-                                            past_agent_trajectories=past_trajectories_str,
-                                            past_agent_responses=past_agent_responses_str,
-                                            questions=current_agent_input_str,
-                                            trajectories=current_trajectories_str,
-                                            answers=current_agent_responses_str,
-                                            subgoal=sub_goal.details)
-            
+            prompt = template_subgoal.format(
+                past_user_inputs=past_agent_input_str,
+                past_agent_trajectories=past_trajectories_str,
+                past_agent_responses=past_agent_responses_str,
+                questions=current_agent_input_str,
+                trajectories=current_trajectories_str,
+                answers=current_agent_responses_str,
+                subgoal=sub_goal.details,
+            )
+
         return prompt
 
     @staticmethod
-    def generate_prompt_from_sub_goal_user_task_and_turn_traces(sub_goal: SubGoal, user_instruction: str, turn_traces: List[TurnTrace], template_subgoal: str):
-        trajectories_str = SubGoalCompletionValidator.get_trajectories_str_from_agent_trace(turn_traces)
+    def generate_prompt_from_sub_goal_user_task_and_turn_traces(
+        sub_goal: SubGoal,
+        user_instruction: str,
+        turn_traces: List[TurnTrace],
+        template_subgoal: str,
+    ):
+        trajectories_str = SubGoalCompletionValidator.get_trajectories_str_from_agent_trace(
+            turn_traces
+        )
         agent_responses_str = SubGoalCompletionValidator.get_agent_responses_str(turn_traces)
         dialog_str = SubGoalCompletionValidator.get_dialogue_str(turn_traces)
-        prompt = template_subgoal.format(userTask=user_instruction, subgoal=sub_goal.details,
-                                            trajectories=trajectories_str, answers=agent_responses_str,
-                                            dynamicDialogue=dialog_str)
+        prompt = template_subgoal.format(
+            userTask=user_instruction,
+            subgoal=sub_goal.details,
+            trajectories=trajectories_str,
+            answers=agent_responses_str,
+            dynamicDialogue=dialog_str,
+        )
         return prompt
 
     @staticmethod
-    def generate_prompt_from_sub_goal_without_user_task_and_turn_traces(sub_goal: SubGoal, turn_traces: List[TurnTrace], template_subgoal: str):
-        trajectories_str = SubGoalCompletionValidator.get_trajectories_str_from_agent_trace(turn_traces)
+    def generate_prompt_from_sub_goal_without_user_task_and_turn_traces(
+        sub_goal: SubGoal, turn_traces: List[TurnTrace], template_subgoal: str
+    ):
+        trajectories_str = SubGoalCompletionValidator.get_trajectories_str_from_agent_trace(
+            turn_traces
+        )
         agent_responses_str = SubGoalCompletionValidator.get_agent_responses_str(turn_traces)
         dialog_str = SubGoalCompletionValidator.get_dialogue_str(turn_traces)
-        prompt = template_subgoal.format(subgoal=sub_goal.details,
-                                            trajectories=trajectories_str, answers=agent_responses_str,
-                                            dynamicDialogue=dialog_str)
+        prompt = template_subgoal.format(
+            subgoal=sub_goal.details,
+            trajectories=trajectories_str,
+            answers=agent_responses_str,
+            dynamicDialogue=dialog_str,
+        )
         return prompt

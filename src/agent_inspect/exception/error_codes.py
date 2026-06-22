@@ -1,23 +1,27 @@
 from enum import Enum, unique
 
+
 @unique
 class EvaluationComponent(Enum):
     EVALUATION_ERROR_CODE = "05"
+
 
 @unique
 class UserProxyComponent(Enum):
     USER_PROXY_ERROR_CODE = "06"
 
+
 @unique
 class ClientComponent(Enum):
     CLIENT_ERROR_CODE = "07"
+
 
 @unique
 class ToolComponent(Enum):
     TOOL_ERROR_CODE = "08"
 
 
-#TODO: reorganize error codes for different purposes
+# TODO: reorganize error codes for different purposes
 @unique
 class ErrorCode(Enum):
     INVALID_LLM_JUDGE_RESULT_ERROR = "0000"
@@ -38,4 +42,4 @@ class ErrorCode(Enum):
     UNSUCCESSFUL_LLM_SUMMARIZATION = "0015"
     UNSUCCESSFUL_MAJORITY_VOTING = "0016"
     CLIENT_REQUEST_ERROR = "0017"
-    
+    INVALID_ERROR_ANALYSIS_ERROR_CLUSTERS = "0018"

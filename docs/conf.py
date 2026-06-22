@@ -13,28 +13,32 @@ import inspect
 sys.path.insert(0, os.path.abspath("../src"))
 
 
-
-project = 'agent_inspect'
+project = "agent_inspect"
 copyright = '2026, ""'
 author = '""'
-release = '1.0'
+release = "1.0"
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
-extensions = ["sphinx.ext.todo", "sphinx.ext.viewcode",  "sphinx.ext.mathjax", "sphinx.ext.autodoc",     "sphinx_autodoc_typehints",]
+extensions = [
+    "sphinx.ext.todo",
+    "sphinx.ext.viewcode",
+    "sphinx.ext.mathjax",
+    "sphinx.ext.autodoc",
+    "sphinx_autodoc_typehints",
+]
 autodoc_default_options = {
-    'members': True,
-    'undoc-members': True,
+    "members": True,
+    "undoc-members": True,
     # 'special-members': '__init__',
-    'inherited-members': False,
+    "inherited-members": False,
 }
 
 
 # autodoc_typehints = "none"  # turn off typing hit in class
 autodoc_typehints = "description"
 typehints_use_rich_description = True
-
 
 
 def skip_static_methods(app, what, name, obj, skip, options):
@@ -46,10 +50,10 @@ def skip_static_methods(app, what, name, obj, skip, options):
     try:
         # Attempt to get the class object from obj.__qualname__
         qualname = getattr(obj, "__qualname__", "")
-        if '.' not in qualname:
+        if "." not in qualname:
             return None
 
-        cls_name = qualname.split('.')[-2]
+        cls_name = qualname.split(".")[-2]
 
         # Find the module where this obj is defined
         module = inspect.getmodule(obj)
@@ -62,7 +66,13 @@ def skip_static_methods(app, what, name, obj, skip, options):
 
         # Check if this attribute on the class is a staticmethod
         attr = cls.__dict__.get(name)
-        if isinstance(attr, staticmethod) and name not in ['get_auc_score_from_progress_scores', 'get_ppt_score_from_progress_scores', 'get_success_score_from_progress_score', 'get_success_score_from_validation_results', 'compute_statistic_analysis_result'] :
+        if isinstance(attr, staticmethod) and name not in [
+            "get_auc_score_from_progress_scores",
+            "get_ppt_score_from_progress_scores",
+            "get_success_score_from_progress_score",
+            "get_success_score_from_validation_results",
+            "compute_statistic_analysis_result",
+        ]:
             print(attr)
             print(name)
             return True  # skip it!
@@ -82,9 +92,7 @@ def skip_methods_by_name(app, what, name, obj, skip, options):
 
     try:
         # List of method names to skip (both static and non-static)
-        methods_to_skip = [
-            'get_system_prompt', 'get_user_message_reflection'
-        ]
+        methods_to_skip = ["get_system_prompt", "get_user_message_reflection"]
 
         # Skip methods based on their name
         if name in methods_to_skip:
@@ -98,22 +106,21 @@ def skip_methods_by_name(app, what, name, obj, skip, options):
     return None  # default behavior
 
 
-
-
 def setup(app):
     app.connect("autodoc-skip-member", skip_static_methods)
     app.connect("autodoc-skip-member", skip_methods_by_name)
 
 
-
-
-templates_path = ['_templates']
-exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
-
+templates_path = ["_templates"]
+exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
 
 
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
-html_theme = 'sphinx_rtd_theme'
-html_static_path = ['_static']
+html_theme = "sphinx_rtd_theme"
+html_theme_options = {
+    "navigation_depth": 1,
+}
+html_static_path = ["_static"]
+html_css_files = ["custom.css"]

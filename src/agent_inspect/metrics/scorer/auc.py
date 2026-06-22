@@ -1,5 +1,3 @@
-import sklearn
-
 from typing import Any, Optional, Dict, List
 
 from agent_inspect.clients.llm_client import LLMClient
@@ -10,6 +8,7 @@ from agent_inspect.metrics.scorer.progress import ProgressScoresThroughTurns
 from agent_inspect.models.metrics.agent_data_sample import EvaluationSample
 from agent_inspect.models.metrics.agent_trace import AgentDialogueTrace
 from agent_inspect.models.metrics.metric_score import NumericalScore
+from agent_inspect.utils.auc_calculator import auc
 
 
 class AUC(LLMBasedMetric):
@@ -18,11 +17,11 @@ class AUC(LLMBasedMetric):
 
     .. math::
 
-        AUC = \int_{0}^{T} p(t) \ dt, 
+        AUC = \\int_{0}^{T} p(t) \\ dt,
 
     where :math:`T` is the maximum turns of a conversation and
-    :math:`p(t) := progress(i, G_i, \\tau_i[1:t])` denotes the progress at turn :math:`t` (refer to the documentation on :obj:`~agent_inspect.metrics.scorer.progress.ProgressScoresThroughTurns`). 
-    
+    :math:`p(t) := progress(i, G_i, \\tau_i[1:t])` denotes the progress at turn :math:`t` (refer to the documentation on :obj:`~agent_inspect.metrics.scorer.progress.ProgressScoresThroughTurns`).
+
     :param llm_client: the client which allows connection to the LLM-as-a-judge model for evaluation.
     :param config: Default to ``None``. Configuration options:
 
@@ -38,9 +37,9 @@ class AUC(LLMBasedMetric):
         super().__init__(llm_client, config)
 
     def evaluate(
-            self,
-            agent_trace: AgentDialogueTrace,
-            evaluation_data_sample: EvaluationSample,
+        self,
+        agent_trace: AgentDialogueTrace,
+        evaluation_data_sample: EvaluationSample,
     ):
         """
         Returns the value of area under the progress scores curve. Calls the :obj:`agent_inspect.metrics.scorer.progress.ProgressScoresThroughTurns.evaluate` method underneath.
@@ -53,7 +52,7 @@ class AUC(LLMBasedMetric):
 
         >>> from agent_inspect.metrics.scorer import AUC
         >>> from agent_inspect.metrics.constants import INCLUDE_JUDGE_EXPLANATION, MAX_TURNS, OPTIMIZE_JUDGE_TRIALS
-        >>> from agent_inspect.clients import AzureOpenAIClient
+        >>> from agent_inspect.clients.azure_openai_client import AzureOpenAIClient
         >>>
         >>> data_sample=load_data_sample(sample_path) # Load data sample
         >>> agent_trace = load_agent_trace(trace_file_path) # Load agent trajectory information
@@ -70,13 +69,16 @@ class AUC(LLMBasedMetric):
         ...     agent_trace=agent_trace,
         ...     evaluation_data_sample=data_sample
         ... )
-        >>> print(metric_result.score) 
+        >>> print(metric_result.score)
         """
         progress_metric = ProgressScoresThroughTurns(self.llm_client, self.config)
         progress_scores = progress_metric.evaluate(agent_trace, evaluation_data_sample)
-        
+
         if not progress_scores:
-            raise EvaluationError(internal_code=ErrorCode.EMPTY_PROGRESS_SCORE.value, message="No progress score produced for AUC calculation.")
+            raise EvaluationError(
+                internal_code=ErrorCode.EMPTY_PROGRESS_SCORE.value,
+                message="No progress score produced for AUC calculation.",
+            )
         n = len(progress_scores)
         x = [i / (n - 1) if n > 1 else 0 for i in range(n)]
         progress_rates = [progress_score.score for progress_score in progress_scores]
@@ -85,13 +87,19 @@ class AUC(LLMBasedMetric):
         for idx, progress in enumerate(progress_rates):
             sub_scores[f"Turn_{idx + 1}_progress_score"] = progress
 
-        return NumericalScore(score=round(sklearn.metrics.auc(x, progress_rates), 4), explanations=progress_explanations, sub_scores=sub_scores)
+        return NumericalScore(
+            score=round(auc(x, progress_rates), 4),
+            explanations=progress_explanations,
+            sub_scores=sub_scores,
+        )
 
     @staticmethod
-    def get_auc_score_from_progress_scores(progress_scores: List[NumericalScore]) -> NumericalScore:
-        '''
-        Computes the value of area under the progress scores curve given a list of progress scores at every conversational turn as input. The list of progress scores are obtained from :obj:`agent_inspect.metrics.scorer.progress.ProgressScoresThroughTurns.evaluate` method. 
-        
+    def get_auc_score_from_progress_scores(
+        progress_scores: List[NumericalScore],
+    ) -> NumericalScore:
+        """
+        Computes the value of area under the progress scores curve given a list of progress scores at every conversational turn as input. The list of progress scores are obtained from :obj:`agent_inspect.metrics.scorer.progress.ProgressScoresThroughTurns.evaluate` method.
+
         :param progress_scores: a :obj:`~typing.List` [:obj:`~agent_inspect.models.metrics.metric_score.NumericalScore`]  object storing a list of progress scores at every conversational turn.
         :return: a :obj:`~agent_inspect.models.metrics.metric_score.NumericalScore` object containing the AUC score.
 
@@ -99,7 +107,7 @@ class AUC(LLMBasedMetric):
 
         >>> from agent_inspect.metrics.scorer import ProgressScoresThroughTurns, AUC
         >>> from agent_inspect.metrics.constants import INCLUDE_JUDGE_EXPLANATION, INCLUDE_VALIDATION_RESULTS, MAX_TURNS, OPTIMIZE_JUDGE_TRIALS
-        >>> from agent_inspect.clients import AzureOpenAIClient
+        >>> from agent_inspect.clients.azure_openai_client import AzureOpenAIClient
         >>>
         >>> data_sample=load_data_sample(sample_path) # Load data sample
         >>> agent_trace = load_agent_trace(trace_file_path) # Load agent trajectory information
@@ -118,19 +126,23 @@ class AUC(LLMBasedMetric):
         ...     evaluation_data_sample=data_sample
         ... )
         >>> auc_metric = AUC(llm_client=client)
-        >>> auc_metric_result = auc_metric.get_auc_score_from_progress_scores(progress_rates)   
-        >>> print(auc_metric_result.score)     
-        '''
-        
+        >>> auc_metric_result = auc_metric.get_auc_score_from_progress_scores(progress_rates)
+        >>> print(auc_metric_result.score)
+        """
+
         if not progress_scores:
-            raise InvalidInputValueError(internal_code=ErrorCode.EMPTY_PROGRESS_SCORE.value,
-                                         message="No progress score provided for AUC calculation.")
+            raise InvalidInputValueError(
+                internal_code=ErrorCode.EMPTY_PROGRESS_SCORE.value,
+                message="No progress score provided for AUC calculation.",
+            )
         scores = [ps.score for ps in progress_scores]
         n = len(scores)
         x = [i / (n - 1) if n > 1 else 0 for i in range(n)]
         try:
-            auc_score = round(sklearn.metrics.auc(x, scores), 4)
-        except Exception as e:
-            raise EvaluationError(internal_code=ErrorCode.AUC_CALCULATION_ERROR.value,
-                                  message=f"Error calculating AUC: {str(e)}")
+            auc_score = round(auc(x, scores), 4)
+        except ValueError as e:
+            raise EvaluationError(
+                internal_code=ErrorCode.AUC_CALCULATION_ERROR.value,
+                message=f"Error calculating AUC: {str(e)}",
+            )
         return NumericalScore(score=auc_score)

@@ -21,9 +21,9 @@ class MultiSampleMetric(ABC):
 
     @abstractmethod
     def compute(
-            self,
-            scorer_results: List[NumericalScore],
-    ):
+        self,
+        scorer_results: List[NumericalScore],
+    ) -> NumericalScore:
         """
         Computes an aggregated metric score from multiple scorer results.
 

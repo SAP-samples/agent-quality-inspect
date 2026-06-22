@@ -1,7 +1,8 @@
 from typing import Optional, Dict, Any
 import re
 
-from agent_inspect.metrics.utils.metrics_utils import get_config_or_default
+from agent_inspect.core.utils import get_config_or_default
+
 
 def regex_match(candidate: str, pattern: str, config: Optional[Dict[str, Any]] = None) -> bool:
     mode = get_config_or_default(config, "mode", "substring")

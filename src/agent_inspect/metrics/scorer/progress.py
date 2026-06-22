@@ -14,9 +14,11 @@ from agent_inspect.models.metrics.agent_data_sample import EvaluationSample, Sub
 from agent_inspect.models.metrics.agent_trace import AgentDialogueTrace
 from agent_inspect.models.metrics.metric_score import NumericalScore
 from agent_inspect.metrics.constants import MAX_TURNS, MAX_TURNS_DEFAULT
-from agent_inspect.metrics.utils.metrics_utils import get_config_or_default
+from agent_inspect.core.utils import get_config_or_default
 from agent_inspect.metrics.constants import INCLUDE_VALIDATION_RESULTS
-from agent_inspect.metrics.validator.subgoal_completion import SubGoalCompletionValidator
+from agent_inspect.metrics.validator.subgoal_completion import (
+    SubGoalCompletionValidator,
+)
 from agent_inspect.models.metrics.validation_result import SubGoalValidationResult
 
 
@@ -27,15 +29,16 @@ class ProgressBasedMetric(LLMBasedMetric):
     :param llm_client: the client which allows connection to the llm-as-a-judge model for evaluations.
     :param config: configuration for progress metric initialization. Default to ``None``.
     """
+
     def __init__(self, llm_client: LLMClient, config: Optional[Dict[str, Any]] = None):
         super().__init__(llm_client, config)
 
     @abstractmethod
     def evaluate(
-            self,
-            agent_trace: AgentDialogueTrace,
-            evaluation_data_sample: EvaluationSample,
-    ):
+        self,
+        agent_trace: AgentDialogueTrace,
+        evaluation_data_sample: EvaluationSample,
+    ) -> Any:
         """
         This is an abstract method and should be implemented in a concrete class.
 
@@ -53,7 +56,7 @@ class ProgressScore(ProgressBasedMetric):
 
     .. math::
 
-        progress(i, G_i, \\tau_i)=\\frac{1}{|G_i|} \sum_{j=1}^{|G_i|} LLM_{judge}(i, g_{i, j}, \\tau_i ),
+        progress(i, G_i, \\tau_i)=\\frac{1}{|G_i|} \\sum_{j=1}^{|G_i|} LLM_{judge}(i, g_{i, j}, \\tau_i ),
 
     where :math:`LLM_{judge}(\\cdot)` is the output from the LLM-as-a-judge,
     :math:`G_i= \\{ g_{i, 1}, ..., g_{i, j}, ...,  g_{i, |G_i|} \\}` is the set of subgoals a.k.a grading notes for task sample :math:`i`, and
@@ -70,13 +73,14 @@ class ProgressScore(ProgressBasedMetric):
         - **max_retry_judge_trials**: an :obj:`~typing.int` value indicating the maximum number of retry attempts for each judge trial in case of errors related to LLM as a judge. Default to ``5``. This will be ignored if ``optimize_judge_trials`` is set to ``True``.
 
     """
+
     def __init__(self, llm_client: LLMClient, config: Optional[Dict[str, Any]] = None):
         super().__init__(llm_client, config)
 
     def evaluate(
-            self,
-            agent_trace: AgentDialogueTrace,
-            evaluation_data_sample: EvaluationSample,
+        self,
+        agent_trace: AgentDialogueTrace,
+        evaluation_data_sample: EvaluationSample,
     ):
         """
         Returns a progress score given the agent trace and the evaluation data sample.
@@ -89,7 +93,7 @@ class ProgressScore(ProgressBasedMetric):
 
         >>> from agent_inspect.metrics.scorer import ProgressScore
         >>> from agent_inspect.metrics.constants import INCLUDE_JUDGE_EXPLANATION, OPTIMIZE_JUDGE_TRIALS
-        >>> from agent_inspect.clients import AzureOpenAIClient
+        >>> from agent_inspect.clients.azure_openai_client import AzureOpenAIClient
         >>>
         >>> data_sample=load_data_sample(sample_path) # Load data sample
         >>> agent_trace = load_agent_trace(trace_file_path) # Load agent trajectory information
@@ -109,31 +113,50 @@ class ProgressScore(ProgressBasedMetric):
 
         validation_results = []
         explanations = []
-        goal_completion_validator = SubGoalCompletionValidator(llm_client=self.llm_client, config=self.config)
+        goal_completion_validator = SubGoalCompletionValidator(
+            llm_client=self.llm_client, config=self.config
+        )
 
+        if not agent_trace.turns:
+            raise InvalidInputValueError(
+                internal_code=ErrorCode.EMPTY_VALIDATION_RESULT.value,
+                message="Agent trace has no turns to evaluate.",
+            )
         turns_to_run = len(agent_trace.turns)
-        turns_groupings = ProgressBasedMetric.get_turn_groupings_from_traces(agent_trace, turns_to_run)
+        turns_groupings = ProgressBasedMetric.get_turn_groupings_from_traces(
+            agent_trace, turns_to_run
+        )
 
         for idx, turns_grouping in enumerate(turns_groupings):
             # print(f"Evaluating at turn: {idx + 1} with previous turns as context")
             current_subgoals = ProgressScore.get_turn_subgoals(sub_goals, idx)
             for current_subgoal in current_subgoals:
-                validation_result = asyncio.run(goal_completion_validator.validate(turn_traces=turns_grouping, sub_goal=current_subgoal))
+                validation_result = asyncio.run(
+                    goal_completion_validator.validate(
+                        turn_traces=turns_grouping, sub_goal=current_subgoal
+                    )
+                )
                 # print(f"Result: {validation_result.is_completed}")
                 # TODO: store subgoal turn and type for judge_explanation incase subgoal.details is not unique
                 explanations.append({current_subgoal.details: validation_result.explanations})
                 validation_results.append(validation_result)
-        progress_score = ProgressScore.get_progress_score_from_validation_results(validation_results)
+        progress_score = ProgressScore.get_progress_score_from_validation_results(
+            validation_results
+        )
         progress_score.explanations = explanations
         progress_score.validation_results = validation_results
         return progress_score
 
     @staticmethod
-    def get_progress_score_from_validation_results(validation_results: List[SubGoalValidationResult]) -> NumericalScore:
+    def get_progress_score_from_validation_results(
+        validation_results: List[SubGoalValidationResult],
+    ) -> NumericalScore:
         scores = []
         if not validation_results:
-            raise InvalidInputValueError(internal_code=ErrorCode.EMPTY_VALIDATION_RESULT.value,
-                                         message="No validation result present to aggregate for progress score.")
+            raise InvalidInputValueError(
+                internal_code=ErrorCode.EMPTY_VALIDATION_RESULT.value,
+                message="No validation result present to aggregate for progress score.",
+            )
         for validation_result in validation_results:
             if validation_result.is_completed:
                 scores.append(1.0)
@@ -158,8 +181,8 @@ class ProgressScoresThroughTurns(ProgressBasedMetric):
 
     .. math::
 
-        progress(i, G_i, \\tau_i[1:t])=\\frac{1}{|G_i|} \sum_{j=1}^{|G_i|} LLM_{judge}(i, g_{i, j}, \\tau_i[1:t]), 
-    
+        progress(i, G_i, \\tau_i[1:t])=\\frac{1}{|G_i|} \\sum_{j=1}^{|G_i|} LLM_{judge}(i, g_{i, j}, \\tau_i[1:t]),
+
     where :math:`LLM_{judge}(\\cdot)` is the output from the LLM-as-a-judge,
     :math:`G_i= \\{ g_{i, 1}, ..., g_{i, j}, ...,  g_{i, |G_i|} \\}` is the set of subgoals a.k.a grading notes for task sample :math:`i`, and
     :math:`\\tau_i[1:t]` is the segment of agent trajectory from the first turn up to turn :math:`t` consisting of tool calls, agent responses, and user inputs.
@@ -182,9 +205,9 @@ class ProgressScoresThroughTurns(ProgressBasedMetric):
         super().__init__(llm_client, config)
 
     def evaluate(
-            self,
-            agent_trace: AgentDialogueTrace,
-            evaluation_data_sample: EvaluationSample,
+        self,
+        agent_trace: AgentDialogueTrace,
+        evaluation_data_sample: EvaluationSample,
     ):
         """
         Returns a list of progress scores at every turn until ``max_turns`` given the agent trace and the evaluation data sample.
@@ -197,7 +220,7 @@ class ProgressScoresThroughTurns(ProgressBasedMetric):
 
         >>> from agent_inspect.metrics.scorer import ProgressScoresThroughTurns
         >>> from agent_inspect.metrics.constants import INCLUDE_JUDGE_EXPLANATION, INCLUDE_VALIDATION_RESULTS, MAX_TURNS, OPTIMIZE_JUDGE_TRIALS
-        >>> from agent_inspect.clients import AzureOpenAIClient
+        >>> from agent_inspect.clients.azure_openai_client import AzureOpenAIClient
         >>>
         >>> data_sample=load_data_sample(sample_path) # Load data sample
         >>> agent_trace = load_agent_trace(trace_file_path) # Load agent trajectory information
@@ -218,53 +241,78 @@ class ProgressScoresThroughTurns(ProgressBasedMetric):
         >>> print(metric_result) # print list of NumericalScore objects
 
         """
-        include_validation_results = get_config_or_default(config=self.config, config_key=INCLUDE_VALIDATION_RESULTS, default=False)
-        
-        scores = []
-        judge_explanations_turns=[]
-   
-        max_turn = get_config_or_default(config=self.config, config_key=MAX_TURNS, default=MAX_TURNS_DEFAULT)
+        include_validation_results = get_config_or_default(
+            config=self.config, config_key=INCLUDE_VALIDATION_RESULTS, default=False
+        )
 
+        scores = []
+        judge_explanations_turns = []
+
+        max_turn = get_config_or_default(
+            config=self.config, config_key=MAX_TURNS, default=MAX_TURNS_DEFAULT
+        )
+
+        if not agent_trace.turns:
+            raise InvalidInputValueError(
+                internal_code=ErrorCode.EMPTY_VALIDATION_RESULT.value,
+                message="Agent trace has no turns to evaluate.",
+            )
         turns_to_run = min(max_turn, len(agent_trace.turns))
-        turns_groupings = ProgressBasedMetric.get_turn_groupings_from_traces(agent_trace, turns_to_run)
+        turns_groupings = ProgressBasedMetric.get_turn_groupings_from_traces(
+            agent_trace, turns_to_run
+        )
 
         user_task = evaluation_data_sample.user_instruction
 
         remaining_goals = copy.deepcopy(evaluation_data_sample.sub_goals)
         completed_goals = []
 
-        goal_completion_validator = SubGoalCompletionValidator(llm_client=self.llm_client, config=self.config)
+        goal_completion_validator = SubGoalCompletionValidator(
+            llm_client=self.llm_client, config=self.config
+        )
         validation_results_completed: list[SubGoalValidationResult] = []
         full_validation_results = []
 
         for idx, turns_grouping in enumerate(turns_groupings):
-            turn_validation_results = [] # stores results for the remaining subgoals
+            turn_validation_results = []  # stores results for the remaining subgoals
             # print(f"Evaluating with traces up to turn: {idx + 1}")
             for sub_goal in remaining_goals:
-                validation_result = asyncio.run(goal_completion_validator.validate_dynamic(turn_traces=turns_grouping, sub_goal=sub_goal, user_instruction=user_task))
+                validation_result = asyncio.run(
+                    goal_completion_validator.validate_dynamic(
+                        turn_traces=turns_grouping,
+                        sub_goal=sub_goal,
+                        user_instruction=user_task,
+                    )
+                )
                 if validation_result.is_completed:
                     completed_goals.append(sub_goal)
                 turn_validation_results.append(validation_result)
-            
+
             for goal in completed_goals:
                 remaining_goals.remove(goal)
             completed_goals = []
 
             full_validation_results = validation_results_completed + turn_validation_results
-            progress_turn = ProgressScore.get_progress_score_from_validation_results(full_validation_results)
+            progress_turn = ProgressScore.get_progress_score_from_validation_results(
+                full_validation_results
+            )
             scores.append(round(progress_turn.score, 4))
             # TODO: store subgoal turn and type for judge_explanation incase subgoal.details is not unique
-            judge_explanations = [{r.sub_goal.details: r.explanations} for r in full_validation_results]
+            judge_explanations = [
+                {r.sub_goal.details: r.explanations} for r in full_validation_results
+            ]
             judge_explanations_turns.append(judge_explanations)
-            validation_results_completed += [r for r in turn_validation_results if r.is_completed == True]
+            validation_results_completed += [r for r in turn_validation_results if r.is_completed]
 
-        if max_turn > turns_to_run :
+        if max_turn > turns_to_run:
             scores = scores + [scores[-1]] * (max_turn - turns_to_run)
-            judge_explanations_turns = judge_explanations_turns + [judge_explanations_turns[-1]]* (max_turn - turns_to_run)
+            judge_explanations_turns = judge_explanations_turns + [judge_explanations_turns[-1]] * (
+                max_turn - turns_to_run
+            )
 
         score_objs = []
         for score, judge_exp in zip(scores, judge_explanations_turns):
             score_objs.append(NumericalScore(score=score, explanations=judge_exp))
         if include_validation_results and score_objs:
-            score_objs[-1].validation_results = full_validation_results 
+            score_objs[-1].validation_results = full_validation_results
         return score_objs

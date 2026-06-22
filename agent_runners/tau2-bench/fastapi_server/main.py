@@ -15,24 +15,30 @@ app = FastAPI()
 # In-memory session store
 dialog_sessions: Dict[str, dict] = {}
 
+
 class StartConversationRequest(BaseModel):
     domain: str = "airline"
     agent_llm: str = "azure/gpt-4.1"
     # Optionally, add task_id, etc.
     # task_id: Optional[str] = None
 
+
 class StartConversationResponse(BaseModel):
     session_id: str
 
+
 class UserMessageRequest(BaseModel):
     message: str
+
 
 class AgentResponse(BaseModel):
     response: str
     history: List[dict]
 
+
 class AgentDescriptionRequest(BaseModel):
     domain: str
+
 
 @app.post("/start_conversation", response_model=StartConversationResponse)
 def start_conversation(req: StartConversationRequest):
@@ -42,7 +48,9 @@ def start_conversation(req: StartConversationRequest):
         get_env_func = getattr(env_module, "get_environment")
         env = get_env_func()
     except Exception as e:
-        raise HTTPException(400, f"Could not load environment for domain '{req.domain}': {e}")
+        raise HTTPException(
+            400, f"Could not load environment for domain '{req.domain}': {e}"
+        )
     tools = list(env.tools.get_tools().values())
     agent = LLMAgent(llm=req.agent_llm, tools=tools, domain_policy=env.policy)
     agent_state = agent.get_init_state()
@@ -54,6 +62,7 @@ def start_conversation(req: StartConversationRequest):
         "history": [],
     }
     return {"session_id": session_id}
+
 
 @app.post("/conversation/{session_id}/message", response_model=AgentResponse)
 def send_message(session_id: str, req: UserMessageRequest):
@@ -72,24 +81,38 @@ def send_message(session_id: str, req: UserMessageRequest):
         print(f"[DEBUG] Making agent call...)")
         agent_msg, agent_state = agent.generate_next_message(next_input, agent_state)
         print(f"[DEBUG] Agent call complete")
-        session["history"].append({"role": "agent", "content": agent_msg.content, "tool_calls": getattr(agent_msg, "tool_calls", None)})
+        session["history"].append(
+            {
+                "role": "agent",
+                "content": agent_msg.content,
+                "tool_calls": getattr(agent_msg, "tool_calls", None),
+            }
+        )
         if agent_msg.is_tool_call() and agent_msg.tool_calls:
             tool_msgs = []
             for tool_call in agent_msg.tool_calls:
                 tool_msg = env.get_response(tool_call)
                 tool_msgs.append(tool_msg)
-                session["history"].append({"role": "tool", "content": tool_msg.content, "tool_id": tool_msg.id})
+                session["history"].append(
+                    {
+                        "role": "tool",
+                        "content": tool_msg.content,
+                        "tool_id": tool_msg.id,
+                    }
+                )
             # If multiple tool messages, wrap in MultiToolMessage, else just use the single one
             if len(tool_msgs) == 1:
                 next_input = tool_msgs[0]
             else:
                 from tau2.data_model.message import MultiToolMessage
+
                 next_input = MultiToolMessage(role="tool", tool_messages=tool_msgs)
             continue
         else:
             break
     session["agent_state"] = agent_state
     return {"response": agent_msg.content, "history": session["history"]}
+
 
 @app.post("/conversation/{session_id}/end")
 def end_conversation(session_id: str):
@@ -98,6 +121,7 @@ def end_conversation(session_id: str):
         return {"status": "ended"}
     else:
         raise HTTPException(404, "Session not found")
+
 
 @app.get("/conversation/{session_id}/trajectory")
 def get_trajectory(session_id: str):
@@ -117,6 +141,7 @@ def get_trajectory(session_id: str):
     if current_turn:
         turns.append(current_turn)
     return {"trajectory": turns}
+
 
 @app.post("/agent_description")
 def get_agent_description(req: AgentDescriptionRequest):

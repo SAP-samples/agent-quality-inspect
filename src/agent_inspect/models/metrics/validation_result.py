@@ -19,11 +19,13 @@ class ValidationResult:
     Contains a list of explanation/reason(s) for why/how this particular validation result is produced.
     """
 
+
 @dataclass
 class SubGoalValidationResult(ValidationResult):
     """
     Represents a result produced after validation.
     """
+
     sub_goal: SubGoal
     """
     Contains the subgoal that is being validated.
@@ -39,9 +41,8 @@ class ToolCallValidationResult(ValidationResult):
     """
     Represents a tool correctness result after validation.
     """
-    
+
     expected_tool_call: ExpectedToolCall
     """
     The expected ground truth tool call that is being validated against.
     """
-

@@ -17,9 +17,9 @@ class Metric(ABC):
 
     @abstractmethod
     def evaluate(
-            self,
-            agent_trace: AgentDialogueTrace,
-            evaluation_data_sample: EvaluationSample,
+        self,
+        agent_trace: AgentDialogueTrace,
+        evaluation_data_sample: EvaluationSample,
     ):
         """
         This is an abstract method and should be implemented in a concrete class.

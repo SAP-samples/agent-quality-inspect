@@ -3,6 +3,8 @@
 **Paper:** [Tau2 Bench (arXiv)](https://arxiv.org/pdf/2408.04682v1)  
 **Original Repo:** [GitHub - sierra-research/tau2-bench](https://github.com/sierra-research/tau2-bench)
 
+Note: The codebase is largely adapted from the original Tau2Bench repository, with modifications to fit into our evaluation framework which include the server and azure clients.
+
 ---
 
 ## Installation

@@ -1,9 +1,18 @@
 from .error_analysis import (
-    ErrorAnalysis,
+    UnsupervisedSubgoalErrorAnalysis,
+    SemisupervisedSubgoalErrorAnalysis,
+    SemisupervisedToolCallErrorAnalysis,
+    DeterministicToolCallErrorAnalysis,
     StatisticAnalysis,
 )
 
 __all__ = [
-    "ErrorAnalysis",
+    # Subgoal error analysis implementations
+    "UnsupervisedSubgoalErrorAnalysis",
+    "SemisupervisedSubgoalErrorAnalysis",
+    # Tool call error analysis implementations
+    "SemisupervisedToolCallErrorAnalysis",
+    "DeterministicToolCallErrorAnalysis",
+    # Utility
     "StatisticAnalysis",
 ]

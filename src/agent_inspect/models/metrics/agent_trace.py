@@ -9,7 +9,7 @@ class AgentResponse:
     Represents an agent response produced by the agent in one turn.
     """
 
-    response: Union[str|dict]
+    response: Union[str, dict]
     """
     A response from the agent, which can either be a python str or a python dict. This will be converted to a str during metric calculation if a dict is provided.
     """
@@ -68,7 +68,7 @@ class TurnTrace:
     """
     Represents a turn: one back and forth conversation between the agent and the user/user proxy by encapsulating the agent trace (logs) produced during a turn.
     """
-    
+
     id: str
     """
     Represents an ID assigned to a turn, must be a unique identifier.
@@ -100,7 +100,7 @@ class AgentDialogueTrace:
     """
     Represents an agent trace (logs) produced by an agent given an evaluation data sample during an evaluation run.
     """
-    
+
     turns: Optional[List[TurnTrace]] = None
     """
     A list of turn which contains the subset of agent trace (logs) produced during one back and forth conversation between the agent and the user/user proxy.

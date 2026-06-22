@@ -3,7 +3,8 @@ from typing import Optional, Dict, Any, List
 
 from agent_inspect.exception import EvaluationError, ErrorCode
 from agent_inspect.models.metrics.metric_score import NumericalScore
-from agent_inspect.metrics.utils.metrics_utils import get_config_or_default, validate_inputs_for_pass_k_initialisation
+from agent_inspect.core.utils import get_config_or_default
+from agent_inspect.tools.utils import validate_inputs_for_pass_k_initialisation
 from agent_inspect.metrics.constants import K_VALUE, NO_OF_TRIALS
 from agent_inspect.metrics.multi_samples.multi_sample_metric import MultiSampleMetric
 
@@ -26,13 +27,17 @@ class PassHatK(MultiSampleMetric):
 
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         super().__init__(config)
-        
-        self.num_trials = get_config_or_default(config=self.config, config_key=NO_OF_TRIALS, default=None)
-        self.k_value = get_config_or_default(config=self.config, config_key=K_VALUE, default=self.num_trials)
-        
+
+        self.num_trials = get_config_or_default(
+            config=self.config, config_key=NO_OF_TRIALS, default=None
+        )
+        self.k_value = get_config_or_default(
+            config=self.config, config_key=K_VALUE, default=self.num_trials
+        )
+
         validate_inputs_for_pass_k_initialisation(k_value=self.k_value, num_trials=self.num_trials)
 
-    def compute(self, success_scores: List[NumericalScore]) -> NumericalScore:
+    def compute(self, scorer_results: List[NumericalScore]) -> NumericalScore:
         """
         Computes the pass^k metric given a list of success scores from multiple trials.
 
@@ -43,7 +48,7 @@ class PassHatK(MultiSampleMetric):
         Configuration values are retrieved from the metric config, falling back to
         defaults if not explicitly provided.
 
-        :param success_scores: A list of :obj:`~agent_inspect.models.metrics.metric_score.NumericalScore`
+        :param scorer_results: A list of :obj:`~agent_inspect.models.metrics.metric_score.NumericalScore`
             objects, one per trial, where each score indicates success (typically 0 or 1).
         :return: A :obj:`~agent_inspect.models.metrics.metric_score.NumericalScore`
             object containing the computed pass^k value.
@@ -67,22 +72,27 @@ class PassHatK(MultiSampleMetric):
         >>> result = metric.compute(scores)
         >>> print(result.score)
         """
-        
+
         num_trials = self.num_trials
         k_value = self.k_value
-        
-        success_scores_list = [obj.score for obj in success_scores]
-        
-        if num_trials > len(success_scores_list):
-                raise EvaluationError(ErrorCode.INVALID_VALUE.value, f"Success scores should have the same length as num_trials ({num_trials}), but got {len(success_scores_list)}")
-            
-        success_count = sum(success_scores_list)
+
+        if num_trials > len(scorer_results):
+            raise EvaluationError(
+                ErrorCode.INVALID_VALUE.value,
+                f"Success scores should have the same length as num_trials ({num_trials}), but got {len(scorer_results)}",
+            )
+
+        success_count = 0
+        for obj in scorer_results:
+            if obj.score not in [0, 1]:
+                raise EvaluationError(
+                    ErrorCode.INVALID_VALUE.value,
+                    f"Each score in scorer_results should be either 0 or 1, but got {obj.score}",
+                )
+            success_count += int(obj.score)
 
         if success_count < k_value:
             return NumericalScore(score=0.0)
 
-        value = (
-            math.comb(success_count, k_value)
-            / math.comb(num_trials, k_value)
-        )
+        value = math.comb(success_count, k_value) / math.comb(num_trials, k_value)
         return NumericalScore(score=value)

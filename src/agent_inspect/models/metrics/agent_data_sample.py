@@ -15,11 +15,7 @@ class SubGoal:
     """
     Details containing the information and criteria used by the metric to determine when the agent has achieved this subgoal.
     """
-    type: Optional[str] = None
-    """
-    Represents the type of subgoal (e.g. grading notes).
-    """
-    turn: Optional[Union[int|str]] = None
+    turn: Optional[Union[int, str]] = None
     """
     Represents which turn(s) should this subgoal be considered. Optional and this is only a placeholder for future implementation.
     """
@@ -43,6 +39,7 @@ class ToolInputParameter:
     """
     Represents the llm prompt to check the correctness of the parameter name and the value that the agent invokes with the tool.
     """
+
 
 @dataclass
 class ToolOutput:
@@ -130,4 +127,3 @@ class EvaluationSample:
     """
     An instruction/instructions for user proxy how it should behave/response while communicating with the agent during an evaluation run.
     """
-
