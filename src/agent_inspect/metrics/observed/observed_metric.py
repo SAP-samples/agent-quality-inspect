@@ -17,12 +17,12 @@ class ObservedMetric(ABC):
 
     @abstractmethod
     def evaluate(
-            self,
-            agent_turn_traces: List[TurnTrace],
+        self,
+        agent_turn_traces: List[TurnTrace],
     ) -> NumericalScore:
         """
         This is an abstract method and should be implemented in a concrete class.
-        
+
         :param agent_turn_traces: a :obj:`~typing.List` [:obj:`~agent_inspect.models.metrics.agent_trace.TurnTrace`] object constructed with the agent trajectory information from the first turn up to the current turn.
         :return: a :obj:`~agent_inspect.models.metrics.metric_score.NumericalScore` object.
         """

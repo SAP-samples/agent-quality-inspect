@@ -6,10 +6,31 @@ from huggingface_hub import hf_hub_download, snapshot_download
 
 def download_files():
     parser = argparse.ArgumentParser(description="Download a HuggingFace dataset or model repo.")
-    parser.add_argument("--repo-id", type=str, default="SAP/agent-quality-inspect", help="HuggingFace repository ID")
-    parser.add_argument("--output-dir", type=str, default="./downloads", help="Directory to save downloaded files")
-    parser.add_argument("--filename", type=str, default=None, help="Download a specific file instead of the full repo")
-    parser.add_argument("--repo-type", type=str, default="dataset", choices=["model", "dataset"], help="Type of repository (model or dataset)")
+    parser.add_argument(
+        "--repo-id",
+        type=str,
+        default="SAP/agent-quality-inspect",
+        help="HuggingFace repository ID",
+    )
+    parser.add_argument(
+        "--output-dir",
+        type=str,
+        default="./downloads",
+        help="Directory to save downloaded files",
+    )
+    parser.add_argument(
+        "--filename",
+        type=str,
+        default=None,
+        help="Download a specific file instead of the full repo",
+    )
+    parser.add_argument(
+        "--repo-type",
+        type=str,
+        default="dataset",
+        choices=["model", "dataset"],
+        help="Type of repository (model or dataset)",
+    )
     args = parser.parse_args()
 
     try:
@@ -34,7 +55,7 @@ def download_files():
         print(f"Download failed: {e}")
         print()
         print("If authentication is required, log in first:")
-        
-        
+
+
 if __name__ == "__main__":
     download_files()

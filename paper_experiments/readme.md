@@ -6,7 +6,6 @@ This directory contains scripts for running agent evaluation experiments with us
 
 1. **Agent Setup**
    - For Tau2Bench agent: Refer to [agent_runners/README_tau2_bench_setup.md](../agent_runners/README_tau2_bench_setup.md)
-   - For ToolSandbox agent: Refer to [agent_runners/README_tool_sandbox_setup.md](../agent_runners/README_tool_sandbox_setup.md)
 
 2. **Azure OpenAI Configuration**:
    - Create a `.env` file in the **project root directory** with the following variables:

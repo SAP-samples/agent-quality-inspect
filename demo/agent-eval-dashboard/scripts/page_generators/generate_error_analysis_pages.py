@@ -20,12 +20,16 @@ from __future__ import annotations
 
 import json
 import pickle
-import math
 import re
 import sys
+import importlib.util
 from collections import defaultdict
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
+
+from agent_inspect.tools.error_analysis.statistic_analysis import StatisticAnalysis
+
+from .shared_styles import SHARED_CSS, esc, fmt, fmt_model, slugify
 
 # Add src to path to allow pickle to load agent_inspect modules
 REPO_ROOT = Path(__file__).parent.parent.parent.parent.parent
@@ -33,9 +37,6 @@ sys.path.insert(0, str(REPO_ROOT / "src"))
 
 # Import StatisticAnalysis directly to avoid client dependencies
 # (which require backoff module that may not be installed)
-from agent_inspect.tools.error_analysis.statistic_analysis import StatisticAnalysis
-
-from .shared_styles import SHARED_CSS, esc, fmt, fmt_model, slugify
 
 
 DASHBOARD_ROOT = Path(__file__).parent.parent.parent  # demo/agent-eval-dashboard
@@ -45,6 +46,7 @@ ERROR_ANALYSIS_BASE = DASHBOARD_ROOT / "leaderboard" / "error_analysis"
 # ---------------------------------------------------------------------------
 # Data extraction and statistical analysis
 # ---------------------------------------------------------------------------
+
 
 def match_to_int(completion: str) -> int:
     """
@@ -61,7 +63,7 @@ def match_to_int(completion: str) -> int:
     match = re.search(pattern, completion)
 
     if not match:
-        raise ValueError(f"Could not find GRADE pattern in completion")
+        raise ValueError("Could not find GRADE pattern in completion")
 
     grade = match.group(1).upper()
     if grade == "C":
@@ -86,8 +88,7 @@ def load_error_analysis_data(pkl_path: Path) -> Tuple[List[Any], Any]:
 
 
 def extract_error_data(
-    error_analysis_data_samples: List[Any],
-    error_analysis_result: Any
+    error_analysis_data_samples: List[Any], error_analysis_result: Any
 ) -> Dict[str, Any]:
     """Extract and organize error data for visualization.
 
@@ -95,7 +96,6 @@ def extract_error_data(
     to ensure the error summary table matches the Streamlit UI.
     """
 
-    samples_by_key = {}
     mean_data = []
     full_data = []
 
@@ -111,24 +111,37 @@ def extract_error_data(
         # Use StatisticAnalysis to compute statistics (same as Streamlit launch_ui)
         stat_result = StatisticAnalysis.compute_statistic_analysis_result(sample)
 
-        mean_data.append({
-            "agent_run_id": str(agent_run_id),
-            "sample_idx": sample_id,
-            "SB_token_prob_mean": stat_result.judge_expectation if stat_result.judge_expectation is not None else 0.0,
-            "SB_token_prob_SD_aggregated": stat_result.judge_std if stat_result.judge_std is not None else 0.0,
-        })
+        mean_data.append(
+            {
+                "agent_run_id": str(agent_run_id),
+                "sample_idx": sample_id,
+                "SB_token_prob_mean": stat_result.judge_expectation
+                if stat_result.judge_expectation is not None
+                else 0.0,
+                "SB_token_prob_SD_aggregated": stat_result.judge_std
+                if stat_result.judge_std is not None
+                else 0.0,
+            }
+        )
 
     # Second pass: Process clustered errors (WITH cluster_label and final_error_type)
     # This matches ResultHandler.prepare_dataframes() lines 62-71
-    if error_analysis_result and hasattr(error_analysis_result, 'analyzed_validations_clustered_by_errors'):
-        for cluster_label, analyzed_validations in error_analysis_result.analyzed_validations_clustered_by_errors.items():
+    if error_analysis_result and hasattr(
+        error_analysis_result, "analyzed_validations_clustered_by_errors"
+    ):
+        for (
+            cluster_label,
+            analyzed_validations,
+        ) in error_analysis_result.analyzed_validations_clustered_by_errors.items():
             for av in analyzed_validations:
                 if av is None or av.subgoal_validation is None:
                     continue
 
                 agent_run_id = str(av.agent_run_id if av.agent_run_id is not None else "0")
                 sample_id = av.data_sample_id
-                subgoal_detail = av.subgoal_validation.sub_goal.details if av.subgoal_validation.sub_goal else ""
+                subgoal_detail = (
+                    av.subgoal_validation.sub_goal.details if av.subgoal_validation.sub_goal else ""
+                )
 
                 # Track subgoal index
                 key = (agent_run_id, sample_id)
@@ -143,13 +156,19 @@ def extract_error_data(
                     "sample_idx": sample_id,
                     "subgoal_idx": subgoal_idx,
                     "subgoal_detail": subgoal_detail,
-                    "judge_model_input": av.subgoal_validation.prompt_sent_to_llmj if hasattr(av.subgoal_validation, 'prompt_sent_to_llmj') else "",
+                    "judge_model_input": av.subgoal_validation.prompt_sent_to_llmj
+                    if hasattr(av.subgoal_validation, "prompt_sent_to_llmj")
+                    else "",
                     "cluster_label": cluster_label,
-                    "final_error_type": av.base_error if hasattr(av, 'base_error') else "",
+                    "final_error_type": av.base_error if hasattr(av, "base_error") else "",
                 }
 
                 # Extract judge scores
-                explanations = av.subgoal_validation.explanations[1:] if len(av.subgoal_validation.explanations) > 1 else []
+                explanations = (
+                    av.subgoal_validation.explanations[1:]
+                    if len(av.subgoal_validation.explanations) > 1
+                    else []
+                )
                 for j, exp in enumerate(explanations):
                     if exp == "DUMMY STRING":
                         continue
@@ -165,14 +184,16 @@ def extract_error_data(
 
     # Third pass: Process completed subgoals (WITHOUT cluster_label)
     # This matches ResultHandler.prepare_dataframes() lines 74-81
-    if error_analysis_result and hasattr(error_analysis_result, 'completed_subgoal_validations'):
+    if error_analysis_result and hasattr(error_analysis_result, "completed_subgoal_validations"):
         for cv in error_analysis_result.completed_subgoal_validations:
             if cv is None or cv.subgoal_validation is None:
                 continue
 
             agent_run_id = str(cv.agent_run_id if cv.agent_run_id is not None else "0")
             sample_id = cv.data_sample_id
-            subgoal_detail = cv.subgoal_validation.sub_goal.details if cv.subgoal_validation.sub_goal else ""
+            subgoal_detail = (
+                cv.subgoal_validation.sub_goal.details if cv.subgoal_validation.sub_goal else ""
+            )
 
             # Track subgoal index
             key = (agent_run_id, sample_id)
@@ -187,11 +208,17 @@ def extract_error_data(
                 "sample_idx": sample_id,
                 "subgoal_idx": subgoal_idx,
                 "subgoal_detail": subgoal_detail,
-                "judge_model_input": cv.subgoal_validation.prompt_sent_to_llmj if hasattr(cv.subgoal_validation, 'prompt_sent_to_llmj') else "",
+                "judge_model_input": cv.subgoal_validation.prompt_sent_to_llmj
+                if hasattr(cv.subgoal_validation, "prompt_sent_to_llmj")
+                else "",
             }
 
             # Extract judge scores
-            explanations = cv.subgoal_validation.explanations[1:] if len(cv.subgoal_validation.explanations) > 1 else []
+            explanations = (
+                cv.subgoal_validation.explanations[1:]
+                if len(cv.subgoal_validation.explanations) > 1
+                else []
+            )
             for j, exp in enumerate(explanations):
                 if exp == "DUMMY STRING":
                     continue
@@ -218,7 +245,9 @@ def extract_error_data(
         subgoal_idx_map = {}
         for sample_idx, subgoal_details in sample_subgoals.items():
             sorted_details = sorted(subgoal_details)
-            subgoal_idx_map[sample_idx] = {detail: idx + 1 for idx, detail in enumerate(sorted_details)}
+            subgoal_idx_map[sample_idx] = {
+                detail: idx + 1 for idx, detail in enumerate(sorted_details)
+            }
 
         # Apply the mapping to reassign subgoal_idx
         for row in full_data:
@@ -232,7 +261,9 @@ def extract_error_data(
     # Count number of judges from first sample with data
     num_judges = 0
     if full_data:
-        judge_keys = [k for k in full_data[0].keys() if k.startswith("pred_") and k.endswith("_score")]
+        judge_keys = [
+            k for k in full_data[0].keys() if k.startswith("pred_") and k.endswith("_score")
+        ]
         num_judges = len(judge_keys)
 
     # Summary statistics: Count errors and completions from full_data
@@ -258,7 +289,7 @@ def extract_error_data(
             "completed_count": completed_count,
             "error_count": error_count,
             "num_error_types": num_error_types,
-        }
+        },
     }
 
 
@@ -274,22 +305,22 @@ def build_error_summary_table(error_data: Dict[str, Any]) -> str:
 
     # Filter to only rows with cluster_label (errors)
     # Match Streamlit logic: lines 60-66 of consistency_viz.py
-    error_rows = [row for row in full_data if row.get("cluster_label") and row["cluster_label"] != ""]
+    error_rows = [
+        row for row in full_data if row.get("cluster_label") and row["cluster_label"] != ""
+    ]
 
     # Filter out rows where cluster_label contains BOTH "no" AND "error"
     error_rows = [
-        row for row in error_rows
-        if not (
-            "no" in row["cluster_label"].lower() and
-            "error" in row["cluster_label"].lower()
-        )
+        row
+        for row in error_rows
+        if not ("no" in row["cluster_label"].lower() and "error" in row["cluster_label"].lower())
     ]
 
     if not error_rows:
         return ""
 
     # Build trace map (agent_run_id -> trace_N)
-    trace_map = {run_id: f"trace_{i+1}" for i, run_id in enumerate(agent_runs)}
+    trace_map = {run_id: f"trace_{i + 1}" for i, run_id in enumerate(agent_runs)}
 
     # Get unique cluster labels
     cluster_labels = sorted(set(row["cluster_label"] for row in error_rows))
@@ -320,7 +351,7 @@ def build_error_summary_table(error_data: Dict[str, Any]) -> str:
             # Sort traces numerically (trace_1, trace_2, ..., trace_10, trace_11, ...)
             traces = sorted(
                 sample_traces.get(sid, []),
-                key=lambda t: int(t.split('_')[1]) if '_' in t else 0
+                key=lambda t: int(t.split("_")[1]) if "_" in t else 0,
             )
             if traces:
                 cell_class = ' class="trace-cell"'
@@ -332,8 +363,12 @@ def build_error_summary_table(error_data: Dict[str, Any]) -> str:
                     visible_traces = ", ".join(traces[:MAX_VISIBLE_TRACES])
                     hidden_traces = ", ".join(traces[MAX_VISIBLE_TRACES:])
                     more_count = len(traces) - MAX_VISIBLE_TRACES
-                    cell_id = f"cell_{cluster_label.replace(' ', '_').replace('/', '_')}_{sid}".replace('-', '_')
-                    content = f'''<span class="trace-list-visible">{visible_traces}</span><span class="trace-list-hidden" id="hidden_{cell_id}" style="display:none">, {hidden_traces}</span><button class="trace-expand-btn" onclick="toggleTraces('{cell_id}')" id="btn_{cell_id}">+{more_count} more</button>'''
+                    cell_id = (
+                        f"cell_{cluster_label.replace(' ', '_').replace('/', '_')}_{sid}".replace(
+                            "-", "_"
+                        )
+                    )
+                    content = f"""<span class="trace-list-visible">{visible_traces}</span><span class="trace-list-hidden" id="hidden_{cell_id}" style="display:none">, {hidden_traces}</span><button class="trace-expand-btn" onclick="toggleTraces('{cell_id}')" id="btn_{cell_id}">+{more_count} more</button>"""
             else:
                 cell_class = ""
                 content = "–"
@@ -383,14 +418,17 @@ def build_error_analysis_page(
     summary = error_data["summary"]
 
     # Prepare data for JavaScript
-    data_json = json.dumps({
-        "mean_data": error_data["mean_data"],
-        "full_data": error_data["full_data"],
-        "agent_runs": error_data["agent_runs"],
-        "sample_ids": error_data["sample_ids"],
-        "num_judges": error_data["num_judges"],
-        "summary": summary,
-    }, ensure_ascii=False)
+    data_json = json.dumps(
+        {
+            "mean_data": error_data["mean_data"],
+            "full_data": error_data["full_data"],
+            "agent_runs": error_data["agent_runs"],
+            "sample_ids": error_data["sample_ids"],
+            "num_judges": error_data["num_judges"],
+            "summary": summary,
+        },
+        ensure_ascii=False,
+    )
 
     # Build error summary table HTML
     error_table_html = build_error_summary_table(error_data)
@@ -453,27 +491,27 @@ def build_error_analysis_page(
   <!-- Summary cards -->
   <div class="summary-cards">
     <div class="summary-card">
-      <div class="card-value">{summary['num_samples']}</div>
+      <div class="card-value">{summary["num_samples"]}</div>
       <div class="card-label">Samples</div>
     </div>
     <div class="summary-card">
-      <div class="card-value">{summary['num_traces']}</div>
+      <div class="card-value">{summary["num_traces"]}</div>
       <div class="card-label">Traces</div>
     </div>
     <div class="summary-card">
-      <div class="card-value">{summary['total_subgoals']}</div>
+      <div class="card-value">{summary["total_subgoals"]}</div>
       <div class="card-label">Total Subgoals</div>
     </div>
     <div class="summary-card">
-      <div class="card-value" style="color:var(--score-hi)">{summary['completed_count']}</div>
+      <div class="card-value" style="color:var(--score-hi)">{summary["completed_count"]}</div>
       <div class="card-label">Completed</div>
     </div>
     <div class="summary-card">
-      <div class="card-value" style="color:var(--score-lo)">{summary['error_count']}</div>
+      <div class="card-value" style="color:var(--score-lo)">{summary["error_count"]}</div>
       <div class="card-label">Errors</div>
     </div>
     <div class="summary-card">
-      <div class="card-value">{summary['num_error_types']}</div>
+      <div class="card-value">{summary["num_error_types"]}</div>
       <div class="card-label">Error Types</div>
     </div>
   </div>
@@ -1301,6 +1339,7 @@ window.onload = function() {{
 # Main Generator Functions
 # ---------------------------------------------------------------------------
 
+
 def generate_folder_name(entry: Dict[str, Any], dataset_name: str) -> str:
     """Generate a readable folder name: dataset_model_persona_id"""
     model = entry.get("agent_model", "").split("/")[-1].replace("-", "_").replace(".", "_")
@@ -1364,5 +1403,6 @@ def generate_error_analysis_pages(
     except Exception as e:
         print(f"  [error] Failed to generate error analysis: {e}")
         import traceback
+
         traceback.print_exc()
         return None

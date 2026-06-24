@@ -1,7 +1,12 @@
 from typing import List, Dict, Any, Optional, Tuple
 
 from agent_inspect.metrics.adapters.base_adapter import BaseAdapter
-from agent_inspect.models.metrics.agent_trace import AgentDialogueTrace, TurnTrace, Step, AgentResponse
+from agent_inspect.models.metrics.agent_trace import (
+    AgentDialogueTrace,
+    TurnTrace,
+    Step,
+    AgentResponse,
+)
 from agent_inspect.models.metrics.agent_data_sample import ToolInputParameter
 
 
@@ -10,7 +15,9 @@ class Tau2BenchAdapter(BaseAdapter):
     Adapter for converting tau2bench conversation format to AgentDialogueTrace format.
     """
 
-    def convert_to_agent_trace(self, conversation_data: List[Dict[str, Any]]) -> AgentDialogueTrace:
+    def convert_to_agent_trace(
+        self, conversation_data: List[List[Dict[str, Any]]]
+    ) -> AgentDialogueTrace:
         """
         Convert tau2bench conversation format to AgentDialogueTrace format.
 
@@ -26,7 +33,9 @@ class Tau2BenchAdapter(BaseAdapter):
 
         return AgentDialogueTrace(turns=turns)
 
-    def _process_turn(self, turn_messages: List[Dict[str, Any]], turn_idx: int) -> Optional[TurnTrace]:
+    def _process_turn(
+        self, turn_messages: List[Dict[str, Any]], turn_idx: int
+    ) -> Optional[TurnTrace]:
         """
         Process a single conversation turn into a TurnTrace.
 
@@ -46,7 +55,7 @@ class Tau2BenchAdapter(BaseAdapter):
             agent_response=agent_response,
             from_id=f"turn_{turn_idx - 1}" if turn_idx > 0 else None,
             steps=steps,
-            latency_in_ms=None
+            latency_in_ms=None,
         )
 
     def _extract_user_input(self, turn_messages: List[Dict[str, Any]]) -> Optional[str]:
@@ -61,8 +70,9 @@ class Tau2BenchAdapter(BaseAdapter):
                 return message.get("content")
         return None
 
-    def _process_agent_messages(self, turn_messages: List[Dict[str, Any]], turn_idx: int) -> Tuple[
-        Optional[AgentResponse], List[Step]]:
+    def _process_agent_messages(
+        self, turn_messages: List[Dict[str, Any]], turn_idx: int
+    ) -> Tuple[Optional[AgentResponse], List[Step]]:
         """
         Process agent messages to extract response and tool steps.
 
@@ -78,7 +88,9 @@ class Tau2BenchAdapter(BaseAdapter):
                 # Process tool calls first
                 tool_calls = message.get("tool_calls", [])
                 if tool_calls:
-                    new_steps = self._process_tool_calls(tool_calls, turn_messages, turn_idx, len(steps))
+                    new_steps = self._process_tool_calls(
+                        tool_calls, turn_messages, turn_idx, len(steps)
+                    )
                     steps.extend(new_steps)
 
                 # Process agent response content
@@ -88,8 +100,13 @@ class Tau2BenchAdapter(BaseAdapter):
 
         return agent_response, steps
 
-    def _process_tool_calls(self, tool_calls: List[Dict[str, Any]], turn_messages: List[Dict[str, Any]],
-                            turn_idx: int, step_offset: int) -> List[Step]:
+    def _process_tool_calls(
+        self,
+        tool_calls: List[Dict[str, Any]],
+        turn_messages: List[Dict[str, Any]],
+        turn_idx: int,
+        step_offset: int,
+    ) -> List[Step]:
         """
         Process tool calls into Step objects.
 
@@ -103,7 +120,11 @@ class Tau2BenchAdapter(BaseAdapter):
 
         for step_idx, tool_call in enumerate(tool_calls):
             tool_input_args = self._parse_tool_arguments(tool_call.get("arguments", {}))
-            tool_output = self._find_tool_output(tool_call.get("id"), turn_messages)
+            tool_output = (
+                self._find_tool_output(str(tool_call.get("id")), turn_messages)
+                if tool_call.get("id")
+                else None
+            )
             parent_ids = self._get_parent_ids(step_offset + step_idx, turn_idx, step_offset)
 
             step = Step(
@@ -115,7 +136,7 @@ class Tau2BenchAdapter(BaseAdapter):
                 agent_thought=None,
                 input_token_consumption=None,
                 output_token_consumption=None,
-                reasoning_token_consumption=None
+                reasoning_token_consumption=None,
             )
             steps.append(step)
 
@@ -133,7 +154,9 @@ class Tau2BenchAdapter(BaseAdapter):
             tool_input_args.append(ToolInputParameter(name=key, value=value))
         return tool_input_args
 
-    def _find_tool_output(self, tool_call_id: str, turn_messages: List[Dict[str, Any]]) -> Optional[str]:
+    def _find_tool_output(
+        self, tool_call_id: str, turn_messages: List[Dict[str, Any]]
+    ) -> Optional[str]:
         """
         Find the tool output for a given tool call ID.
 
@@ -142,8 +165,7 @@ class Tau2BenchAdapter(BaseAdapter):
         :return: Tool output content or None
         """
         for message in turn_messages:
-            if (message.get("role") == "tool" and
-                    message.get("tool_id") == tool_call_id):
+            if message.get("role") == "tool" and message.get("tool_id") == tool_call_id:
                 return message.get("content")
         return None
 

@@ -1,6 +1,7 @@
 from typing import Optional, Dict, Any
 
-from agent_inspect.metrics.utils.metrics_utils import get_config_or_default
+from agent_inspect.core.utils import get_config_or_default
+
 
 def exact_match(candidate: str, ground_truth: str, config: Optional[Dict[str, Any]] = None) -> bool:
     trim = get_config_or_default(config, "trim", True)
@@ -12,6 +13,3 @@ def exact_match(candidate: str, ground_truth: str, config: Optional[Dict[str, An
         candidate = candidate.lower()
         ground_truth = ground_truth.lower()
     return candidate == ground_truth
-
-
-

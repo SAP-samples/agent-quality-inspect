@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import List, Dict, Any
+from typing import Dict, Any
 import json
 
 from agent_inspect.models.metrics.agent_trace import AgentDialogueTrace
@@ -23,11 +23,11 @@ class BaseAdapter(ABC):
         return data
 
     @abstractmethod
-    def convert_to_agent_trace(self, conversation_data: List[Dict[str, Any]]) -> AgentDialogueTrace:
+    def convert_to_agent_trace(self, conversation_data: Any) -> AgentDialogueTrace:
         """
         Convert external conversation format to AgentDialogueTrace format.
 
-        :param conversation_data: List of conversation turns in external format.
+        :param conversation_data: Conversation data in external format (format varies by adapter).
         :return: Converted agent trace.
         """
         pass

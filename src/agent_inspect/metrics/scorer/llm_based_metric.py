@@ -22,10 +22,10 @@ class LLMBasedMetric(Metric):
 
     @abstractmethod
     def evaluate(
-            self,
-            agent_trace: AgentDialogueTrace,
-            evaluation_data_sample: EvaluationSample,
-    ):
+        self,
+        agent_trace: AgentDialogueTrace,
+        evaluation_data_sample: EvaluationSample,
+    ) -> Any:
         """
         This is an abstract method and should be implemented in a concrete class.
 
@@ -39,5 +39,5 @@ class LLMBasedMetric(Metric):
     def get_turn_groupings_from_traces(agent_trace, turns_to_run):
         turns_groupings = []
         for i in range(turns_to_run):
-            turns_groupings.append(agent_trace.turns[:i + 1])
+            turns_groupings.append(agent_trace.turns[: i + 1])
         return turns_groupings

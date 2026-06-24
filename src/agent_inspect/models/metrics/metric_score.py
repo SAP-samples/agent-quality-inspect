@@ -2,6 +2,7 @@ from typing import Optional, List, Dict, Any
 from dataclasses import dataclass
 from agent_inspect.models.metrics.validation_result import ValidationResult
 
+
 @dataclass
 class NumericalScore:
     """
@@ -25,6 +26,7 @@ class NumericalScore:
     Contains a list of validation results for each subgoal associated with this score.
     """
 
+
 @dataclass
 class BooleanScore:
     """
@@ -39,4 +41,3 @@ class BooleanScore:
     """
     Contains a list of explanation/reason(s) for why/how this particular score is calculated.
     """
-

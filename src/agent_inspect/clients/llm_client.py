@@ -2,6 +2,7 @@ from abc import ABC, abstractmethod
 from agent_inspect.models.llm_response import LLMResponse
 from agent_inspect.models.llm_payload import LLMPayload
 
+
 class LLMClient(ABC):
     """
     This is a base abstract class that should be extended for actual implementations to connect to llm-as-a-judge model.

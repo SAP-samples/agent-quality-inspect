@@ -11,21 +11,31 @@ class TraceValidator:
     """
 
     @staticmethod
-    def validate_turn_traces(agent_turn_traces: List[TurnTrace]) -> None:
+    def validate_turn_traces_content(agent_turn_traces: List[TurnTrace]) -> None:
         for turn_trace in agent_turn_traces:
-            TraceValidator.validate_agent_input(turn_trace)
-            TraceValidator.validate_agent_response(turn_trace)
+            TraceValidator.validate_agent_input_if_empty(turn_trace)
+            TraceValidator.validate_agent_response_if_empty(turn_trace)
 
     @staticmethod
-    def validate_agent_input(agent_turn_trace: TurnTrace) -> None:
+    def validate_agent_trace_if_empty(agent_turn_traces: List[TurnTrace]) -> None:
+        if not agent_turn_traces or len(agent_turn_traces) == 0:
+            raise InvalidInputValueError(
+                internal_code=ErrorCode.MISSING_VALUE.value,
+                message="Agent turn traces list is empty or None.",
+            )
+
+    @staticmethod
+    def validate_agent_input_if_empty(agent_turn_trace: TurnTrace) -> None:
         if not agent_turn_trace.agent_input:
-            raise InvalidInputValueError(internal_code=ErrorCode.MISSING_VALUE.value, message=f"Turn :{agent_turn_trace.id} is missing agent input.")
+            raise InvalidInputValueError(
+                internal_code=ErrorCode.MISSING_VALUE.value,
+                message=f"Turn :{agent_turn_trace.id} is missing agent input.",
+            )
 
     @staticmethod
-    def validate_agent_response(agent_turn_trace: TurnTrace) -> None:
+    def validate_agent_response_if_empty(agent_turn_trace: TurnTrace) -> None:
         if not agent_turn_trace.agent_response or not agent_turn_trace.agent_response.response:
-            raise InvalidInputValueError(internal_code=ErrorCode.MISSING_VALUE.value, message=f"Turn :{agent_turn_trace.id} is missing agent response.")
-
-
-
-
+            raise InvalidInputValueError(
+                internal_code=ErrorCode.MISSING_VALUE.value,
+                message=f"Turn :{agent_turn_trace.id} is missing agent response.",
+            )

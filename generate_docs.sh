@@ -21,10 +21,5 @@ find docs -name '*.rst' -exec sed -i '' -e '/^.. toctree::/{
     s/.*/   :maxdepth: 1/
 }' {} +
 
-
-cd docs
-
-make clean
-make html
-
-cd ..
+# Build docs in a subshell to avoid mutating working directory
+(cd docs && make clean && make html)

@@ -4,6 +4,7 @@ import asyncio
 import backoff
 
 from openai import AzureOpenAI, APIStatusError, RateLimitError
+from openai.types.chat import ChatCompletionUserMessageParam
 from typing import Any, Dict
 import logging
 
@@ -11,7 +12,12 @@ from agent_inspect.clients.llm_client import LLMClient
 from agent_inspect.models.llm_payload import LLMPayload
 from agent_inspect.models.llm_response import LLMResponse
 
-from agent_inspect.metrics.constants import STATUS_200, STATUS_500, STATUS_429, MAX_RETRY_ATTEMPTS_EXCEEDED
+from agent_inspect.metrics.constants import (
+    STATUS_200,
+    STATUS_500,
+    STATUS_429,
+    MAX_RETRY_ATTEMPTS_EXCEEDED,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -56,33 +62,37 @@ class AzureOpenAIClient(LLMClient):
         self.model = model
         self.max_tokens = max_tokens
         self.chat_client = AzureOpenAI(
-            api_version=os.environ['AZURE_API_VERSION'],
-            azure_endpoint=os.environ['AZURE_API_BASE'],
-            api_key=os.environ['AZURE_API_KEY'],
+            api_version=os.environ["AZURE_API_VERSION"],
+            azure_endpoint=os.environ["AZURE_API_BASE"],
+            api_key=os.environ["AZURE_API_KEY"],
         )
         self.temperature = temperature
 
     @backoff.on_exception(
         backoff.expo,
-        (APIStatusError, RateLimitError, requests.exceptions.Timeout, requests.exceptions.ConnectionError,
-         requests.exceptions.RequestException),
+        (
+            APIStatusError,
+            RateLimitError,
+            requests.exceptions.Timeout,
+            requests.exceptions.ConnectionError,
+            requests.exceptions.RequestException,
+        ),
         max_tries=10,
         max_time=300,
         jitter=None,
         on_backoff=backoff_handler,
         on_giveup=give_up_handler,
-        giveup=lambda e: isinstance(e, APIStatusError) and e.status_code in [400, 401, 403, 404]
+        giveup=lambda e: isinstance(e, APIStatusError) and e.status_code in [400, 401, 403, 404],
     )
     async def make_llm_request_with_retry(self, prompt: str):
-        messages = [{"role": "user", "content": prompt}]
+        messages = [ChatCompletionUserMessageParam(content=prompt, role="user")]
         azure_openai_response = self.chat_client.chat.completions.create(
             model=self.model,
             messages=messages,
             max_tokens=self.max_tokens,
-            temperature=self.temperature
+            temperature=self.temperature,
         )
         return azure_openai_response
-
 
     async def make_llm_request(self, prompt: str) -> LLMResponse:
         """
@@ -96,22 +106,29 @@ class AzureOpenAIClient(LLMClient):
         # Backoff decorator handles retries; this try-catch handles final failures
         try:
             azure_openai_response = await self.make_llm_request_with_retry(prompt)
-            return LLMResponse(status=STATUS_200, completion=azure_openai_response.choices[0].message.content)
+            return LLMResponse(
+                status=STATUS_200,
+                completion=azure_openai_response.choices[0].message.content,
+            )
         except RateLimitError:
-            return LLMResponse(status=STATUS_429, completion="", error_message=MAX_RETRY_ATTEMPTS_EXCEEDED)
+            return LLMResponse(
+                status=STATUS_429,
+                completion="",
+                error_message=MAX_RETRY_ATTEMPTS_EXCEEDED,
+            )
         except APIStatusError as e:
             # Non-retryable errors (4xx) or final failure after all retries
             return LLMResponse(
                 status=e.status_code,
                 completion="",
-                error_message=f"Azure OpenAI API Error: {e.message}"
+                error_message=f"Azure OpenAI API Error: {e.message}",
             )
         except Exception as e:
             # Catch any other unexpected errors
             return LLMResponse(
                 status=STATUS_500,
                 completion="",
-                error_message=f"Unexpected error: {str(e)}"
+                error_message=f"Unexpected error: {str(e)}",
             )
 
     async def make_llm_requests(self, prompts: list[str]) -> list[LLMResponse]:
@@ -124,7 +141,7 @@ class AzureOpenAIClient(LLMClient):
 
         responses = await asyncio.gather(*(self.make_llm_request(prompt) for prompt in prompts))
         return list(responses)
-    
+
     def convert_payload_to_raw_request(self, payload: LLMPayload) -> Dict[str, Any]:
         raw_request: Dict[str, Any] = {}
         messages = []
@@ -133,7 +150,9 @@ class AzureOpenAIClient(LLMClient):
         messages.append({"role": "user", "content": payload.user_prompt})
         raw_request["model"] = payload.model if payload.model else self.model
         raw_request["messages"] = messages
-        raw_request["temperature"] = payload.temperature if payload.temperature else self.temperature
+        raw_request["temperature"] = (
+            payload.temperature if payload.temperature else self.temperature
+        )
         raw_request["max_tokens"] = payload.max_tokens if payload.max_tokens else self.max_tokens
         if payload.structured_output:
             raw_request["response_format"] = payload.structured_output
@@ -141,20 +160,24 @@ class AzureOpenAIClient(LLMClient):
 
     @backoff.on_exception(
         backoff.expo,
-        (APIStatusError, requests.exceptions.Timeout, requests.exceptions.ConnectionError,
-         requests.exceptions.RequestException),
+        (
+            APIStatusError,
+            requests.exceptions.Timeout,
+            requests.exceptions.ConnectionError,
+            requests.exceptions.RequestException,
+        ),
         max_tries=10,
         max_time=300,
         jitter=None,
         on_backoff=backoff_handler,
         on_giveup=give_up_handler,
-        giveup=lambda e: isinstance(e, APIStatusError) and e.status_code in [400, 401, 403, 404]
+        giveup=lambda e: isinstance(e, APIStatusError) and e.status_code in [400, 401, 403, 404],
     )
     async def make_request_with_payload_using_retry(self, payload: LLMPayload):
         raw_request = self.convert_payload_to_raw_request(payload)
         azure_response = self.chat_client.chat.completions.create(**raw_request)
         return azure_response
-    
+
     async def make_request_with_payload(self, payload: LLMPayload) -> LLMResponse:
         """
         Returns LLM completion after sending a payload to the selected the model.
@@ -164,9 +187,15 @@ class AzureOpenAIClient(LLMClient):
         """
         try:
             azure_response = await self.make_request_with_payload_using_retry(payload)
-            response = LLMResponse(status=STATUS_200, completion=azure_response.choices[0].message.content)
+            response = LLMResponse(
+                status=STATUS_200, completion=azure_response.choices[0].message.content
+            )
         except RateLimitError:
-            response = LLMResponse(status=STATUS_429, completion="", error_message=MAX_RETRY_ATTEMPTS_EXCEEDED)
+            response = LLMResponse(
+                status=STATUS_429,
+                completion="",
+                error_message=MAX_RETRY_ATTEMPTS_EXCEEDED,
+            )
         except APIStatusError as e:
             response = LLMResponse(status=e.status_code, completion="", error_message=e.message)
         except Exception as e:

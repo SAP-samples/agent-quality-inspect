@@ -20,7 +20,7 @@ from tau2.config import (
     REDIS_PORT,
     REDIS_PREFIX,
     USE_LANGFUSE,
-    DEFAULT_LLM_AGENT
+    DEFAULT_LLM_AGENT,
 )
 from tau2.data_model.message import (
     AssistantMessage,
