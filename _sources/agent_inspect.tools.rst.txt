@@ -1,0 +1,29 @@
+agent\_inspect.tools package
+============================
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 1
+
+   agent_inspect.tools.error_analysis
+
+Submodules
+----------
+
+agent\_inspect.tools.utils module
+---------------------------------
+
+.. automodule:: agent_inspect.tools.utils
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: agent_inspect.tools
+   :members:
+   :undoc-members:
+   :show-inheritance:

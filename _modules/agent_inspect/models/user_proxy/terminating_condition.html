@@ -1,0 +1,190 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>agent_inspect.models.user_proxy.terminating_condition &mdash; agent_inspect 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/custom.css?v=eea1f72d" />
+
+  
+      <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../_static/documentation_options.js?v=f2a433a1"></script>
+      <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            agent_inspect
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules.html">agent_inspect</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">agent_inspect</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">agent_inspect.models.user_proxy.terminating_condition</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for agent_inspect.models.user_proxy.terminating_condition</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span>
+
+
+<span class="n">DEFAULT_STOP_SEQUENCE</span> <span class="o">=</span> <span class="s2">&quot;END_CONVERSATION&quot;</span>
+<span class="n">DEFAULT_DONE_STOP_SEQUENCE</span> <span class="o">=</span> <span class="s2">&quot;##DONE##&quot;</span>
+<span class="n">DEFAULT_DELEGATED_STOP_SEQUENCE</span> <span class="o">=</span> <span class="s2">&quot;##DELEGATE##&quot;</span>
+<span class="n">DEFAULT_BLOCKED_STOP_SEQUENCE</span> <span class="o">=</span> <span class="s2">&quot;##BLOCKED##&quot;</span>
+
+<span class="n">DEFAULT_CHECK</span> <span class="o">=</span> <span class="s2">&quot;The task is considered complete if the instruction goal is satisfied or you are transferred to another agent or you find yourself in a situation in which the scenario does not provide enough information for you to continue the conversation.&quot;</span>
+<span class="n">DEFAULT_DONE_CHECK</span> <span class="o">=</span> <span class="s2">&quot;The task is considered complete when the instruction goal as defined in the [user_task_summary] has been satisfied, even if you (the LLM-simulated user) do not have sufficient information to independently verify the correctness of the outcome.&quot;</span>
+<span class="n">DEFAULT_DELEGATED_CHECK</span> <span class="o">=</span> <span class="s2">&quot;The task must be terminated as soon as the AI agent initiates, implies, or begins any action that transfers, is transferring, or is in the process of transferring—explicitly or implicitly—control of the conversation to another agent, system, or human operator, even if the instruction goal as defined in the [user_task_summary] has not been fully satisfied.&quot;</span>
+<span class="n">DEFAULT_BLOCKED_CHECK</span> <span class="o">=</span> <span class="s2">&quot;The task must be terminated when the AI agent is unable to proceed because it lacks the required permissions, knowledge, capabilities, or access to the necessary tools to fulfill the instruction goal as defined in the [user_task_summary].&quot;</span>
+
+
+<div class="viewcode-block" id="TerminatingCondition">
+<a class="viewcode-back" href="../../../../agent_inspect.models.user_proxy.html#agent_inspect.models.user_proxy.terminating_condition.TerminatingCondition">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">TerminatingCondition</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Represents a condition used to terminate user-agent conversation early.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">check</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">DEFAULT_CHECK</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Description of the terminating condition.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">stop_sequence</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">DEFAULT_STOP_SEQUENCE</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The stop sequence indicating the end of the conversation when the condition is met. This is for future use and any value assigned here will be ignored for now.</span>
+<span class="sd">    &quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="TaskCompletedTerminatingCondition">
+<a class="viewcode-back" href="../../../../agent_inspect.models.user_proxy.html#agent_inspect.models.user_proxy.terminating_condition.TaskCompletedTerminatingCondition">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">TaskCompletedTerminatingCondition</span><span class="p">(</span><span class="n">TerminatingCondition</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Represents a terminating condition indicating that the task is completed.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">check</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">DEFAULT_DONE_CHECK</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The default check for task completion.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">stop_sequence</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">DEFAULT_DONE_STOP_SEQUENCE</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The default stop sequence for completed task.</span>
+<span class="sd">    &quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="TaskDelegatedTerminatingCondition">
+<a class="viewcode-back" href="../../../../agent_inspect.models.user_proxy.html#agent_inspect.models.user_proxy.terminating_condition.TaskDelegatedTerminatingCondition">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">TaskDelegatedTerminatingCondition</span><span class="p">(</span><span class="n">TerminatingCondition</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Represents a terminating condition indicating that the task is delegated to another party.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">check</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">DEFAULT_DELEGATED_CHECK</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The default check for task delegation.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">stop_sequence</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">DEFAULT_DELEGATED_STOP_SEQUENCE</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The default stop sequence for delegated task.</span>
+<span class="sd">    &quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="TaskBlockedTerminatingCondition">
+<a class="viewcode-back" href="../../../../agent_inspect.models.user_proxy.html#agent_inspect.models.user_proxy.terminating_condition.TaskBlockedTerminatingCondition">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">TaskBlockedTerminatingCondition</span><span class="p">(</span><span class="n">TerminatingCondition</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Represents a terminating condition indicating that the task is blocked due to some issues.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">check</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">DEFAULT_BLOCKED_CHECK</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The default check for task being blocked.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">stop_sequence</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">DEFAULT_BLOCKED_STOP_SEQUENCE</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The default stop sequence for blocked task.</span>
+<span class="sd">    &quot;&quot;&quot;</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, &#34;&#34;.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

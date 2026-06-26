@@ -1,0 +1,279 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>agent_inspect.tools.error_analysis.semisupervised_tool_call_error_analysis &mdash; agent_inspect 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/custom.css?v=eea1f72d" />
+
+  
+      <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../_static/documentation_options.js?v=f2a433a1"></script>
+      <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            agent_inspect
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules.html">agent_inspect</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">agent_inspect</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">agent_inspect.tools.error_analysis.semisupervised_tool_call_error_analysis</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for agent_inspect.tools.error_analysis.semisupervised_tool_call_error_analysis</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.models.metrics.validation_result</span><span class="w"> </span><span class="kn">import</span> <span class="n">ToolCallValidationResult</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.tools.error_analysis.tool_call_error_analysis</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">ToolCallErrorAnalysis</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.models.tools.analysis_models</span><span class="w"> </span><span class="kn">import</span> <span class="n">AnalyzedToolValidation</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.models.tools.error_cluster</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">ErrorCluster</span><span class="p">,</span>
+    <span class="n">DEFAULT_TOOL_CALL_ERROR_CLUSTERS</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.models.llm_payload</span><span class="w"> </span><span class="kn">import</span> <span class="n">LLMPayload</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.clients.llm_client</span><span class="w"> </span><span class="kn">import</span> <span class="n">LLMClient</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.tools.error_analysis.llm_templates</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">TOOL_VALIDATION_CLASSIFICATION_PROMPT_TEMPLATE</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.tools.error_analysis.llm_output_schemas</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">TOOL_VALIDATION_CLASSIFICATION_OUTPUT_SCHEMA</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.tools.error_analysis.utils.validator</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">validate_user_defined_clusters</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.exception</span><span class="w"> </span><span class="kn">import</span> <span class="n">InvalidInputValueError</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.exception.error_codes</span><span class="w"> </span><span class="kn">import</span> <span class="n">ErrorCode</span><span class="p">,</span> <span class="n">ToolComponent</span>
+
+
+<div class="viewcode-block" id="SemisupervisedToolCallErrorAnalysis">
+<a class="viewcode-back" href="../../../../agent_inspect.tools.error_analysis.html#agent_inspect.tools.error_analysis.semisupervised_tool_call_error_analysis.SemisupervisedToolCallErrorAnalysis">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">SemisupervisedToolCallErrorAnalysis</span><span class="p">(</span><span class="n">ToolCallErrorAnalysis</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Performs semi-supervised error analysis on tool call validations using LLMs.</span>
+
+<span class="sd">    This implementation uses a direct classification approach where each validation error</span>
+<span class="sd">    is classified into predefined error clusters using an LLM judge. The validation</span>
+<span class="sd">    explanation serves as the base error description, and the LLM assigns the most</span>
+<span class="sd">    appropriate error cluster label.</span>
+
+<span class="sd">    Unlike unsupervised methods that discover patterns through clustering, this semi-supervised</span>
+<span class="sd">    approach leverages predefined error categories to provide more interpretable and consistent</span>
+<span class="sd">    error classification across evaluations. When a validation error does not fit well into any of the predefined clusters, it will be labeled as &quot;Unclassified&quot;. No new clusters will be created in this approach.</span>
+
+<span class="sd">    **Default predefined clusters**:</span>
+
+<span class="sd">        - :obj:`~agent_inspect.models.tools.error_cluster.IncorrectToolInputCluster`</span>
+<span class="sd">        - :obj:`~agent_inspect.models.tools.error_cluster.IncorrectToolOutputHandlingCluster`</span>
+<span class="sd">        - :obj:`~agent_inspect.models.tools.error_cluster.WrongToolSelectionCluster`</span>
+
+<span class="sd">    :param llm_client: The :class:`~agent_inspect.clients.LLMClient` to use for error classification. Must implement the :class:`~agent_inspect.clients.LLMClient` interface for making LLM requests.</span>
+<span class="sd">    :param config: Optional configuration dictionary. Supported keys:</span>
+
+<span class="sd">        - **max_workers**: Maximum number of concurrent workers for processing validations (default: 20)</span>
+
+<span class="sd">    :param error_clusters: Optional list of error cluster definitions. If not provided, uses the default tool call error clusters.</span>
+<span class="sd">    :raises InvalidInputValueError: If llm_client is None or if error_clusters are invalid.</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; from agent_inspect.clients.azure_openai_client import AzureOpenAIClient</span>
+<span class="sd">        &gt;&gt;&gt; from agent_inspect.models.tools.analysis_models import ToolCallErrorAnalysisDataSample</span>
+<span class="sd">        &gt;&gt;&gt;</span>
+<span class="sd">        &gt;&gt;&gt; # Initialize with LLM client</span>
+<span class="sd">        &gt;&gt;&gt; llm_client = AzureOpenAIClient(model=&quot;gpt-4.1&quot;, max_tokens=4096)</span>
+<span class="sd">        &gt;&gt;&gt; analyzer = SemisupervisedToolCallErrorAnalysis(</span>
+<span class="sd">        ...     llm_client=llm_client,</span>
+<span class="sd">        ...     config={&quot;max_workers&quot;: 10}</span>
+<span class="sd">        ... )</span>
+<span class="sd">        &gt;&gt;&gt;</span>
+<span class="sd">        &gt;&gt;&gt; # Prepare data samples with tool call validations</span>
+<span class="sd">        &gt;&gt;&gt; data_samples: List[ToolCallErrorAnalysisDataSample] = [...]</span>
+<span class="sd">        &gt;&gt;&gt;</span>
+<span class="sd">        &gt;&gt;&gt; # Run error analysis with default clusters</span>
+<span class="sd">        &gt;&gt;&gt; results = analyzer.analyze_batch(data_samples)</span>
+<span class="sd">        &gt;&gt;&gt;</span>
+<span class="sd">        &gt;&gt;&gt; # Or provide custom error clusters</span>
+<span class="sd">        &gt;&gt;&gt; from agent_inspect.models.tools.error_cluster import ErrorCluster</span>
+<span class="sd">        &gt;&gt;&gt; from dataclasses import dataclass</span>
+<span class="sd">        &gt;&gt;&gt;</span>
+<span class="sd">        &gt;&gt;&gt; @dataclass(frozen=True)</span>
+<span class="sd">        &gt;&gt;&gt; class CustomErrorCluster(ErrorCluster):</span>
+<span class="sd">        ...     cluster_label: str = &quot;Custom Error Type&quot;</span>
+<span class="sd">        ...     description: str = &quot;Description of when this error occurs&quot;</span>
+<span class="sd">        &gt;&gt;&gt;</span>
+<span class="sd">        &gt;&gt;&gt; custom_clusters = [CustomErrorCluster()]</span>
+<span class="sd">        &gt;&gt;&gt; custom_analyzer = SemisupervisedToolCallErrorAnalysis(</span>
+<span class="sd">        ...     llm_client=llm_client,</span>
+<span class="sd">        ...     error_clusters=custom_clusters</span>
+<span class="sd">        ... )</span>
+<span class="sd">        &gt;&gt;&gt; results = custom_analyzer.analyze_batch(data_samples)</span>
+<span class="sd">        &gt;&gt;&gt;</span>
+<span class="sd">        &gt;&gt;&gt; # Inspect results</span>
+<span class="sd">        &gt;&gt;&gt; for cluster_label, validations in results.analyzed_validations_clustered_by_errors.items():</span>
+<span class="sd">        ...     print(f&quot;{cluster_label}: {len(validations)} errors&quot;)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">llm_client</span><span class="p">:</span> <span class="n">LLMClient</span><span class="p">,</span>
+        <span class="n">config</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">error_clusters</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">ErrorCluster</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="k">if</span> <span class="n">llm_client</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">InvalidInputValueError</span><span class="p">(</span>
+                <span class="n">internal_code</span><span class="o">=</span><span class="n">ErrorCode</span><span class="o">.</span><span class="n">MISSING_VALUE</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+                <span class="n">message</span><span class="o">=</span><span class="s2">&quot;LLM client must be provided for SemisupervisedToolCallErrorAnalysis.&quot;</span><span class="p">,</span>
+                <span class="n">component_code</span><span class="o">=</span><span class="n">ToolComponent</span><span class="o">.</span><span class="n">TOOL_ERROR_CODE</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+            <span class="p">)</span>
+
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">llm_client</span> <span class="o">=</span> <span class="n">llm_client</span>
+
+        <span class="c1"># Default to default error clusters if clusters not provided or is empty list</span>
+        <span class="k">if</span> <span class="n">error_clusters</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="p">(</span>
+            <span class="nb">isinstance</span><span class="p">(</span><span class="n">error_clusters</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">error_clusters</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
+        <span class="p">):</span>
+            <span class="n">error_clusters</span> <span class="o">=</span> <span class="n">DEFAULT_TOOL_CALL_ERROR_CLUSTERS</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">validate_user_defined_clusters</span><span class="p">(</span><span class="n">error_clusters</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">error_clusters</span> <span class="o">=</span> <span class="n">error_clusters</span>
+
+    <span class="c1"># ==================== Algorithm-Specific Methods (implementing abstract methods) ====================</span>
+
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">_classify_single_validation</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">validation_result</span><span class="p">:</span> <span class="n">ToolCallValidationResult</span><span class="p">,</span>
+        <span class="n">data_sample_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">agent_run_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">AnalyzedToolValidation</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Classify a single tool validation error into a predefined cluster.</span>
+
+<span class="sd">        Uses the validation explanation as the base error and makes an LLM request</span>
+<span class="sd">        to assign the most appropriate cluster label based on the expected tool</span>
+<span class="sd">        call details.</span>
+
+<span class="sd">        :param validation_result: a :obj:`~agent_inspect.models.metrics.validation_result.ToolCallValidationResult` object to classify.</span>
+<span class="sd">        :param data_sample_id: ID of the data sample this validation belongs to.</span>
+<span class="sd">        :param agent_run_id: Optional ID of the agent run.</span>
+<span class="sd">        :return: Tuple of (:obj:`~agent_inspect.models.tools.analysis_models.AnalyzedToolValidation`, cluster_label) where:</span>
+
+<span class="sd">            - :obj:`~agent_inspect.models.tools.analysis_models.AnalyzedToolValidation` contains the validation result and base error</span>
+<span class="sd">            - cluster_label is the assigned error category</span>
+
+<span class="sd">        Note:</span>
+<span class="sd">            Uses self.error_clusters from initialization for classification.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Use validation explanation as base_error</span>
+        <span class="n">base_error</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">validation_result</span><span class="o">.</span><span class="n">explanations</span><span class="p">)</span>
+        <span class="n">expected_tool</span> <span class="o">=</span> <span class="n">validation_result</span><span class="o">.</span><span class="n">expected_tool_call</span>
+
+        <span class="c1"># Convert error clusters to dict format for LLM prompt</span>
+        <span class="n">clusters_as_dicts</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">error_clusters</span><span class="p">]</span>
+
+        <span class="c1"># Build classification prompt</span>
+        <span class="n">payload</span> <span class="o">=</span> <span class="n">LLMPayload</span><span class="p">(</span>
+            <span class="n">user_prompt</span><span class="o">=</span><span class="n">TOOL_VALIDATION_CLASSIFICATION_PROMPT_TEMPLATE</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="n">predefined_clusters</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">clusters_as_dicts</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span>
+                <span class="n">tool_name</span><span class="o">=</span><span class="n">expected_tool</span><span class="o">.</span><span class="n">tool</span><span class="p">,</span>
+                <span class="n">expected_parameters</span><span class="o">=</span><span class="n">expected_tool</span><span class="o">.</span><span class="n">expected_parameters</span><span class="p">,</span>
+                <span class="n">expected_output</span><span class="o">=</span><span class="n">expected_tool</span><span class="o">.</span><span class="n">expected_output</span><span class="p">,</span>
+                <span class="n">explanation</span><span class="o">=</span><span class="n">base_error</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="n">structured_output</span><span class="o">=</span><span class="n">TOOL_VALIDATION_CLASSIFICATION_OUTPUT_SCHEMA</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Call LLM for classification</span>
+        <span class="n">response_dict</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_request_and_parse_json_with_retry</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">llm_client</span><span class="p">,</span> <span class="n">payload</span><span class="p">)</span>
+        <span class="n">cluster_label</span> <span class="o">=</span> <span class="n">response_dict</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;cluster_label&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="n">AnalyzedToolValidation</span><span class="p">(</span>
+                <span class="n">tool_call_validation</span><span class="o">=</span><span class="n">validation_result</span><span class="p">,</span>
+                <span class="n">data_sample_id</span><span class="o">=</span><span class="n">data_sample_id</span><span class="p">,</span>
+                <span class="n">base_error</span><span class="o">=</span><span class="n">base_error</span><span class="p">,</span>
+                <span class="n">agent_run_id</span><span class="o">=</span><span class="n">agent_run_id</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="n">cluster_label</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, &#34;&#34;.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,445 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>agent_inspect.user_proxy.user_proxy_agent &mdash; agent_inspect 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=eea1f72d" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=f2a433a1"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            agent_inspect
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">agent_inspect</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">agent_inspect</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">agent_inspect.user_proxy.user_proxy_agent</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for agent_inspect.user_proxy.user_proxy_agent</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">http</span><span class="w"> </span><span class="kn">import</span> <span class="n">HTTPStatus</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Any</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.clients.llm_client</span><span class="w"> </span><span class="kn">import</span> <span class="n">LLMClient</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.user_proxy.constants</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">USE_EXPERT_AGENT</span><span class="p">,</span>
+    <span class="n">USE_EXPERT_AGENT_DEFAULT</span><span class="p">,</span>
+    <span class="n">TERMINATING_CONDITION_MODE</span><span class="p">,</span>
+    <span class="n">DEFAULT_TERMINATING_CONDITION_MODE</span><span class="p">,</span>
+    <span class="n">MULTIPLE</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.exception.error_codes</span><span class="w"> </span><span class="kn">import</span> <span class="n">ErrorCode</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.exception</span><span class="w"> </span><span class="kn">import</span> <span class="n">UserProxyError</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.models.llm_payload</span><span class="w"> </span><span class="kn">import</span> <span class="n">LLMPayload</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.core.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_config_or_default</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.models.user_proxy.chat</span><span class="w"> </span><span class="kn">import</span> <span class="n">ChatHistory</span><span class="p">,</span> <span class="n">UserProxyMessage</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.models.user_proxy.terminating_condition</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">TerminatingCondition</span><span class="p">,</span>
+    <span class="n">TaskCompletedTerminatingCondition</span><span class="p">,</span>
+    <span class="n">TaskDelegatedTerminatingCondition</span><span class="p">,</span>
+    <span class="n">TaskBlockedTerminatingCondition</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.user_proxy.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">ensure_full_stop</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.user_proxy.llm_proxy_agent</span><span class="w"> </span><span class="kn">import</span> <span class="n">LLMProxyAgent</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.user_proxy.templates</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">USER_PROXY_REFLECTION_GEN_TEMPLATE</span><span class="p">,</span>
+    <span class="n">USER_PROXY_REPLY_GEN_TEMPLATE</span><span class="p">,</span>
+    <span class="n">EXPERT_PERSONA_TEMPLATE</span><span class="p">,</span>
+    <span class="n">NONEXPERT_PERSONA_TEMPLATE</span><span class="p">,</span>
+    <span class="n">USER_PROXY_REFLECTION_MULTI_TERMINATION_GEN_TEMPLATE</span><span class="p">,</span>
+    <span class="n">EXPERT_PERSONA_MULTI_TERMINATION_TEMPLATE</span><span class="p">,</span>
+    <span class="n">NONEXPERT_PERSONA_MULTI_TERMINATION_TEMPLATE</span><span class="p">,</span>
+    <span class="n">USER_PROXY_REPLY_MULTI_TERMINATION_GEN_TEMPLATE</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.user_proxy.utils.user_proxy_validators</span><span class="w"> </span><span class="kn">import</span> <span class="n">UserProxyInputValidator</span>
+
+
+<div class="viewcode-block" id="UserProxyAgent">
+<a class="viewcode-back" href="../../../agent_inspect.user_proxy.html#agent_inspect.user_proxy.user_proxy_agent.UserProxyAgent">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">UserProxyAgent</span><span class="p">(</span><span class="n">LLMProxyAgent</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    User proxy (a.k.a. simulated user) class which generates the user utterances during a dynamic conversation with the AI agent. The dynamic user utterances are generated based on the user task instruction and user persona (e.g., expert or non-expert) prompt templates via a two-step process—reflection followed by response generation.</span>
+
+<span class="sd">    :param llm_client: the connection to the llm client for user utterances generation.</span>
+<span class="sd">    :param task_summary: a user task instruction describing the summary of the task user wants the AI agent to complete.</span>
+<span class="sd">    :param terminating_conditions: a :obj:`~typing.List` [:obj:`~agent_inspect.models.user_proxy.terminating_condition.TerminatingCondition`] object where each element in the list is a terminating condition for the user proxy to exit the user-agent conversation early.</span>
+<span class="sd">    :param agent_description: the description of the AI agent that will interact with the user proxy, provided as additional context for the user proxy. Default to empty string.</span>
+<span class="sd">    :param initial_message: a static message that is used as the user proxy&#39;s initial message (if available) to the AI agent. Default to empty string.</span>
+<span class="sd">    :param config: Default to ``None``. Configuration options:</span>
+
+<span class="sd">        - **use_expert_agent**: a :obj:`~typing.bool` flag to indicate whether the user proxy should use an expert persona; otherwise, it uses a non-expert persona. Default to ``True`` to use an expert persona.</span>
+<span class="sd">        - **terminating_condition_mode**: a :obj:`~typing.str` variable to indicate whether the user proxy is configured with single terminating condition or multiple terminating conditions. The value can be either ``&quot;single&quot;`` or ``&quot;multiple&quot;``. Default to ``&quot;single&quot;``.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">llm_client</span><span class="p">:</span> <span class="n">LLMClient</span><span class="p">,</span>
+        <span class="n">task_summary</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">terminating_conditions</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">TerminatingCondition</span><span class="p">],</span>
+        <span class="n">agent_description</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="n">initial_message</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="n">config</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">llm_client</span><span class="p">,</span> <span class="n">config</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">initial_message</span> <span class="o">=</span> <span class="n">initial_message</span>
+
+        <span class="n">UserProxyInputValidator</span><span class="o">.</span><span class="n">validate_task_summary</span><span class="p">(</span><span class="n">task_summary</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">task_summary</span> <span class="o">=</span> <span class="n">ensure_full_stop</span><span class="p">(</span><span class="n">task_summary</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">is_multi_terminating_conditions</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">get_config_or_default</span><span class="p">(</span>
+                <span class="n">config</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">,</span>
+                <span class="n">config_key</span><span class="o">=</span><span class="n">TERMINATING_CONDITION_MODE</span><span class="p">,</span>
+                <span class="n">default</span><span class="o">=</span><span class="n">DEFAULT_TERMINATING_CONDITION_MODE</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="o">==</span> <span class="n">MULTIPLE</span>
+        <span class="p">)</span>
+        <span class="n">UserProxyInputValidator</span><span class="o">.</span><span class="n">validate_terminating_conditions</span><span class="p">(</span>
+            <span class="n">terminating_conditions</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_multi_terminating_conditions</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_assign_terminating_conditions</span><span class="p">(</span><span class="n">terminating_conditions</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">agent_description</span> <span class="o">=</span> <span class="n">agent_description</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">is_expert</span> <span class="o">=</span> <span class="n">get_config_or_default</span><span class="p">(</span>
+            <span class="n">config</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">,</span>
+            <span class="n">config_key</span><span class="o">=</span><span class="n">USE_EXPERT_AGENT</span><span class="p">,</span>
+            <span class="n">default</span><span class="o">=</span><span class="n">USE_EXPERT_AGENT_DEFAULT</span><span class="p">,</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_assign_terminating_conditions</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">terminating_conditions</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">TerminatingCondition</span><span class="p">]</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_multi_terminating_conditions</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">task_completed_terminating_condition</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_get_given_or_default_terminating_condition</span><span class="p">(</span>
+                    <span class="n">terminating_conditions</span><span class="p">,</span> <span class="n">TaskCompletedTerminatingCondition</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">task_delegated_terminating_condition</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_get_given_or_default_terminating_condition</span><span class="p">(</span>
+                    <span class="n">terminating_conditions</span><span class="p">,</span> <span class="n">TaskDelegatedTerminatingCondition</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">task_blocked_terminating_condition</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_get_given_or_default_terminating_condition</span><span class="p">(</span>
+                    <span class="n">terminating_conditions</span><span class="p">,</span> <span class="n">TaskBlockedTerminatingCondition</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">terminating_condition</span> <span class="o">=</span> <span class="n">terminating_conditions</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_system_prompt</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_expert</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_multi_terminating_conditions</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">EXPERT_PERSONA_MULTI_TERMINATION_TEMPLATE</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="n">task_summary</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">task_summary</span><span class="p">,</span>
+                    <span class="n">agent_desc</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">agent_description</span><span class="p">,</span>
+                    <span class="n">stop_sequence_done</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">task_completed_terminating_condition</span><span class="o">.</span><span class="n">stop_sequence</span><span class="p">,</span>
+                    <span class="n">stop_sequence_delegate</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">task_delegated_terminating_condition</span><span class="o">.</span><span class="n">stop_sequence</span><span class="p">,</span>
+                    <span class="n">stop_sequence_blocked</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">task_blocked_terminating_condition</span><span class="o">.</span><span class="n">stop_sequence</span><span class="p">,</span>
+                    <span class="n">check_done</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">task_completed_terminating_condition</span><span class="o">.</span><span class="n">check</span><span class="p">,</span>
+                    <span class="n">check_delegate</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">task_delegated_terminating_condition</span><span class="o">.</span><span class="n">check</span><span class="p">,</span>
+                    <span class="n">check_blocked</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">task_blocked_terminating_condition</span><span class="o">.</span><span class="n">check</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">EXPERT_PERSONA_TEMPLATE</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="n">task_summary</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">task_summary</span><span class="p">,</span>
+                    <span class="n">agent_desc</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">agent_description</span><span class="p">,</span>
+                    <span class="n">check</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">terminating_condition</span><span class="o">.</span><span class="n">check</span><span class="p">,</span>
+                <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_multi_terminating_conditions</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">NONEXPERT_PERSONA_MULTI_TERMINATION_TEMPLATE</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="n">task_summary</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">task_summary</span><span class="p">,</span>
+                    <span class="n">agent_desc</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">agent_description</span><span class="p">,</span>
+                    <span class="n">stop_sequence_done</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">task_completed_terminating_condition</span><span class="o">.</span><span class="n">stop_sequence</span><span class="p">,</span>
+                    <span class="n">stop_sequence_delegate</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">task_delegated_terminating_condition</span><span class="o">.</span><span class="n">stop_sequence</span><span class="p">,</span>
+                    <span class="n">stop_sequence_blocked</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">task_blocked_terminating_condition</span><span class="o">.</span><span class="n">stop_sequence</span><span class="p">,</span>
+                    <span class="n">check_done</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">task_completed_terminating_condition</span><span class="o">.</span><span class="n">check</span><span class="p">,</span>
+                    <span class="n">check_delegate</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">task_delegated_terminating_condition</span><span class="o">.</span><span class="n">check</span><span class="p">,</span>
+                    <span class="n">check_blocked</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">task_blocked_terminating_condition</span><span class="o">.</span><span class="n">check</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">NONEXPERT_PERSONA_TEMPLATE</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="n">task_summary</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">task_summary</span><span class="p">,</span>
+                    <span class="n">agent_desc</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">agent_description</span><span class="p">,</span>
+                    <span class="n">check</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">terminating_condition</span><span class="o">.</span><span class="n">check</span><span class="p">,</span>
+                <span class="p">)</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_chat_history_str_from_chat_history</span><span class="p">(</span><span class="n">chat_history</span><span class="p">:</span> <span class="n">ChatHistory</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="n">chat_history_str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">UserProxyAgent</span><span class="o">.</span><span class="n">contains_chat_history</span><span class="p">(</span><span class="n">chat_history</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">chat_history_str</span>
+        <span class="k">for</span> <span class="n">past_conversation</span> <span class="ow">in</span> <span class="n">chat_history</span><span class="o">.</span><span class="n">conversations</span><span class="p">:</span>
+            <span class="n">chat_history_str</span> <span class="o">+=</span> <span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;[LLM-simulated user start]:</span><span class="se">\n</span><span class="si">{</span><span class="n">past_conversation</span><span class="o">.</span><span class="n">user_message</span><span class="o">.</span><span class="n">message_str</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="si">}</span><span class="se">\n</span><span class="s2">[LLM-simulated user end]</span><span class="se">\n</span><span class="s2">&quot;</span>
+                <span class="k">if</span> <span class="n">past_conversation</span><span class="o">.</span><span class="n">user_message</span><span class="o">.</span><span class="n">message_str</span>
+                <span class="k">else</span> <span class="s2">&quot;&quot;</span>
+            <span class="p">)</span>
+            <span class="k">for</span> <span class="n">agent_response</span> <span class="ow">in</span> <span class="n">past_conversation</span><span class="o">.</span><span class="n">agent_responses</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">agent_response</span><span class="p">:</span>
+                    <span class="n">chat_history_str</span> <span class="o">+=</span> <span class="p">(</span>
+                        <span class="sa">f</span><span class="s2">&quot;[AI assistant start]:</span><span class="se">\n</span><span class="si">{</span><span class="n">agent_response</span><span class="o">.</span><span class="n">response_str</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="si">}</span><span class="se">\n</span><span class="s2">[AI assistant end]</span><span class="se">\n</span><span class="s2">&quot;</span>
+                        <span class="k">if</span> <span class="n">agent_response</span><span class="o">.</span><span class="n">response_str</span>
+                        <span class="k">else</span> <span class="s2">&quot;&quot;</span>
+                    <span class="p">)</span>
+        <span class="k">return</span> <span class="n">chat_history_str</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">contains_chat_history</span><span class="p">(</span><span class="n">chat_history</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ChatHistory</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">chat_history</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">bool</span><span class="p">(</span><span class="n">chat_history</span><span class="o">.</span><span class="n">conversations</span><span class="p">)</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_given_or_default_terminating_condition</span><span class="p">(</span>
+        <span class="n">terminating_conditions</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">TerminatingCondition</span><span class="p">],</span> <span class="n">condition_data_class</span><span class="p">:</span> <span class="nb">type</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TerminatingCondition</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">condition</span> <span class="ow">in</span> <span class="n">terminating_conditions</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">condition</span><span class="p">,</span> <span class="n">condition_data_class</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">condition</span>
+        <span class="k">return</span> <span class="n">condition_data_class</span><span class="p">()</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_user_message_reflection_prompt</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">chat_history_str</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_multi_terminating_conditions</span><span class="p">:</span>
+            <span class="n">completed_condition</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">task_completed_terminating_condition</span>
+            <span class="n">delegated_condition</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">task_delegated_terminating_condition</span>
+            <span class="n">blocked_condition</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">task_blocked_terminating_condition</span>
+
+            <span class="k">return</span> <span class="n">USER_PROXY_REFLECTION_MULTI_TERMINATION_GEN_TEMPLATE</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="n">chat_history_str</span><span class="o">=</span><span class="n">chat_history_str</span><span class="p">,</span>
+                <span class="n">stop_sequence_done</span><span class="o">=</span><span class="n">completed_condition</span><span class="o">.</span><span class="n">stop_sequence</span><span class="p">,</span>
+                <span class="n">stop_sequence_delegate</span><span class="o">=</span><span class="n">delegated_condition</span><span class="o">.</span><span class="n">stop_sequence</span><span class="p">,</span>
+                <span class="n">stop_sequence_blocked</span><span class="o">=</span><span class="n">blocked_condition</span><span class="o">.</span><span class="n">stop_sequence</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">USER_PROXY_REFLECTION_GEN_TEMPLATE</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="n">chat_history_str</span><span class="o">=</span><span class="n">chat_history_str</span><span class="p">,</span>
+                <span class="n">stop_sequence</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">terminating_condition</span><span class="o">.</span><span class="n">stop_sequence</span><span class="p">,</span>
+            <span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_contains_stop_sequence</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_proxy_message_str</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_multi_terminating_conditions</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">task_completed_terminating_condition</span><span class="o">.</span><span class="n">stop_sequence</span> <span class="ow">in</span> <span class="n">user_proxy_message_str</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">task_completed_terminating_condition</span><span class="o">.</span><span class="n">stop_sequence</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">task_delegated_terminating_condition</span><span class="o">.</span><span class="n">stop_sequence</span> <span class="ow">in</span> <span class="n">user_proxy_message_str</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">task_delegated_terminating_condition</span><span class="o">.</span><span class="n">stop_sequence</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">task_blocked_terminating_condition</span><span class="o">.</span><span class="n">stop_sequence</span> <span class="ow">in</span> <span class="n">user_proxy_message_str</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">task_blocked_terminating_condition</span><span class="o">.</span><span class="n">stop_sequence</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">terminating_condition</span><span class="o">.</span><span class="n">stop_sequence</span> <span class="ow">in</span> <span class="n">user_proxy_message_str</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">terminating_condition</span><span class="o">.</span><span class="n">stop_sequence</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_user_proxy_reply_generation_prompt</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">chat_history_str</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">user_message_reflection</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_multi_terminating_conditions</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">USER_PROXY_REPLY_MULTI_TERMINATION_GEN_TEMPLATE</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="n">chat_history_str</span><span class="o">=</span><span class="n">chat_history_str</span><span class="p">,</span>
+                <span class="n">user_message_reflection</span><span class="o">=</span><span class="n">user_message_reflection</span><span class="p">,</span>
+                <span class="n">stop_sequence_done</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">task_completed_terminating_condition</span><span class="o">.</span><span class="n">stop_sequence</span><span class="p">,</span>
+                <span class="n">stop_sequence_delegate</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">task_delegated_terminating_condition</span><span class="o">.</span><span class="n">stop_sequence</span><span class="p">,</span>
+                <span class="n">stop_sequence_blocked</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">task_blocked_terminating_condition</span><span class="o">.</span><span class="n">stop_sequence</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">USER_PROXY_REPLY_GEN_TEMPLATE</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="n">chat_history_str</span><span class="o">=</span><span class="n">chat_history_str</span><span class="p">,</span>
+                <span class="n">user_message_reflection</span><span class="o">=</span><span class="n">user_message_reflection</span><span class="p">,</span>
+                <span class="n">stop_sequence</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">terminating_condition</span><span class="o">.</span><span class="n">stop_sequence</span><span class="p">,</span>
+            <span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_check_from_stop_sequence</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stop_sequence</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_multi_terminating_conditions</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">stop_sequence</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">task_completed_terminating_condition</span><span class="o">.</span><span class="n">stop_sequence</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">task_completed_terminating_condition</span><span class="o">.</span><span class="n">check</span>
+            <span class="k">elif</span> <span class="n">stop_sequence</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">task_delegated_terminating_condition</span><span class="o">.</span><span class="n">stop_sequence</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">task_delegated_terminating_condition</span><span class="o">.</span><span class="n">check</span>
+            <span class="k">elif</span> <span class="n">stop_sequence</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">task_blocked_terminating_condition</span><span class="o">.</span><span class="n">stop_sequence</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">task_blocked_terminating_condition</span><span class="o">.</span><span class="n">check</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">UserProxyError</span><span class="p">(</span>
+                    <span class="n">internal_code</span><span class="o">=</span><span class="n">ErrorCode</span><span class="o">.</span><span class="n">INVALID_USER_PROXY_RESPONSE</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+                    <span class="n">message</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Received stop sequence &#39;</span><span class="si">{</span><span class="n">stop_sequence</span><span class="si">}</span><span class="s2">&#39; does not match any of the defined terminating conditions&#39; stop sequences.&quot;</span><span class="p">,</span>
+                <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">stop_sequence</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">terminating_condition</span><span class="o">.</span><span class="n">stop_sequence</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">terminating_condition</span><span class="o">.</span><span class="n">check</span>
+            <span class="k">raise</span> <span class="n">UserProxyError</span><span class="p">(</span>
+                <span class="n">internal_code</span><span class="o">=</span><span class="n">ErrorCode</span><span class="o">.</span><span class="n">INVALID_USER_PROXY_RESPONSE</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+                <span class="n">message</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Received stop sequence &#39;</span><span class="si">{</span><span class="n">stop_sequence</span><span class="si">}</span><span class="s2">&#39; does not match the defined terminating condition&#39;s stop sequence.&quot;</span><span class="p">,</span>
+            <span class="p">)</span>
+
+<div class="viewcode-block" id="UserProxyAgent.generate_message_from_chat_history">
+<a class="viewcode-back" href="../../../agent_inspect.user_proxy.html#agent_inspect.user_proxy.user_proxy_agent.UserProxyAgent.generate_message_from_chat_history">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">generate_message_from_chat_history</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">chat_history</span><span class="p">:</span> <span class="n">ChatHistory</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">UserProxyMessage</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generates the next user utterance given a :obj:`~agent_inspect.models.user_proxy.chat.ChatHistory` object containing the user-agent conversation history as input.</span>
+
+<span class="sd">        :param chat_history: a :obj:`~agent_inspect.models.user_proxy.chat.ChatHistory` object containing the user-agent conversation history.</span>
+<span class="sd">        :return: a :obj:`~agent_inspect.models.user_proxy.chat.UserProxyMessage` object containing the next user utterance. For the first user utterance, if the input variable ``chat_history`` is ``None`` and ``self.initial_message`` is not an empty string,  the method returns the ``self.initial_message`` as the initial user utterance, otherwise it generates the user utterance based on the conversation history. All subsequent user utterances are generated based on the conversation history.</span>
+
+<span class="sd">        Example:</span>
+
+<span class="sd">        &gt;&gt;&gt; from agent_inspect.user_proxy import UserProxyAgent</span>
+<span class="sd">        &gt;&gt;&gt; from agent_inspect.models.user_proxy import ChatHistory TerminatingCondition</span>
+<span class="sd">        &gt;&gt;&gt; from agent_inspect.user_proxy.constants import USE_EXPERT_AGENT</span>
+<span class="sd">        &gt;&gt;&gt; from agent_inspect.clients.azure_openai_client import AzureOpenAIClient</span>
+<span class="sd">        &gt;&gt;&gt; from uuid import uuid4</span>
+<span class="sd">        &gt;&gt;&gt; import asyncio</span>
+<span class="sd">        &gt;&gt;&gt;</span>
+<span class="sd">        &gt;&gt;&gt; user_instruct, term_condition = load_user_instruct_term(sample_path) # Load user instruction and terminating condition</span>
+<span class="sd">        &gt;&gt;&gt; client = AzureOpenAIClient(model=&quot;gpt-4.1&quot;, max_tokens=4096) # create llm client for user proxy</span>
+<span class="sd">        &gt;&gt;&gt; user = UserProxyAgent(</span>
+<span class="sd">        ...     llm_client=client,</span>
+<span class="sd">        ...     task_summary=user_instruct,</span>
+<span class="sd">        ...     terminating_conditions=[</span>
+<span class="sd">        ...         TerminatingCondition(check=term_condition)</span>
+<span class="sd">        ...     ],</span>
+<span class="sd">        ...     config={USE_EXPERT_AGENT: True}</span>
+<span class="sd">        ... )</span>
+<span class="sd">        &gt;&gt;&gt; chat_history = ChatHistory(id=str(uuid4()), conversations=[]) # start from an empty conversation</span>
+<span class="sd">        &gt;&gt;&gt; user_response = asyncio.run(user.generate_message_from_chat_history(chat_history))</span>
+<span class="sd">        &gt;&gt;&gt; print(user_response.message_str)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="n">UserProxyAgent</span><span class="o">.</span><span class="n">contains_chat_history</span><span class="p">(</span><span class="n">chat_history</span><span class="p">))</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">initial_message</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">UserProxyMessage</span><span class="p">(</span><span class="n">message_str</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">initial_message</span><span class="p">)</span>
+
+        <span class="n">system_prompt</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_system_prompt</span><span class="p">()</span>
+        <span class="n">chat_history_str</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_chat_history_str_from_chat_history</span><span class="p">(</span><span class="n">chat_history</span><span class="p">)</span>
+        <span class="n">user_message_reflection_prompt</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_user_message_reflection_prompt</span><span class="p">(</span><span class="n">chat_history_str</span><span class="p">)</span>
+
+        <span class="n">llm_response</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">llm_client</span><span class="o">.</span><span class="n">make_request_with_payload</span><span class="p">(</span>
+            <span class="n">LLMPayload</span><span class="p">(</span><span class="n">user_prompt</span><span class="o">=</span><span class="n">user_message_reflection_prompt</span><span class="p">,</span> <span class="n">system_prompt</span><span class="o">=</span><span class="n">system_prompt</span><span class="p">)</span>
+        <span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">llm_response</span><span class="o">.</span><span class="n">status</span> <span class="o">!=</span> <span class="n">HTTPStatus</span><span class="o">.</span><span class="n">OK</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">UserProxyError</span><span class="p">(</span>
+                <span class="n">internal_code</span><span class="o">=</span><span class="n">ErrorCode</span><span class="o">.</span><span class="n">INVALID_USER_MESSAGE_REFLECTION</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+                <span class="n">message</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Unable to get user message reflection due to status: </span><span class="si">{</span><span class="n">llm_response</span><span class="o">.</span><span class="n">status</span><span class="si">}</span><span class="s2"> from LLM client.&quot;</span><span class="p">,</span>
+            <span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">llm_response</span><span class="o">.</span><span class="n">completion</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">UserProxyError</span><span class="p">(</span>
+                <span class="n">internal_code</span><span class="o">=</span><span class="n">ErrorCode</span><span class="o">.</span><span class="n">INVALID_USER_MESSAGE_REFLECTION</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+                <span class="n">message</span><span class="o">=</span><span class="s2">&quot;Received empty user message reflection from LLM client.&quot;</span><span class="p">,</span>
+            <span class="p">)</span>
+
+        <span class="n">user_message_reflection</span> <span class="o">=</span> <span class="n">llm_response</span><span class="o">.</span><span class="n">completion</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+        <span class="n">user_proxy_reply_gen_prompt</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_user_proxy_reply_generation_prompt</span><span class="p">(</span>
+            <span class="n">chat_history_str</span><span class="o">=</span><span class="n">chat_history_str</span><span class="p">,</span>
+            <span class="n">user_message_reflection</span><span class="o">=</span><span class="n">user_message_reflection</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">llm_response</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">llm_client</span><span class="o">.</span><span class="n">make_request_with_payload</span><span class="p">(</span>
+            <span class="n">LLMPayload</span><span class="p">(</span><span class="n">user_prompt</span><span class="o">=</span><span class="n">user_proxy_reply_gen_prompt</span><span class="p">,</span> <span class="n">system_prompt</span><span class="o">=</span><span class="n">system_prompt</span><span class="p">)</span>
+        <span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">llm_response</span><span class="o">.</span><span class="n">status</span> <span class="o">!=</span> <span class="n">HTTPStatus</span><span class="o">.</span><span class="n">OK</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">UserProxyError</span><span class="p">(</span>
+                <span class="n">internal_code</span><span class="o">=</span><span class="n">ErrorCode</span><span class="o">.</span><span class="n">INVALID_USER_PROXY_RESPONSE</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+                <span class="n">message</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Unable to generate user proxy message due to status: </span><span class="si">{</span><span class="n">llm_response</span><span class="o">.</span><span class="n">status</span><span class="si">}</span><span class="s2"> from LLM client.&quot;</span><span class="p">,</span>
+            <span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">llm_response</span><span class="o">.</span><span class="n">completion</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">UserProxyError</span><span class="p">(</span>
+                <span class="n">internal_code</span><span class="o">=</span><span class="n">ErrorCode</span><span class="o">.</span><span class="n">INVALID_USER_PROXY_RESPONSE</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+                <span class="n">message</span><span class="o">=</span><span class="s2">&quot;Received empty user proxy message from LLM client.&quot;</span><span class="p">,</span>
+            <span class="p">)</span>
+
+        <span class="n">user_proxy_message_str</span> <span class="o">=</span> <span class="n">llm_response</span><span class="o">.</span><span class="n">completion</span>
+
+        <span class="n">stop_sequence</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_contains_stop_sequence</span><span class="p">(</span><span class="n">user_proxy_message_str</span><span class="p">)</span>
+
+        <span class="n">user_proxy_message</span> <span class="o">=</span> <span class="n">UserProxyMessage</span><span class="p">(</span>
+            <span class="n">message_str</span><span class="o">=</span><span class="n">user_proxy_message_str</span><span class="p">,</span>
+            <span class="n">check</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_check_from_stop_sequence</span><span class="p">(</span><span class="n">stop_sequence</span><span class="p">)</span> <span class="k">if</span> <span class="n">stop_sequence</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">user_proxy_message</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, &#34;&#34;.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

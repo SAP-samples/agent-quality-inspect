@@ -1,0 +1,712 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>agent_inspect.metrics.validator.tool_call_completion &mdash; agent_inspect 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/custom.css?v=eea1f72d" />
+
+  
+      <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../_static/documentation_options.js?v=f2a433a1"></script>
+      <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            agent_inspect
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules.html">agent_inspect</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">agent_inspect</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">agent_inspect.metrics.validator.tool_call_completion</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for agent_inspect.metrics.validator.tool_call_completion</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Any</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.exception.error_codes</span><span class="w"> </span><span class="kn">import</span> <span class="n">ErrorCode</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.exception</span><span class="w"> </span><span class="kn">import</span> <span class="n">InvalidInputValueError</span><span class="p">,</span> <span class="n">EvaluationError</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.clients.llm_client</span><span class="w"> </span><span class="kn">import</span> <span class="n">LLMClient</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.metrics.constants</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">NUM_JUDGE_TRIALS</span><span class="p">,</span>
+    <span class="n">NUM_JUDGE_TRIALS_DEFAULT</span><span class="p">,</span>
+    <span class="n">INCLUDE_JUDGE_EXPLANATION</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.metrics.validator.templates</span><span class="w"> </span><span class="kn">import</span> <span class="n">TOOL_CORRECTNESS_TEMPLATE</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.metrics.validator.constants</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">TOOL_NOT_FOUND_EXPLANATION</span><span class="p">,</span>
+    <span class="n">ARGUMENT_PASSED_EXACT_MATCH_EXPLANATION</span><span class="p">,</span>
+    <span class="n">ARGUMENT_FAILED_EXACT_MATCH_EXPLANATION</span><span class="p">,</span>
+    <span class="n">ARGUMENT_NOT_FOUND_EXPLANATION</span><span class="p">,</span>
+    <span class="n">ARGUMENT_PASSED_LLMJ_EXPLANATION</span><span class="p">,</span>
+    <span class="n">ARGUMENT_FAILED_LLMJ_EXPLANATION</span><span class="p">,</span>
+    <span class="n">OUTPUT_PASSED_EXACT_MATCH_EXPLANATION</span><span class="p">,</span>
+    <span class="n">OUTPUT_FAILED_EXACT_MATCH_EXPLANATION</span><span class="p">,</span>
+    <span class="n">OUTPUT_PASSED_LLMJ_EXPLANATION</span><span class="p">,</span>
+    <span class="n">OUTPUT_FAILED_LLMJ_EXPLANATION</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.models.metrics.agent_data_sample</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">ToolInputParameter</span><span class="p">,</span>
+    <span class="n">ExpectedToolCall</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.models.metrics.agent_trace</span><span class="w"> </span><span class="kn">import</span> <span class="n">TurnTrace</span><span class="p">,</span> <span class="n">Step</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.models.metrics.validation_result</span><span class="w"> </span><span class="kn">import</span> <span class="n">ToolCallValidationResult</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.core.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_config_or_default</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.metrics.utils.trace_validators</span><span class="w"> </span><span class="kn">import</span> <span class="n">TraceValidator</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.metrics.utils.expected_tool_validators</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">ExpectedToolCallValidator</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.metrics.validator.validator</span><span class="w"> </span><span class="kn">import</span> <span class="n">Validator</span>
+
+
+<div class="viewcode-block" id="ToolCallCompletionValidator">
+<a class="viewcode-back" href="../../../../agent_inspect.metrics.validator.html#agent_inspect.metrics.validator.tool_call_completion.ToolCallCompletionValidator">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ToolCallCompletionValidator</span><span class="p">(</span><span class="n">Validator</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Tool call completion validator using both exact match and LLM-as-a-judge approaches to assess whether the tool call is correctly completed.</span>
+
+<span class="sd">    This validator performs a three-dimensional evaluation of tool calls:</span>
+
+<span class="sd">    1. **Tool name validation**: Checks if the tool name in the agent&#39;s trajectory matches the expected tool name exactly.</span>
+<span class="sd">    2. **Tool input arguments validation**: Validates each input parameter using either exact match (when the expected parameter specifies a :obj:`~agent_inspect.models.metrics.agent_data_sample.ToolInputParameter.value`) or LLM-as-a-judge (when the expected parameter specifies a :obj:`~agent_inspect.models.metrics.agent_data_sample.ToolInputParameter.check`).</span>
+<span class="sd">    3. **Tool output validation**: Validates the tool&#39;s output using either exact match (when the expected output specifies a :obj:`~agent_inspect.models.metrics.agent_data_sample.ToolOutput.value`) or LLM-as-a-judge (when the expected output specifies a :obj:`~agent_inspect.models.metrics.agent_data_sample.ToolOutput.check`).</span>
+
+<span class="sd">    A tool call is considered correctly completed only if all the above three dimensions pass validation. The validator iterates through all tool calls in the latest turn of the agent trace to find a matching tool call that satisfies all validation criteria set in :obj:`~agent_inspect.models.metrics.agent_data_sample.ExpectedToolCall`.</span>
+
+<span class="sd">    :param llm_client: the client which allows connection to the LLM-as-a-judge model for evaluation.</span>
+<span class="sd">    :param config: Default to ``None``. Configuration options:</span>
+
+<span class="sd">        - **num_judge_trials**: the number of LLM-as-a-judge runs. Default to ``5``. A majority vote is used when the number of LLM-as-a-judge runs is set to a value larger than 1.</span>
+<span class="sd">        - **include_judge_explanation**: a :obj:`~typing.bool` flag to indicate whether the output should also return judge explanations. Default to ``False``.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">llm_client</span><span class="p">:</span> <span class="n">LLMClient</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">llm_client</span><span class="p">,</span> <span class="n">config</span><span class="p">)</span>
+
+<div class="viewcode-block" id="ToolCallCompletionValidator.validate_static_last_turn">
+<a class="viewcode-back" href="../../../../agent_inspect.metrics.validator.html#agent_inspect.metrics.validator.tool_call_completion.ToolCallCompletionValidator.validate_static_last_turn">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">validate_static_last_turn</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">agent_trace_turns</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">TurnTrace</span><span class="p">],</span> <span class="n">expected_tool_call</span><span class="p">:</span> <span class="n">ExpectedToolCall</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ToolCallValidationResult</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns a :obj:`~agent_inspect.models.metrics.validation_result.ToolCallValidationResult` indicating whether the tool call is correctly completed by the agent in the latest turn of the agent trace.</span>
+
+<span class="sd">        :param agent_trace_turns: A list of :obj:`~agent_inspect.models.metrics.agent_trace.TurnTrace` representing the entire agent trace up to the current turn.</span>
+<span class="sd">        :param expected_tool_call: An :obj:`~agent_inspect.models.metrics.agent_data_sample.ExpectedToolCall` representing the expected tool call checklist to validate against.</span>
+<span class="sd">        :return: a :obj:`~agent_inspect.models.metrics.validation_result.ToolCallValidationResult` indicating whether the tool call is correctly completed by the agent.</span>
+
+<span class="sd">        Example:</span>
+
+<span class="sd">        &gt;&gt;&gt; from agent_inspect.metrics.validator import ToolCallCompletionValidator</span>
+<span class="sd">        &gt;&gt;&gt; from agent_inspect.metrics.constants import NUM_JUDGE_TRIALS, INCLUDE_JUDGE_EXPLANATION</span>
+<span class="sd">        &gt;&gt;&gt; from agent_inspect.clients.azure_openai_client import AzureOpenAIClient</span>
+<span class="sd">        &gt;&gt;&gt; import asyncio</span>
+<span class="sd">        &gt;&gt;&gt;</span>
+<span class="sd">        &gt;&gt;&gt; expected_tool_call = load_expected_tool_call(expected_tool_call_file_path) # Load expected tool call checklist</span>
+<span class="sd">        &gt;&gt;&gt; agent_turn_traces = load_agent_turn_traces(trace_file_path) # Load agent trajectory information</span>
+<span class="sd">        &gt;&gt;&gt; client = AzureOpenAIClient(model=&quot;gpt-4.1&quot;, max_tokens=4096) # create client needed for LLM-based metric</span>
+<span class="sd">        &gt;&gt;&gt; validator = ToolCallCompletionValidator(</span>
+<span class="sd">        ...    llm_client=client,</span>
+<span class="sd">        ...    config={NUM_JUDGE_TRIALS: 5, INCLUDE_JUDGE_EXPLANATION: True}</span>
+<span class="sd">        ... )</span>
+<span class="sd">        &gt;&gt;&gt; validation_result = asyncio.run(</span>
+<span class="sd">        ...   validator.validate_static_last_turn(</span>
+<span class="sd">        ...        agent_trace_turns = agent_turn_traces,</span>
+<span class="sd">        ...        expected_tool_call = expected_tool_call</span>
+<span class="sd">        ...    )</span>
+<span class="sd">        ... )</span>
+<span class="sd">        &gt;&gt;&gt; print(validation_result.is_completed)  # True or False</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">TraceValidator</span><span class="o">.</span><span class="n">validate_turn_traces_content</span><span class="p">(</span><span class="n">agent_trace_turns</span><span class="p">)</span>
+        <span class="n">TraceValidator</span><span class="o">.</span><span class="n">validate_agent_trace_if_empty</span><span class="p">(</span><span class="n">agent_trace_turns</span><span class="p">)</span>
+        <span class="n">ExpectedToolCallValidator</span><span class="o">.</span><span class="n">validate_expected_tool_call</span><span class="p">(</span><span class="n">expected_tool_call</span><span class="p">)</span>
+
+        <span class="n">num_judge_trials</span> <span class="o">=</span> <span class="n">get_config_or_default</span><span class="p">(</span>
+            <span class="n">config</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">,</span>
+            <span class="n">config_key</span><span class="o">=</span><span class="n">NUM_JUDGE_TRIALS</span><span class="p">,</span>
+            <span class="n">default</span><span class="o">=</span><span class="n">NUM_JUDGE_TRIALS_DEFAULT</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">include_judge_explanation</span> <span class="o">=</span> <span class="n">get_config_or_default</span><span class="p">(</span>
+            <span class="n">config</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">,</span> <span class="n">config_key</span><span class="o">=</span><span class="n">INCLUDE_JUDGE_EXPLANATION</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">False</span>
+        <span class="p">)</span>
+
+        <span class="n">agent_turn_trace</span> <span class="o">=</span> <span class="n">agent_trace_turns</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>  <span class="c1"># validate the latest turn</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_validate_per_turn</span><span class="p">(</span>
+            <span class="n">agent_turn_trace</span><span class="o">=</span><span class="n">agent_turn_trace</span><span class="p">,</span>
+            <span class="n">expected_tool_call</span><span class="o">=</span><span class="n">expected_tool_call</span><span class="p">,</span>
+            <span class="n">num_judge_trials</span><span class="o">=</span><span class="n">num_judge_trials</span><span class="p">,</span>
+            <span class="n">include_judge_explanation</span><span class="o">=</span><span class="n">include_judge_explanation</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ToolCallCompletionValidator.validate_multi_turns">
+<a class="viewcode-back" href="../../../../agent_inspect.metrics.validator.html#agent_inspect.metrics.validator.tool_call_completion.ToolCallCompletionValidator.validate_multi_turns">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">validate_multi_turns</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">agent_trace_turns</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">TurnTrace</span><span class="p">],</span> <span class="n">expected_tool_call</span><span class="p">:</span> <span class="n">ExpectedToolCall</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ToolCallValidationResult</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns a :obj:`~agent_inspect.models.metrics.validation_result.ToolCallValidationResult` indicating whether the tool call is correctly completed by the agent in any turn of the agent trace.</span>
+<span class="sd">        Iterates through all user provided turn traces from first to last, stopping as soon as a valid tool call is found or when the last turn is reached.</span>
+
+<span class="sd">        :param agent_trace_turns: A list of :obj:`~agent_inspect.models.metrics.agent_trace.TurnTrace` representing the entire agent trace.</span>
+<span class="sd">        :param expected_tool_call: An :obj:`~agent_inspect.models.metrics.agent_data_sample.ExpectedToolCall` representing the expected tool call checklist to validate against.</span>
+<span class="sd">        :return: a :obj:`~agent_inspect.models.metrics.validation_result.ToolCallValidationResult` indicating whether the tool call is correctly completed by the agent.</span>
+
+<span class="sd">        Example:</span>
+
+<span class="sd">        &gt;&gt;&gt; from agent_inspect.metrics.validator import ToolCallCompletionValidator</span>
+<span class="sd">        &gt;&gt;&gt; from agent_inspect.metrics.constants import NUM_JUDGE_TRIALS, INCLUDE_JUDGE_EXPLANATION</span>
+<span class="sd">        &gt;&gt;&gt; from agent_inspect.clients.azure_openai_client import AzureOpenAIClient</span>
+<span class="sd">        &gt;&gt;&gt; import asyncio</span>
+<span class="sd">        &gt;&gt;&gt;</span>
+<span class="sd">        &gt;&gt;&gt; expected_tool_call = load_expected_tool_call(expected_tool_call_file_path) # Load expected tool call checklist</span>
+<span class="sd">        &gt;&gt;&gt; agent_turn_traces = load_agent_turn_traces(trace_file_path) # Load agent trajectory information</span>
+<span class="sd">        &gt;&gt;&gt; client = AzureOpenAIClient(model=&quot;gpt-4.1&quot;, max_tokens=4096) # create client needed for LLM-based metric</span>
+<span class="sd">        &gt;&gt;&gt; validator = ToolCallCompletionValidator(</span>
+<span class="sd">        ...    llm_client=client,</span>
+<span class="sd">        ...    config={NUM_JUDGE_TRIALS: 5, INCLUDE_JUDGE_EXPLANATION: True}</span>
+<span class="sd">        ... )</span>
+<span class="sd">        &gt;&gt;&gt; validation_result = asyncio.run(</span>
+<span class="sd">        ...   validator.validate_multi_turns(</span>
+<span class="sd">        ...        agent_trace_turns = agent_turn_traces,</span>
+<span class="sd">        ...        expected_tool_call = expected_tool_call</span>
+<span class="sd">        ...    )</span>
+<span class="sd">        ... )</span>
+<span class="sd">        &gt;&gt;&gt; print(validation_result.is_completed)  # True or False</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">TraceValidator</span><span class="o">.</span><span class="n">validate_turn_traces_content</span><span class="p">(</span><span class="n">agent_trace_turns</span><span class="p">)</span>
+        <span class="n">TraceValidator</span><span class="o">.</span><span class="n">validate_agent_trace_if_empty</span><span class="p">(</span><span class="n">agent_trace_turns</span><span class="p">)</span>
+        <span class="n">ExpectedToolCallValidator</span><span class="o">.</span><span class="n">validate_expected_tool_call</span><span class="p">(</span><span class="n">expected_tool_call</span><span class="p">)</span>
+
+        <span class="n">num_judge_trials</span> <span class="o">=</span> <span class="n">get_config_or_default</span><span class="p">(</span>
+            <span class="n">config</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">,</span>
+            <span class="n">config_key</span><span class="o">=</span><span class="n">NUM_JUDGE_TRIALS</span><span class="p">,</span>
+            <span class="n">default</span><span class="o">=</span><span class="n">NUM_JUDGE_TRIALS_DEFAULT</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">include_judge_explanation</span> <span class="o">=</span> <span class="n">get_config_or_default</span><span class="p">(</span>
+            <span class="n">config</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">,</span> <span class="n">config_key</span><span class="o">=</span><span class="n">INCLUDE_JUDGE_EXPLANATION</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">False</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Iterate through all turns</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">for</span> <span class="n">agent_turn_trace</span> <span class="ow">in</span> <span class="n">agent_trace_turns</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_validate_per_turn</span><span class="p">(</span>
+                <span class="n">agent_turn_trace</span><span class="o">=</span><span class="n">agent_turn_trace</span><span class="p">,</span>
+                <span class="n">expected_tool_call</span><span class="o">=</span><span class="n">expected_tool_call</span><span class="p">,</span>
+                <span class="n">num_judge_trials</span><span class="o">=</span><span class="n">num_judge_trials</span><span class="p">,</span>
+                <span class="n">include_judge_explanation</span><span class="o">=</span><span class="n">include_judge_explanation</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="c1"># If tool call is correctly completed, return immediately</span>
+            <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">is_completed</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">result</span>
+
+        <span class="c1"># If no valid tool call found in any turn, return the last result, which contains explanations ONLY for the last attempted validation, but will discard all the previous validation results.</span>
+        <span class="c1"># If no turns were processed, result will be None, but this shouldn&#39;t happen after TraceValidator.validate_agent_trace_if_empty</span>
+        <span class="k">if</span> <span class="n">result</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">EvaluationError</span><span class="p">(</span>
+                <span class="n">internal_code</span><span class="o">=</span><span class="n">ErrorCode</span><span class="o">.</span><span class="n">INVALID_VALUE</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+                <span class="n">message</span><span class="o">=</span><span class="s2">&quot;No turns were processed during validation&quot;</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="n">result</span></div>
+
+
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">_validate_per_turn</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">agent_turn_trace</span><span class="p">:</span> <span class="n">TurnTrace</span><span class="p">,</span>
+        <span class="n">expected_tool_call</span><span class="p">:</span> <span class="n">ExpectedToolCall</span><span class="p">,</span>
+        <span class="n">num_judge_trials</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">include_judge_explanation</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ToolCallValidationResult</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Helper method to validate a single turn of the agent trace.</span>
+
+<span class="sd">        :param agent_turn_trace: A single :obj:`~agent_inspect.models.metrics.agent_trace.TurnTrace` to validate.</span>
+<span class="sd">        :param expected_tool_call: An :obj:`~agent_inspect.models.metrics.agent_data_sample.ExpectedToolCall` representing the expected tool call checklist to validate against.</span>
+<span class="sd">        :param num_judge_trials: The number of LLM-as-a-judge runs for validation.</span>
+<span class="sd">        :param include_judge_explanation: Whether to include judge explanations in the output.</span>
+<span class="sd">        :return: a :obj:`~agent_inspect.models.metrics.validation_result.ToolCallValidationResult` indicating whether the tool call is correctly completed in this turn.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">agent_tool_steps</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_tool_steps_from_agent_trace</span><span class="p">(</span><span class="n">agent_turn_trace</span><span class="o">=</span><span class="n">agent_turn_trace</span><span class="p">)</span>
+        <span class="c1"># set a dict to store each tool call validation result</span>
+        <span class="n">tool_call_validation_results</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">explanations</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">res_tool_call_validation</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">for</span> <span class="n">agent_single_tool_step</span> <span class="ow">in</span> <span class="n">agent_tool_steps</span><span class="p">:</span>
+            <span class="c1"># Check steps:</span>
+            <span class="c1"># Step 1. check tool name match</span>
+            <span class="k">if</span> <span class="p">(</span>
+                <span class="n">agent_single_tool_step</span><span class="o">.</span><span class="n">tool</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+                <span class="ow">and</span> <span class="n">expected_tool_call</span><span class="o">.</span><span class="n">tool</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="o">==</span> <span class="n">agent_single_tool_step</span><span class="o">.</span><span class="n">tool</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+            <span class="p">):</span>
+                <span class="c1"># Step 2. validate input tool arguments</span>
+                <span class="n">parameter_validation_results</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_validate_parameters</span><span class="p">(</span>
+                    <span class="n">expected_tool_call</span><span class="o">=</span><span class="n">expected_tool_call</span><span class="p">,</span>
+                    <span class="n">agent_single_tool_step</span><span class="o">=</span><span class="n">agent_single_tool_step</span><span class="p">,</span>
+                    <span class="n">num_judge_trials</span><span class="o">=</span><span class="n">num_judge_trials</span><span class="p">,</span>
+                    <span class="n">include_judge_explanation</span><span class="o">=</span><span class="n">include_judge_explanation</span><span class="p">,</span>
+                <span class="p">)</span>
+                <span class="c1"># Step 3. validate tool output</span>
+                <span class="p">(</span>
+                    <span class="n">is_tool_output_correct</span><span class="p">,</span>
+                    <span class="n">output_explanation</span><span class="p">,</span>
+                <span class="p">)</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_validate_output</span><span class="p">(</span>
+                    <span class="n">expected_tool_call</span><span class="o">=</span><span class="n">expected_tool_call</span><span class="p">,</span>
+                    <span class="n">agent_single_tool_step</span><span class="o">=</span><span class="n">agent_single_tool_step</span><span class="p">,</span>
+                    <span class="n">num_judge_trials</span><span class="o">=</span><span class="n">num_judge_trials</span><span class="p">,</span>
+                    <span class="n">include_judge_explanation</span><span class="o">=</span><span class="n">include_judge_explanation</span><span class="p">,</span>
+                <span class="p">)</span>
+                <span class="c1"># Aggregate results &amp; explanations</span>
+                <span class="n">all_parameters_correct</span> <span class="o">=</span> <span class="p">(</span>
+                    <span class="nb">all</span><span class="p">(</span><span class="n">res</span><span class="p">[</span><span class="s2">&quot;is_completed&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">res</span> <span class="ow">in</span> <span class="n">parameter_validation_results</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+                    <span class="ow">and</span> <span class="n">is_tool_output_correct</span>
+                <span class="p">)</span>
+                <span class="n">tool_call_name</span> <span class="o">=</span> <span class="n">expected_tool_call</span><span class="o">.</span><span class="n">tool</span>
+                <span class="k">if</span> <span class="n">all_parameters_correct</span><span class="p">:</span>
+                    <span class="n">res_tool_call_validation</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_aggregate_success</span><span class="p">(</span>
+                        <span class="n">expected_tool_call</span><span class="o">=</span><span class="n">expected_tool_call</span><span class="p">,</span>
+                        <span class="n">parameter_validation_results</span><span class="o">=</span><span class="n">parameter_validation_results</span><span class="p">,</span>
+                        <span class="n">output_explanation</span><span class="o">=</span><span class="n">output_explanation</span><span class="p">,</span>
+                    <span class="p">)</span>
+                    <span class="n">tool_call_validation_results</span><span class="p">[</span><span class="n">tool_call_name</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+                    <span class="c1"># print(f&quot;Tool call validation succeed for tool {tool_call_name}.&quot;)</span>
+                    <span class="k">break</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="c1"># print(f&quot;Tool call validation failed for tool {tool_call_name}.&quot;)</span>
+                    <span class="n">tool_call_validation_results</span><span class="p">[</span><span class="n">tool_call_name</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_aggregate_failure</span><span class="p">(</span>
+                        <span class="n">expected_tool_call</span><span class="o">=</span><span class="n">expected_tool_call</span><span class="p">,</span>
+                        <span class="n">parameter_validation_results</span><span class="o">=</span><span class="n">parameter_validation_results</span><span class="p">,</span>
+                        <span class="n">output_explanation</span><span class="o">=</span><span class="n">output_explanation</span><span class="p">,</span>
+                        <span class="n">explanations</span><span class="o">=</span><span class="n">explanations</span><span class="p">,</span>
+                    <span class="p">)</span>
+                    <span class="n">res_tool_call_validation</span> <span class="o">=</span> <span class="n">ToolCallValidationResult</span><span class="p">(</span>
+                        <span class="n">is_completed</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                        <span class="n">expected_tool_call</span><span class="o">=</span><span class="n">expected_tool_call</span><span class="p">,</span>
+                        <span class="n">explanations</span><span class="o">=</span><span class="n">explanations</span><span class="p">,</span>
+                    <span class="p">)</span>
+
+        <span class="c1"># no matching tool name found for this expected tool call in the current turn, return failed validation result with explanation</span>
+        <span class="k">if</span> <span class="n">res_tool_call_validation</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">ToolCallValidationResult</span><span class="p">(</span>
+                <span class="n">is_completed</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                <span class="n">expected_tool_call</span><span class="o">=</span><span class="n">expected_tool_call</span><span class="p">,</span>
+                <span class="n">explanations</span><span class="o">=</span><span class="p">[</span><span class="n">TOOL_NOT_FOUND_EXPLANATION</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tool_name</span><span class="o">=</span><span class="n">expected_tool_call</span><span class="o">.</span><span class="n">tool</span><span class="p">)],</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="n">res_tool_call_validation</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_tool_steps_from_agent_trace</span><span class="p">(</span><span class="n">agent_turn_trace</span><span class="p">:</span> <span class="n">TurnTrace</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Step</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return back a list of steps where tool is called in the agent trace.</span>
+<span class="sd">        E.g., [</span>
+<span class="sd">        Step(id=&#39;7cacb625-111b-4495-8d71-9268c8eda081&#39;, parent_ids=[None], tool=&#39;calculator&#39;, tool_input_args=[ToolInputParameter(name=&#39;expression&#39;, value=&#39;((20750089.32 + 1000000.00) / 34673013.30) * 100&#39;)], tool_output=62.729158068300926, agent_thought=None, latency_in_sec=0.0, input_token_consumption=0, output_token_consumption=0, reasoning_token_consumption=None),</span>
+<span class="sd">        Step(id=&#39;6e0e20d1-4b5f-431d-b8be-e9253f3dcef4&#39;, parent_ids=[None], tool=&#39;calculator&#39;, tool_input_args=[ToolInputParameter(name=&#39;expression&#39;, value=&#39;34673013.30 - (20750089.32 + 1000000.00)&#39;)], tool_output=12922923.979999997, agent_thought=None, latency_in_sec=0.0, input_token_consumption=0, output_token_consumption=0, reasoning_token_consumption=None), Step(id=&#39;8547f6e4-f7f1-49ec-b8be-e9253f3dcef4&#39;, parent_ids=[&#39;8547f6e4-f7f1-49ec-9ed1-9c346cd43215&#39;], tool=None, tool_input_args=None, tool_output=None, agent_thought=None, latency_in_sec=0.0, input_token_consumption=0, output_token_consumption=0, reasoning_token_consumption=None)</span>
+<span class="sd">        ]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">tool_steps</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="n">agent_turn_trace</span><span class="o">.</span><span class="n">steps</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">step</span> <span class="ow">in</span> <span class="n">agent_turn_trace</span><span class="o">.</span><span class="n">steps</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">step</span><span class="o">.</span><span class="n">tool</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">tool_steps</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">step</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">tool_steps</span>
+
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">_validate_parameters</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">expected_tool_call</span><span class="p">:</span> <span class="n">ExpectedToolCall</span><span class="p">,</span>
+        <span class="n">agent_single_tool_step</span><span class="p">:</span> <span class="n">Step</span><span class="p">,</span>
+        <span class="n">num_judge_trials</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">include_judge_explanation</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Validate all expected parameters for a single tool step.</span>
+<span class="sd">        Returns a dict keyed by parameter name with validation result &amp; explanation.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">parameter_validation_results</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">if</span> <span class="n">expected_tool_call</span><span class="o">.</span><span class="n">expected_parameters</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">param</span> <span class="ow">in</span> <span class="n">expected_tool_call</span><span class="o">.</span><span class="n">expected_parameters</span><span class="p">:</span>
+                <span class="c1"># print(f&quot;Validating parameter: {param.name} ...&quot;)</span>
+                <span class="n">result</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_validate_single_parameter</span><span class="p">(</span>
+                    <span class="n">param</span><span class="o">=</span><span class="n">param</span><span class="p">,</span>
+                    <span class="n">agent_single_tool_step</span><span class="o">=</span><span class="n">agent_single_tool_step</span><span class="p">,</span>
+                    <span class="n">num_judge_trials</span><span class="o">=</span><span class="n">num_judge_trials</span><span class="p">,</span>
+                    <span class="n">include_judge_explanation</span><span class="o">=</span><span class="n">include_judge_explanation</span><span class="p">,</span>
+                <span class="p">)</span>
+                <span class="n">parameter_validation_results</span><span class="p">[</span><span class="n">param</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">result</span>
+        <span class="k">return</span> <span class="n">parameter_validation_results</span>
+
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">_validate_single_parameter</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">param</span><span class="p">:</span> <span class="n">ToolInputParameter</span><span class="p">,</span>
+        <span class="n">agent_single_tool_step</span><span class="p">:</span> <span class="n">Step</span><span class="p">,</span>
+        <span class="n">num_judge_trials</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">include_judge_explanation</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Validate a single parameter (exact match or llm-as-a-judge) returning the standardized result dict.</span>
+<span class="sd">        Preserves the same structure used previously inside _validate_parameters.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">param</span><span class="o">.</span><span class="n">value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">param</span><span class="o">.</span><span class="n">check</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">InvalidInputValueError</span><span class="p">(</span>
+                <span class="n">internal_code</span><span class="o">=</span><span class="n">ErrorCode</span><span class="o">.</span><span class="n">INVALID_VALUE</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+                <span class="n">message</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;ExpectedToolCall parameter </span><span class="si">{</span><span class="n">param</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> cannot have both value and check specified at the same time.&quot;</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="n">param</span><span class="o">.</span><span class="n">check</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="p">(</span>
+                <span class="n">is_correct</span><span class="p">,</span>
+                <span class="n">explanation_list</span><span class="p">,</span>
+            <span class="p">)</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">validate_tool_call_parameter_by_llmj</span><span class="p">(</span>
+                <span class="n">llm_client</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">llm_client</span><span class="p">,</span>
+                <span class="n">param_name</span><span class="o">=</span><span class="n">param</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                <span class="n">param_check</span><span class="o">=</span><span class="n">param</span><span class="o">.</span><span class="n">check</span><span class="p">,</span>
+                <span class="n">actual_tool_call</span><span class="o">=</span><span class="n">agent_single_tool_step</span><span class="p">,</span>
+                <span class="n">num_judge_trials</span><span class="o">=</span><span class="n">num_judge_trials</span><span class="p">,</span>
+                <span class="n">include_judge_explanation</span><span class="o">=</span><span class="n">include_judge_explanation</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="k">return</span> <span class="p">{</span>
+                <span class="s2">&quot;is_completed&quot;</span><span class="p">:</span> <span class="n">is_correct</span><span class="p">,</span>
+                <span class="s2">&quot;method&quot;</span><span class="p">:</span> <span class="s2">&quot;llmj&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;expected_check&quot;</span><span class="p">:</span> <span class="n">param</span><span class="o">.</span><span class="n">check</span><span class="p">,</span>
+                <span class="s2">&quot;explanation&quot;</span><span class="p">:</span> <span class="n">explanation_list</span><span class="p">,</span>
+            <span class="p">}</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># when param.check is None, will ONLY trigger the exact match validation</span>
+            <span class="n">is_correct</span><span class="p">,</span> <span class="n">explanation_str</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">validate_tool_call_parameter_by_exact_match</span><span class="p">(</span>
+                <span class="n">expected_tool_param</span><span class="o">=</span><span class="n">param</span><span class="p">,</span>
+                <span class="n">actual_tool_call_step</span><span class="o">=</span><span class="n">agent_single_tool_step</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="k">return</span> <span class="p">{</span>
+                <span class="s2">&quot;is_completed&quot;</span><span class="p">:</span> <span class="n">is_correct</span><span class="p">,</span>
+                <span class="s2">&quot;method&quot;</span><span class="p">:</span> <span class="s2">&quot;exact_match&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;expected_value&quot;</span><span class="p">:</span> <span class="n">param</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+                <span class="s2">&quot;explanation&quot;</span><span class="p">:</span> <span class="n">explanation_str</span><span class="p">,</span>
+            <span class="p">}</span>
+
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">_validate_output</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">expected_tool_call</span><span class="p">:</span> <span class="n">ExpectedToolCall</span><span class="p">,</span>
+        <span class="n">agent_single_tool_step</span><span class="p">:</span> <span class="n">Step</span><span class="p">,</span>
+        <span class="n">num_judge_trials</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">include_judge_explanation</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Validate tool output (exact match or llm-as-a-judge). Returns (is_correct, explanation or None).&quot;&quot;&quot;</span>
+        <span class="n">is_tool_output_correct</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">output_explanation</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">expected_tool_call</span><span class="o">.</span><span class="n">expected_output</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="p">(</span>
+                <span class="n">expected_tool_call</span><span class="o">.</span><span class="n">expected_output</span><span class="o">.</span><span class="n">value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+                <span class="ow">and</span> <span class="n">expected_tool_call</span><span class="o">.</span><span class="n">expected_output</span><span class="o">.</span><span class="n">check</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+            <span class="p">):</span>
+                <span class="k">raise</span> <span class="n">InvalidInputValueError</span><span class="p">(</span>
+                    <span class="n">internal_code</span><span class="o">=</span><span class="n">ErrorCode</span><span class="o">.</span><span class="n">INVALID_VALUE</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+                    <span class="n">message</span><span class="o">=</span><span class="s2">&quot;ExpectedToolCall output cannot have both value and check specified at the same time.&quot;</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="k">if</span> <span class="n">expected_tool_call</span><span class="o">.</span><span class="n">expected_output</span><span class="o">.</span><span class="n">check</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="p">(</span>
+                    <span class="n">is_tool_output_correct</span><span class="p">,</span>
+                    <span class="n">output_explanation</span><span class="p">,</span>
+                <span class="p">)</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">validate_tool_call_output_by_llmj</span><span class="p">(</span>
+                    <span class="n">llm_client</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">llm_client</span><span class="p">,</span>
+                    <span class="n">output_check</span><span class="o">=</span><span class="n">expected_tool_call</span><span class="o">.</span><span class="n">expected_output</span><span class="o">.</span><span class="n">check</span><span class="p">,</span>
+                    <span class="n">actual_tool_call</span><span class="o">=</span><span class="n">agent_single_tool_step</span><span class="p">,</span>
+                    <span class="n">num_judge_trials</span><span class="o">=</span><span class="n">num_judge_trials</span><span class="p">,</span>
+                    <span class="n">include_judge_explanation</span><span class="o">=</span><span class="n">include_judge_explanation</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># when expected_tool_call.expected_output.check is None, will ONLY trigger the exact match validation</span>
+                <span class="n">is_tool_output_correct</span><span class="p">,</span> <span class="n">output_explanation</span> <span class="o">=</span> <span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">validate_tool_call_output_by_exact_match</span><span class="p">(</span>
+                        <span class="n">expected_output_value</span><span class="o">=</span><span class="n">expected_tool_call</span><span class="o">.</span><span class="n">expected_output</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+                        <span class="n">actual_tool_call_step</span><span class="o">=</span><span class="n">agent_single_tool_step</span><span class="p">,</span>
+                    <span class="p">)</span>
+                <span class="p">)</span>
+        <span class="k">return</span> <span class="n">is_tool_output_correct</span><span class="p">,</span> <span class="n">output_explanation</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_aggregate_success</span><span class="p">(</span>
+        <span class="n">expected_tool_call</span><span class="p">:</span> <span class="n">ExpectedToolCall</span><span class="p">,</span>
+        <span class="n">parameter_validation_results</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]],</span>
+        <span class="n">output_explanation</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ToolCallValidationResult</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Aggregate successful validation:</span>
+<span class="sd">        Append general explanation at the beginning, then tool name match, parameter explanations, output explanation</span>
+<span class="sd">        [</span>
+<span class="sd">            &quot;Tool {tool_call_name} call has passed all input arguments check and output check successfully.&quot;</span>
+<span class="sd">            &quot;Tool name: {expected_tool_call.tool} matched.&quot;,</span>
+<span class="sd">            &quot;Argument \&quot;{param_name}\&quot; has passed exact match successfully.&quot;,</span>
+<span class="sd">            &quot;Argument \&quot;{param_name}\&quot; has passed llm-as-a-judge successfully.&quot;,</span>
+<span class="sd">            &quot;Tool output has passed llm-as-a-judge successfully.&quot;,</span>
+<span class="sd">        ]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">tool_call_name</span> <span class="o">=</span> <span class="n">expected_tool_call</span><span class="o">.</span><span class="n">tool</span>
+        <span class="n">correct_explanation</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">general_explnation_str</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;Tool &quot;</span><span class="si">{</span><span class="n">tool_call_name</span><span class="si">}</span><span class="s1">&quot; call has passed all input arguments check and output check successfully.&#39;</span>
+        <span class="n">correct_explanation</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">general_explnation_str</span><span class="p">)</span>
+        <span class="n">explanations_str</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Tool name: </span><span class="si">{</span><span class="n">expected_tool_call</span><span class="o">.</span><span class="n">tool</span><span class="si">}</span><span class="s2"> matched.&quot;</span>
+        <span class="n">correct_explanation</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">explanations_str</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">parameter_validation_results</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="n">correct_explanation</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span>
+                <span class="n">p</span><span class="p">[</span><span class="s2">&quot;explanation&quot;</span><span class="p">]</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="s2">&quot;explanation&quot;</span><span class="p">],</span> <span class="nb">list</span><span class="p">)</span> <span class="k">else</span> <span class="p">[</span><span class="n">p</span><span class="p">[</span><span class="s2">&quot;explanation&quot;</span><span class="p">]]</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="n">output_explanation</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">correct_explanation</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span>
+                <span class="n">output_explanation</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">output_explanation</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="k">else</span> <span class="p">[</span><span class="n">output_explanation</span><span class="p">]</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="n">ToolCallValidationResult</span><span class="p">(</span>
+            <span class="n">is_completed</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">expected_tool_call</span><span class="o">=</span><span class="n">expected_tool_call</span><span class="p">,</span>
+            <span class="n">explanations</span><span class="o">=</span><span class="n">correct_explanation</span><span class="p">,</span>
+        <span class="p">)</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_aggregate_failure</span><span class="p">(</span>
+        <span class="n">expected_tool_call</span><span class="p">:</span> <span class="n">ExpectedToolCall</span><span class="p">,</span>
+        <span class="n">parameter_validation_results</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]],</span>
+        <span class="n">output_explanation</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
+        <span class="n">explanations</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Append failure block explanations for a single failed attempt:</span>
+<span class="sd">        This will include all the explanations for wrong tool call with the same tool name, formatted as:</span>
+<span class="sd">        [</span>
+<span class="sd">            &quot;Tool {tool_call_name} call has failed input arguments check or output check.&quot;</span>
+<span class="sd">            &quot;Tool name: {expected_tool_call.tool} matched.&quot;,</span>
+<span class="sd">            &quot;Argument \&quot;{param_name}\&quot; has passed exact match successfully.&quot;,</span>
+<span class="sd">            &quot;Argument \&quot;{param_name}\&quot; has failed llm-as-a-judge.&quot;,</span>
+<span class="sd">            &quot;judge explanation: ...&quot;,</span>
+<span class="sd">            &quot;Tool output has failed llm-as-a-judge.&quot;,</span>
+<span class="sd">            &quot;judge explanation: ...&quot;</span>
+<span class="sd">        ]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">tool_call_name</span> <span class="o">=</span> <span class="n">expected_tool_call</span><span class="o">.</span><span class="n">tool</span>
+        <span class="n">general_explnation_str</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="sa">f</span><span class="s1">&#39;Tool &quot;</span><span class="si">{</span><span class="n">tool_call_name</span><span class="si">}</span><span class="s1">&quot; call has failed input arguments check or output check.&#39;</span>
+        <span class="p">)</span>
+        <span class="n">explanations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">general_explnation_str</span><span class="p">)</span>
+        <span class="n">explanations_str</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Tool name: </span><span class="si">{</span><span class="n">expected_tool_call</span><span class="o">.</span><span class="n">tool</span><span class="si">}</span><span class="s2"> matched.&quot;</span>
+        <span class="n">explanations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">explanations_str</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">parameter_validation_results</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="n">explanations</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span>
+                <span class="n">p</span><span class="p">[</span><span class="s2">&quot;explanation&quot;</span><span class="p">]</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="s2">&quot;explanation&quot;</span><span class="p">],</span> <span class="nb">list</span><span class="p">)</span> <span class="k">else</span> <span class="p">[</span><span class="n">p</span><span class="p">[</span><span class="s2">&quot;explanation&quot;</span><span class="p">]]</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="n">output_explanation</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">explanations</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span>
+                <span class="n">output_explanation</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">output_explanation</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="k">else</span> <span class="p">[</span><span class="n">output_explanation</span><span class="p">]</span>
+            <span class="p">)</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">validate_tool_call_parameter_by_llmj</span><span class="p">(</span>
+        <span class="n">llm_client</span><span class="p">,</span>
+        <span class="n">param_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">param_check</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">actual_tool_call</span><span class="p">:</span> <span class="n">Step</span><span class="p">,</span>
+        <span class="n">num_judge_trials</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">include_judge_explanation</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]:</span>
+        <span class="n">input_arg_value</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">actual_tool_call</span><span class="o">.</span><span class="n">tool_input_args</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">input_arg</span> <span class="ow">in</span> <span class="n">actual_tool_call</span><span class="o">.</span><span class="n">tool_input_args</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">input_arg</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="o">==</span> <span class="n">param_name</span><span class="o">.</span><span class="n">strip</span><span class="p">():</span>
+                    <span class="n">input_arg_value</span> <span class="o">=</span> <span class="n">input_arg</span><span class="o">.</span><span class="n">value</span>
+                    <span class="k">break</span>  <span class="c1"># shouldn&#39;t have multiple params with same name in actual_tool_call</span>
+
+        <span class="c1"># construct llmj prompt</span>
+        <span class="n">prompt</span> <span class="o">=</span> <span class="n">ToolCallCompletionValidator</span><span class="o">.</span><span class="n">construct_tool_correctness_llmj_prompt</span><span class="p">(</span>
+            <span class="n">arg_value</span><span class="o">=</span><span class="n">input_arg_value</span><span class="p">,</span>
+            <span class="n">gt_param_check</span><span class="o">=</span><span class="n">param_check</span><span class="p">,</span>
+            <span class="n">actual_tool_call</span><span class="o">=</span><span class="n">actual_tool_call</span><span class="p">,</span>
+            <span class="n">is_input_arg</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="p">(</span>
+            <span class="n">majority_voted_score</span><span class="p">,</span>
+            <span class="n">judge_explanations</span><span class="p">,</span>
+        <span class="p">)</span> <span class="o">=</span> <span class="k">await</span> <span class="n">Validator</span><span class="o">.</span><span class="n">get_majority_voted_score_from_judge_responses_optimised</span><span class="p">(</span>
+            <span class="n">llm_client</span><span class="o">=</span><span class="n">llm_client</span><span class="p">,</span> <span class="n">prompt</span><span class="o">=</span><span class="n">prompt</span><span class="p">,</span> <span class="n">no_of_trials</span><span class="o">=</span><span class="n">num_judge_trials</span>
+        <span class="p">)</span>
+        <span class="n">is_completed</span> <span class="o">=</span> <span class="kc">True</span> <span class="k">if</span> <span class="n">majority_voted_score</span> <span class="o">==</span> <span class="mi">1</span> <span class="k">else</span> <span class="kc">False</span>
+        <span class="n">explanations</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="n">is_completed</span><span class="p">:</span>
+            <span class="n">explanations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ARGUMENT_PASSED_LLMJ_EXPLANATION</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">param_name</span><span class="o">=</span><span class="n">param_name</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">explanations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ARGUMENT_FAILED_LLMJ_EXPLANATION</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">param_name</span><span class="o">=</span><span class="n">param_name</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="n">include_judge_explanation</span><span class="p">:</span>
+            <span class="n">explanations</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">judge_explanations</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">is_completed</span><span class="p">,</span> <span class="n">explanations</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">construct_tool_correctness_llmj_prompt</span><span class="p">(</span>
+        <span class="n">arg_value</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">gt_param_check</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">actual_tool_call</span><span class="p">:</span> <span class="n">Step</span><span class="p">,</span>
+        <span class="n">is_input_arg</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">is_input_arg</span><span class="p">:</span>
+            <span class="n">agent_tool_call_step_str</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Step(tool=&#39;</span><span class="si">{</span><span class="n">actual_tool_call</span><span class="o">.</span><span class="n">tool</span><span class="si">}</span><span class="s2">&#39;, tool_input_args=[&quot;</span>
+            <span class="k">if</span> <span class="n">actual_tool_call</span><span class="o">.</span><span class="n">tool_input_args</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">actual_tool_call</span><span class="o">.</span><span class="n">tool_input_args</span><span class="p">:</span>
+                    <span class="n">agent_tool_call_step_str</span> <span class="o">+=</span> <span class="p">(</span>
+                        <span class="sa">f</span><span class="s2">&quot;ToolInputParameter(name=&#39;</span><span class="si">{</span><span class="n">arg</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&#39;, value=&#39;</span><span class="si">{</span><span class="n">arg</span><span class="o">.</span><span class="n">value</span><span class="si">}</span><span class="s2">&#39;),</span><span class="se">\n</span><span class="s2">&quot;</span>
+                    <span class="p">)</span>
+            <span class="n">agent_tool_call_step_str</span> <span class="o">+=</span> <span class="s2">&quot;])&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">agent_tool_call_step_str</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Step(tool=&#39;</span><span class="si">{</span><span class="n">actual_tool_call</span><span class="o">.</span><span class="n">tool</span><span class="si">}</span><span class="s2">&#39;, tool_output=[ToolOutput(value=&#39;</span><span class="si">{</span><span class="n">actual_tool_call</span><span class="o">.</span><span class="n">tool_output</span><span class="si">}</span><span class="s2">&#39;)])&quot;</span>
+
+        <span class="n">prompt</span> <span class="o">=</span> <span class="n">TOOL_CORRECTNESS_TEMPLATE</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="n">arg_value</span><span class="o">=</span><span class="n">arg_value</span><span class="p">,</span>
+            <span class="n">gt_value</span><span class="o">=</span><span class="n">gt_param_check</span><span class="p">,</span>
+            <span class="n">agent_tool_step</span><span class="o">=</span><span class="n">agent_tool_call_step_str</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">prompt</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">validate_tool_call_parameter_by_exact_match</span><span class="p">(</span>
+        <span class="n">expected_tool_param</span><span class="p">:</span> <span class="n">ToolInputParameter</span><span class="p">,</span> <span class="n">actual_tool_call_step</span><span class="p">:</span> <span class="n">Step</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
+        <span class="n">param_name</span> <span class="o">=</span> <span class="n">expected_tool_param</span><span class="o">.</span><span class="n">name</span>
+        <span class="k">if</span> <span class="n">actual_tool_call_step</span><span class="o">.</span><span class="n">tool_input_args</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">input_arg</span> <span class="ow">in</span> <span class="n">actual_tool_call_step</span><span class="o">.</span><span class="n">tool_input_args</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">input_arg</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="o">==</span> <span class="n">param_name</span><span class="o">.</span><span class="n">strip</span><span class="p">():</span>
+                    <span class="k">if</span> <span class="n">input_arg</span><span class="o">.</span><span class="n">value</span> <span class="o">==</span> <span class="n">expected_tool_param</span><span class="o">.</span><span class="n">value</span><span class="p">:</span>
+                        <span class="k">return</span> <span class="kc">True</span><span class="p">,</span> <span class="n">ARGUMENT_PASSED_EXACT_MATCH_EXPLANATION</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                            <span class="n">param_name</span><span class="o">=</span><span class="n">param_name</span>
+                        <span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="k">return</span> <span class="kc">False</span><span class="p">,</span> <span class="n">ARGUMENT_FAILED_EXACT_MATCH_EXPLANATION</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                            <span class="n">param_name</span><span class="o">=</span><span class="n">param_name</span><span class="p">,</span>
+                            <span class="n">expected_value</span><span class="o">=</span><span class="n">expected_tool_param</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+                            <span class="n">expected_type</span><span class="o">=</span><span class="nb">type</span><span class="p">(</span><span class="n">expected_tool_param</span><span class="o">.</span><span class="n">value</span><span class="p">),</span>
+                            <span class="n">actual_value</span><span class="o">=</span><span class="n">input_arg</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+                            <span class="n">actual_type</span><span class="o">=</span><span class="nb">type</span><span class="p">(</span><span class="n">input_arg</span><span class="o">.</span><span class="n">value</span><span class="p">),</span>
+                        <span class="p">)</span>
+        <span class="k">return</span> <span class="kc">False</span><span class="p">,</span> <span class="n">ARGUMENT_NOT_FOUND_EXPLANATION</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="n">param_name</span><span class="o">=</span><span class="n">param_name</span><span class="p">,</span>
+            <span class="n">expected_value</span><span class="o">=</span><span class="n">expected_tool_param</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+            <span class="n">expected_type</span><span class="o">=</span><span class="nb">type</span><span class="p">(</span><span class="n">expected_tool_param</span><span class="o">.</span><span class="n">value</span><span class="p">),</span>
+        <span class="p">)</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">validate_tool_call_output_by_exact_match</span><span class="p">(</span>
+        <span class="n">expected_output_value</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">actual_tool_call_step</span><span class="p">:</span> <span class="n">Step</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
+        <span class="n">actual_output</span> <span class="o">=</span> <span class="n">actual_tool_call_step</span><span class="o">.</span><span class="n">tool_output</span>
+        <span class="k">if</span> <span class="n">actual_output</span> <span class="o">==</span> <span class="n">expected_output_value</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span><span class="p">,</span> <span class="n">OUTPUT_PASSED_EXACT_MATCH_EXPLANATION</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span><span class="p">,</span> <span class="n">OUTPUT_FAILED_EXACT_MATCH_EXPLANATION</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="n">expected_output</span><span class="o">=</span><span class="n">expected_output_value</span><span class="p">,</span>
+                <span class="n">expected_type</span><span class="o">=</span><span class="nb">type</span><span class="p">(</span><span class="n">expected_output_value</span><span class="p">),</span>
+                <span class="n">actual_output</span><span class="o">=</span><span class="n">actual_output</span><span class="p">,</span>
+                <span class="n">actual_type</span><span class="o">=</span><span class="nb">type</span><span class="p">(</span><span class="n">actual_output</span><span class="p">),</span>
+            <span class="p">)</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">validate_tool_call_output_by_llmj</span><span class="p">(</span>
+        <span class="n">llm_client</span><span class="p">,</span>
+        <span class="n">output_check</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">actual_tool_call</span><span class="p">:</span> <span class="n">Step</span><span class="p">,</span>
+        <span class="n">num_judge_trials</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">include_judge_explanation</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]:</span>
+        <span class="c1"># In cases where the tool call does not return any output, we set it to an empty string</span>
+        <span class="n">prompt</span> <span class="o">=</span> <span class="n">ToolCallCompletionValidator</span><span class="o">.</span><span class="n">construct_tool_correctness_llmj_prompt</span><span class="p">(</span>
+            <span class="n">arg_value</span><span class="o">=</span><span class="n">actual_tool_call</span><span class="o">.</span><span class="n">tool_output</span>
+            <span class="k">if</span> <span class="n">actual_tool_call</span><span class="o">.</span><span class="n">tool_output</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+            <span class="k">else</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+            <span class="n">gt_param_check</span><span class="o">=</span><span class="n">output_check</span><span class="p">,</span>
+            <span class="n">actual_tool_call</span><span class="o">=</span><span class="n">actual_tool_call</span><span class="p">,</span>
+            <span class="n">is_input_arg</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="p">(</span>
+            <span class="n">majority_voted_score</span><span class="p">,</span>
+            <span class="n">judge_explanations</span><span class="p">,</span>
+        <span class="p">)</span> <span class="o">=</span> <span class="k">await</span> <span class="n">Validator</span><span class="o">.</span><span class="n">get_majority_voted_score_from_judge_responses_optimised</span><span class="p">(</span>
+            <span class="n">llm_client</span><span class="o">=</span><span class="n">llm_client</span><span class="p">,</span> <span class="n">prompt</span><span class="o">=</span><span class="n">prompt</span><span class="p">,</span> <span class="n">no_of_trials</span><span class="o">=</span><span class="n">num_judge_trials</span>
+        <span class="p">)</span>
+        <span class="n">is_completed</span> <span class="o">=</span> <span class="kc">True</span> <span class="k">if</span> <span class="n">majority_voted_score</span> <span class="o">==</span> <span class="mi">1</span> <span class="k">else</span> <span class="kc">False</span>
+        <span class="n">explanations</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="n">is_completed</span><span class="p">:</span>
+            <span class="n">explanations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">OUTPUT_PASSED_LLMJ_EXPLANATION</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">explanations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">OUTPUT_FAILED_LLMJ_EXPLANATION</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">include_judge_explanation</span><span class="p">:</span>
+            <span class="n">explanations</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">judge_explanations</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">is_completed</span><span class="p">,</span> <span class="n">explanations</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, &#34;&#34;.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

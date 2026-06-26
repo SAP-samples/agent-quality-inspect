@@ -1,0 +1,34 @@
+agent\_inspect.metrics package
+==============================
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 1
+
+   agent_inspect.metrics.adapters
+   agent_inspect.metrics.multi_samples
+   agent_inspect.metrics.observed
+   agent_inspect.metrics.scorer
+   agent_inspect.metrics.utils
+   agent_inspect.metrics.validator
+
+Submodules
+----------
+
+agent\_inspect.metrics.constants module
+---------------------------------------
+
+.. automodule:: agent_inspect.metrics.constants
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: agent_inspect.metrics
+   :members:
+   :undoc-members:
+   :show-inheritance:

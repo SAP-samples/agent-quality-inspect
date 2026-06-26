@@ -1,0 +1,53 @@
+agent\_inspect.user\_proxy package
+==================================
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 1
+
+   agent_inspect.user_proxy.utils
+
+Submodules
+----------
+
+agent\_inspect.user\_proxy.constants module
+-------------------------------------------
+
+.. automodule:: agent_inspect.user_proxy.constants
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+agent\_inspect.user\_proxy.llm\_proxy\_agent module
+---------------------------------------------------
+
+.. automodule:: agent_inspect.user_proxy.llm_proxy_agent
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+agent\_inspect.user\_proxy.templates module
+-------------------------------------------
+
+.. automodule:: agent_inspect.user_proxy.templates
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+agent\_inspect.user\_proxy.user\_proxy\_agent module
+----------------------------------------------------
+
+.. automodule:: agent_inspect.user_proxy.user_proxy_agent
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: agent_inspect.user_proxy
+   :members:
+   :undoc-members:
+   :show-inheritance:

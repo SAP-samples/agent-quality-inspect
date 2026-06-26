@@ -1,0 +1,290 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>agent_inspect.tools.error_analysis.unsupervised_subgoal_error_analysis &mdash; agent_inspect 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/custom.css?v=eea1f72d" />
+
+  
+      <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../_static/documentation_options.js?v=f2a433a1"></script>
+      <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            agent_inspect
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules.html">agent_inspect</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">agent_inspect</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">agent_inspect.tools.error_analysis.unsupervised_subgoal_error_analysis</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for agent_inspect.tools.error_analysis.unsupervised_subgoal_error_analysis</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">asyncio</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Optional</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.exception.error_codes</span><span class="w"> </span><span class="kn">import</span> <span class="n">ErrorCode</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.exception</span><span class="w"> </span><span class="kn">import</span> <span class="n">ToolError</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.models.tools.analysis_models</span><span class="w"> </span><span class="kn">import</span> <span class="n">AnalyzedSubgoalValidation</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.models.metrics.validation_result</span><span class="w"> </span><span class="kn">import</span> <span class="n">SubGoalValidationResult</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.models.llm_payload</span><span class="w"> </span><span class="kn">import</span> <span class="n">LLMPayload</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.clients.llm_client</span><span class="w"> </span><span class="kn">import</span> <span class="n">LLMClient</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.tools.error_analysis.subgoal_error_analysis</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">SubgoalErrorAnalysis</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.tools.error_analysis.llm_templates</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">MAJORITY_VOTE_PROMPT_TEMPLATE</span><span class="p">,</span>
+    <span class="n">UNSUPERVISED_CLUSTERING_PROMPT_TEMPLATE</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.tools.error_analysis.llm_output_schemas</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">MAJORITY_VOTE_OUTPUT_SCHEMA</span><span class="p">,</span>
+    <span class="n">UNSUPERVISED_CLUSTERING_OUTPUT_SCHEMA</span><span class="p">,</span>
+<span class="p">)</span>
+
+
+<div class="viewcode-block" id="UnsupervisedSubgoalErrorAnalysis">
+<a class="viewcode-back" href="../../../../agent_inspect.tools.error_analysis.html#agent_inspect.tools.error_analysis.unsupervised_subgoal_error_analysis.UnsupervisedSubgoalErrorAnalysis">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">UnsupervisedSubgoalErrorAnalysis</span><span class="p">(</span><span class="n">SubgoalErrorAnalysis</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Unsupervised error analysis for subgoal validations.</span>
+
+<span class="sd">    This class implements an unsupervised learning approach to error analysis that:</span>
+<span class="sd">    1) Identifies low-level errors from individual subgoal validation failures</span>
+<span class="sd">    2) Dynamically clusters similar low-level errors into error categories</span>
+<span class="sd">    3) Error clusters are generated on-the-fly based on the low-level errors, without relying on any predefined error categories.</span>
+
+<span class="sd">    The analysis follows a two-step process:</span>
+
+<span class="sd">    - **Step 1**: For each failed subgoal validation, summarize the issues raised by</span>
+<span class="sd">      the judge trials into a concise base error description.</span>
+<span class="sd">    - **Step 2**: Cluster all base errors semantically using an LLM to identify</span>
+<span class="sd">      common failure patterns.</span>
+
+<span class="sd">    This approach is useful when you want to discover error patterns without prior</span>
+<span class="sd">    assumptions about what kinds of errors might occur.</span>
+
+<span class="sd">    :param llm_client: The :class:`~agent_inspect.clients.llm_client.LLMClient` for performing error analysis operations.</span>
+<span class="sd">    :param config: Optional configuration dictionary. Supported keys:</span>
+
+<span class="sd">        - **max_workers**: Maximum number of concurrent workers (default: 20)</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; from agent_inspect.models.tools import SubgoalErrorAnalysisDataSample</span>
+<span class="sd">        &gt;&gt;&gt; from agent_inspect.tools.error_analysis import UnsupervisedSubgoalErrorAnalysis</span>
+<span class="sd">        &gt;&gt;&gt; from agent_inspect.clients.azure_openai_client import AzureOpenAIClient</span>
+<span class="sd">        &gt;&gt;&gt;</span>
+<span class="sd">        &gt;&gt;&gt; # Prepare your data samples</span>
+<span class="sd">        &gt;&gt;&gt; data_samples: List[SubgoalErrorAnalysisDataSample] = [...]</span>
+<span class="sd">        &gt;&gt;&gt;</span>
+<span class="sd">        &gt;&gt;&gt; # Initialize the analyzer</span>
+<span class="sd">        &gt;&gt;&gt; llm_client = AzureOpenAIClient(model=&quot;gpt-4.1&quot;, max_tokens=4096)</span>
+<span class="sd">        &gt;&gt;&gt; analyzer = UnsupervisedSubgoalErrorAnalysis(</span>
+<span class="sd">        ...     llm_client=llm_client,</span>
+<span class="sd">        ...     config={&quot;max_workers&quot;: 10}</span>
+<span class="sd">        ... )</span>
+<span class="sd">        &gt;&gt;&gt;</span>
+<span class="sd">        &gt;&gt;&gt; # Run error analysis</span>
+<span class="sd">        &gt;&gt;&gt; results = analyzer.analyze_batch(data_samples)</span>
+<span class="sd">        &gt;&gt;&gt; error_categories = list(results.analyzed_validations_clustered_by_errors.keys())</span>
+<span class="sd">        &gt;&gt;&gt; print(f&quot;Discovered error categories: {error_categories}&quot;)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">llm_client</span><span class="p">:</span> <span class="n">LLMClient</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">llm_client</span><span class="p">,</span> <span class="n">config</span><span class="p">)</span>
+
+    <span class="c1"># ==================== Algorithm-Specific Methods (implementing abstract methods) ====================</span>
+
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">_summarize_errors_into_base_error</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">subgoal_validation</span><span class="p">:</span> <span class="n">SubGoalValidationResult</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Summarize judge trial explanations into a single base error description.</span>
+
+<span class="sd">        This method uses the unsupervised approach:</span>
+
+<span class="sd">        - If subgoal is completed: returns None (no error)</span>
+<span class="sd">        - If all judge trials failed: uses first judge trial explanation</span>
+<span class="sd">        - If mixed results: generates error summary for each judge trial and performs majority voting to determine the most likely base error</span>
+
+<span class="sd">        :param subgoal_validation: a :obj:`~agent_inspect.models.metrics.validation_result.SubGoalValidationResult` object to analyze.</span>
+<span class="sd">        :return: A concise base error description, or None if the subgoal was completed.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">subgoal_validation</span><span class="o">.</span><span class="n">is_completed</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="n">judge_trial_explanations</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_judge_trial_explanations_from_subgoal_validation</span><span class="p">(</span>
+            <span class="n">subgoal_validation</span>
+        <span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_has_failed_consistently</span><span class="p">(</span><span class="n">subgoal_validation</span><span class="p">):</span>
+            <span class="c1"># All judge trials failed - take first judge trial explanation as representative</span>
+            <span class="n">base_error</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_summarize_error</span><span class="p">(</span>
+                <span class="n">judge_trial_explanations</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">subgoal_validation</span><span class="o">.</span><span class="n">sub_goal</span><span class="o">.</span><span class="n">details</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># Mixed results - use unsupervised majority voting approach</span>
+            <span class="c1"># Get error summary for every judge trial explanation</span>
+            <span class="n">tasks</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_summarize_error</span><span class="p">(</span><span class="n">judge_trial_explanation</span><span class="p">,</span> <span class="n">subgoal_validation</span><span class="o">.</span><span class="n">sub_goal</span><span class="o">.</span><span class="n">details</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">judge_trial_explanation</span> <span class="ow">in</span> <span class="n">judge_trial_explanations</span>
+            <span class="p">]</span>
+            <span class="n">errors</span> <span class="o">=</span> <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">gather</span><span class="p">(</span><span class="o">*</span><span class="n">tasks</span><span class="p">)</span>
+            <span class="c1"># Perform majority voting to determine most likely error</span>
+            <span class="n">base_error</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_perform_majority_voting</span><span class="p">(</span><span class="n">errors</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">base_error</span>
+
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">_cluster_errors</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">analyzed_subgoal_validations</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">AnalyzedSubgoalValidation</span><span class="p">]</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Cluster analyzed subgoal validations based on their base errors.</span>
+
+<span class="sd">        Uses unsupervised clustering to dynamically generate error categories from</span>
+<span class="sd">        the base errors. The LLM identifies similar errors and groups them together.</span>
+
+<span class="sd">        :param analyzed_subgoal_validations: a :obj:`~typing.List` of :obj:`~agent_inspect.models.tools.analysis_models.AnalyzedSubgoalValidation` objects with base errors.</span>
+<span class="sd">        :return: Dictionary containing clustering results with the following structure::</span>
+
+<span class="sd">                {</span>
+<span class="sd">                    &quot;clusters&quot;: [</span>
+<span class="sd">                        {</span>
+<span class="sd">                            &quot;cluster_label&quot;: &quot;&lt;error category name&gt;&quot;,</span>
+<span class="sd">                            &quot;description&quot;: &quot;&lt;description of this error type&gt;&quot;,</span>
+<span class="sd">                            &quot;error_ids&quot;: [&quot;0&quot;, &quot;3&quot;, &quot;5&quot;, ...]  # indices into analyzed_subgoal_validations</span>
+<span class="sd">                        },</span>
+<span class="sd">                        ...</span>
+<span class="sd">                    ]</span>
+<span class="sd">                }</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Build index -&gt; base_error mapping for LLM prompt</span>
+        <span class="n">index_to_error_mapping</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="nb">str</span><span class="p">(</span><span class="n">idx</span><span class="p">):</span> <span class="n">analyzed_subgoal_validation</span><span class="o">.</span><span class="n">base_error</span>
+            <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">analyzed_subgoal_validation</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">analyzed_subgoal_validations</span><span class="p">)</span>
+        <span class="p">}</span>
+
+        <span class="c1"># Get all unique subgoals to provide context for clustering</span>
+        <span class="n">unique_subgoals</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span>
+            <span class="nb">dict</span><span class="o">.</span><span class="n">fromkeys</span><span class="p">(</span>
+                <span class="n">analysed_subgoal_validation</span><span class="o">.</span><span class="n">subgoal_validation</span><span class="o">.</span><span class="n">sub_goal</span><span class="o">.</span><span class="n">details</span>
+                <span class="k">for</span> <span class="n">analysed_subgoal_validation</span> <span class="ow">in</span> <span class="n">analyzed_subgoal_validations</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Create LLM payload for unsupervised clustering</span>
+        <span class="n">payload</span> <span class="o">=</span> <span class="n">LLMPayload</span><span class="p">(</span>
+            <span class="n">user_prompt</span><span class="o">=</span><span class="n">UNSUPERVISED_CLUSTERING_PROMPT_TEMPLATE</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="n">error_types</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">index_to_error_mapping</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span>
+                <span class="n">subgoals</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">unique_subgoals</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span>
+            <span class="p">),</span>
+            <span class="n">structured_output</span><span class="o">=</span><span class="n">UNSUPERVISED_CLUSTERING_OUTPUT_SCHEMA</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_request_and_parse_json_with_retry</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">llm_client</span><span class="p">,</span> <span class="n">payload</span><span class="p">)</span>
+
+    <span class="c1"># ==================== Unsupervised-Specific Helper Methods ====================</span>
+
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">_perform_majority_voting</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">errors</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Perform majority voting on multiple error descriptions.</span>
+
+<span class="sd">        Uses an LLM to determine the most common or representative error from a list</span>
+<span class="sd">        of error descriptions.</span>
+
+<span class="sd">        :param errors: List of error descriptions to vote on.</span>
+<span class="sd">        :return: The most probable error description according to the LLM.</span>
+<span class="sd">        :raises ToolError: If the LLM fails to perform majority voting.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">payload</span> <span class="o">=</span> <span class="n">LLMPayload</span><span class="p">(</span>
+            <span class="n">user_prompt</span><span class="o">=</span><span class="n">MAJORITY_VOTE_PROMPT_TEMPLATE</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="n">error_type_list</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">errors</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+            <span class="p">),</span>
+            <span class="n">structured_output</span><span class="o">=</span><span class="n">MAJORITY_VOTE_OUTPUT_SCHEMA</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="n">response_dict</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_request_and_parse_json_with_retry</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">llm_client</span><span class="p">,</span> <span class="n">payload</span><span class="p">)</span>
+        <span class="k">if</span> <span class="s2">&quot;most_probable_error_type&quot;</span> <span class="ow">in</span> <span class="n">response_dict</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">response_dict</span><span class="p">[</span><span class="s2">&quot;most_probable_error_type&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ToolError</span><span class="p">(</span>
+                <span class="n">internal_code</span><span class="o">=</span><span class="n">ErrorCode</span><span class="o">.</span><span class="n">UNSUCCESSFUL_MAJORITY_VOTING</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+                <span class="n">message</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;LLM majority voting request failed as no most_probable_error_type found in response: </span><span class="si">{</span><span class="n">response_dict</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+            <span class="p">)</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, &#34;&#34;.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

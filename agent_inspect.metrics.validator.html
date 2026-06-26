@@ -1,0 +1,807 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>agent_inspect.metrics.validator package &mdash; agent_inspect 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=eea1f72d" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=f2a433a1"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="agent_inspect.models package" href="agent_inspect.models.html" />
+    <link rel="prev" title="agent_inspect.metrics.utils package" href="agent_inspect.metrics.utils.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            agent_inspect
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">agent_inspect</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">agent_inspect</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">agent_inspect</a></li>
+          <li class="breadcrumb-item"><a href="agent_inspect.html">agent_inspect package</a></li>
+          <li class="breadcrumb-item"><a href="agent_inspect.metrics.html">agent_inspect.metrics package</a></li>
+      <li class="breadcrumb-item active">agent_inspect.metrics.validator package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/agent_inspect.metrics.validator.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="agent-inspect-metrics-validator-package">
+<h1>agent_inspect.metrics.validator package<a class="headerlink" href="#agent-inspect-metrics-validator-package" title="Link to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-agent_inspect.metrics.validator.constants">
+<span id="agent-inspect-metrics-validator-constants-module"></span><h2>agent_inspect.metrics.validator.constants module<a class="headerlink" href="#module-agent_inspect.metrics.validator.constants" title="Link to this heading"></a></h2>
+<p>Constants for tool call validation explanation formats.</p>
+<p>These format strings are used by ToolCallCompletionValidator to generate consistent explanations
+and by DeterministicToolCallErrorAnalysis for regex pattern matching during error classification.</p>
+</section>
+<section id="module-agent_inspect.metrics.validator.exact_match">
+<span id="agent-inspect-metrics-validator-exact-match-module"></span><h2>agent_inspect.metrics.validator.exact_match module<a class="headerlink" href="#module-agent_inspect.metrics.validator.exact_match" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="agent_inspect.metrics.validator.exact_match.exact_match">
+<span class="sig-prename descclassname"><span class="pre">agent_inspect.metrics.validator.exact_match.</span></span><span class="sig-name descname"><span class="pre">exact_match</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">candidate</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ground_truth</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/metrics/validator/exact_match.html#exact_match"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.metrics.validator.exact_match.exact_match" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></span></p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>candidate</strong> (<em>str</em>)</p></li>
+<li><p><strong>ground_truth</strong> (<em>str</em>)</p></li>
+<li><p><strong>config</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>] </em><em>| </em><em>None</em>)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-agent_inspect.metrics.validator.llm_check">
+<span id="agent-inspect-metrics-validator-llm-check-module"></span><h2>agent_inspect.metrics.validator.llm_check module<a class="headerlink" href="#module-agent_inspect.metrics.validator.llm_check" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="agent_inspect.metrics.validator.llm_check.llm_check">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agent_inspect.metrics.validator.llm_check.</span></span><span class="sig-name descname"><span class="pre">llm_check</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">variables</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">template</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">post_process</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/metrics/validator/llm_check.html#llm_check"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.metrics.validator.llm_check.llm_check" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></span></p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>client</strong> (<a class="reference internal" href="agent_inspect.clients.html#agent_inspect.clients.llm_client.LLMClient" title="agent_inspect.clients.llm_client.LLMClient"><em>LLMClient</em></a>)</p></li>
+<li><p><strong>variables</strong> (<em>Dict</em>)</p></li>
+<li><p><strong>template</strong> (<em>str</em>)</p></li>
+<li><p><strong>post_process</strong> (<em>Callable</em><em>[</em><em>[</em><a class="reference internal" href="agent_inspect.models.html#agent_inspect.models.llm_response.LLMResponse" title="agent_inspect.models.llm_response.LLMResponse"><em>LLMResponse</em></a><em>]</em><em>, </em><em>bool</em><em>]</em>)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-agent_inspect.metrics.validator.regex_match">
+<span id="agent-inspect-metrics-validator-regex-match-module"></span><h2>agent_inspect.metrics.validator.regex_match module<a class="headerlink" href="#module-agent_inspect.metrics.validator.regex_match" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="agent_inspect.metrics.validator.regex_match.regex_match">
+<span class="sig-prename descclassname"><span class="pre">agent_inspect.metrics.validator.regex_match.</span></span><span class="sig-name descname"><span class="pre">regex_match</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">candidate</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pattern</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/metrics/validator/regex_match.html#regex_match"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.metrics.validator.regex_match.regex_match" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></span></p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>candidate</strong> (<em>str</em>)</p></li>
+<li><p><strong>pattern</strong> (<em>str</em>)</p></li>
+<li><p><strong>config</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>] </em><em>| </em><em>None</em>)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-agent_inspect.metrics.validator.subgoal_completion">
+<span id="agent-inspect-metrics-validator-subgoal-completion-module"></span><h2>agent_inspect.metrics.validator.subgoal_completion module<a class="headerlink" href="#module-agent_inspect.metrics.validator.subgoal_completion" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="agent_inspect.metrics.validator.subgoal_completion.SubGoalCompletionValidator">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agent_inspect.metrics.validator.subgoal_completion.</span></span><span class="sig-name descname"><span class="pre">SubGoalCompletionValidator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">llm_client</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/metrics/validator/subgoal_completion.html#SubGoalCompletionValidator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.metrics.validator.subgoal_completion.SubGoalCompletionValidator" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#agent_inspect.metrics.validator.validator.Validator" title="agent_inspect.metrics.validator.validator.Validator"><code class="xref py py-class docutils literal notranslate"><span class="pre">Validator</span></code></a></p>
+<p>Validator based on LLM-as-a-judge to assess whether the agent has completed the specified subgoal.</p>
+<div class="math notranslate nohighlight">
+\[LLM_{judge}(i, g_{i, j}, \tau_i ) = 1 \ \mathrm{if \ agent \ accomplish} \ g_{i,j}, \mathrm{and} \ 0 \ \mathrm{otherwise},\]</div>
+<p>where <span class="math notranslate nohighlight">\(g_{i,j}\)</span> is the <span class="math notranslate nohighlight">\(j\)</span>-th grading note for the task sample <span class="math notranslate nohighlight">\(i\)</span> and
+<span class="math notranslate nohighlight">\(\tau_i\)</span> is the agent trajectory consisting of tool calls, agent responses, and user inputs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>llm_client</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="agent_inspect.clients.html#agent_inspect.clients.llm_client.LLMClient" title="agent_inspect.clients.llm_client.LLMClient"><code class="xref py py-class docutils literal notranslate"><span class="pre">LLMClient</span></code></a></span>) – the client which allows connection to the LLM-as-a-judge model for evaluation.</p></li>
+<li><p><strong>config</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]]</span>) – <p>Default to <code class="docutils literal notranslate"><span class="pre">None</span></code>. Configuration options:</p>
+<ul>
+<li><p><strong>templates_subgoal</strong>: a user provided LLM-as-a-judge template which will be sent to the judge with user inputs (static setting), subgoal, trajectory, agent responses, user task (dynamic setting), and user utterances (dynamic setting). If this is not provided, the default template for either static or dynamic conversation setting will be used.</p></li>
+<li><p><strong>num_judge_trials</strong>: the number of LLM-as-a-judge runs. Default to <code class="docutils literal notranslate"><span class="pre">5</span></code>. A majority vote is used when the number of LLM-as-a-judge runs is set to a value larger than 1.</p></li>
+<li><p><strong>include_judge_explanation</strong>: a <code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code> flag to indicate whether the output should also return judge explanations. Default to <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p></li>
+<li><p><strong>optimize_judge_trials</strong>: a <code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code> flag to indicate whether to use optimized judge runs when doing a majority vote. Default to <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p></li>
+<li><p><strong>max_retry_judge_trials</strong>: an <code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code> value indicating the maximum number of retry attempts for each judge trial in case of errors related to LLM as a judge. Default to <code class="docutils literal notranslate"><span class="pre">5</span></code>. This will be ignored if <code class="docutils literal notranslate"><span class="pre">optimize_judge_trials</span></code> is set to <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p></li>
+<li><p><strong>include_entire_prompt_in_validation_result</strong>: a <code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code> flag to indicate whether to include the entire prompt sent to LLM-as-a-judge in the SubGoalValidationResult. Use this in the debugging tool UI for display. Default to <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p></li>
+</ul>
+</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="agent_inspect.metrics.validator.subgoal_completion.SubGoalCompletionValidator.validate">
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">validate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">turn_traces</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sub_goal</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/metrics/validator/subgoal_completion.html#SubGoalCompletionValidator.validate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.metrics.validator.subgoal_completion.SubGoalCompletionValidator.validate" title="Link to this definition"></a></dt>
+<dd><p>Returns the LLM-as-a-judge binary score given the subgoal and the agent’s trace up to the current turn in a <code class="docutils literal notranslate"><span class="pre">static</span></code> conversation setting.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>turn_traces</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="agent_inspect.models.metrics.html#agent_inspect.models.metrics.agent_trace.TurnTrace" title="agent_inspect.models.metrics.agent_trace.TurnTrace"><code class="xref py py-class docutils literal notranslate"><span class="pre">TurnTrace</span></code></a>]</span>) – a <code class="xref py py-obj docutils literal notranslate"><span class="pre">List</span></code> [<a class="reference internal" href="agent_inspect.models.metrics.html#agent_inspect.models.metrics.agent_trace.TurnTrace" title="agent_inspect.models.metrics.agent_trace.TurnTrace"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TurnTrace</span></code></a>] object constructed with the agent trajectory information from the first turn up to the current turn.</p></li>
+<li><p><strong>sub_goal</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="agent_inspect.models.metrics.html#agent_inspect.models.metrics.agent_data_sample.SubGoal" title="agent_inspect.models.metrics.agent_data_sample.SubGoal"><code class="xref py py-class docutils literal notranslate"><span class="pre">SubGoal</span></code></a></span>) – a <a class="reference internal" href="agent_inspect.models.metrics.html#agent_inspect.models.metrics.agent_data_sample.SubGoal" title="agent_inspect.models.metrics.agent_data_sample.SubGoal"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SubGoal</span></code></a> object representing a grading note in the form of a natural language text.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="agent_inspect.models.metrics.html#agent_inspect.models.metrics.validation_result.SubGoalValidationResult" title="agent_inspect.models.metrics.validation_result.SubGoalValidationResult"><code class="xref py py-class docutils literal notranslate"><span class="pre">SubGoalValidationResult</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>a <a class="reference internal" href="agent_inspect.models.metrics.html#agent_inspect.models.metrics.validation_result.SubGoalValidationResult" title="agent_inspect.models.metrics.validation_result.SubGoalValidationResult"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SubGoalValidationResult</span></code></a> object containing the judge binary score, the subgoal details, and the judge explanations.</p>
+</dd>
+</dl>
+<p>Example:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.metrics.validator</span><span class="w"> </span><span class="kn">import</span> <span class="n">SubGoalCompletionValidator</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.metrics.constants</span><span class="w"> </span><span class="kn">import</span> <span class="n">INCLUDE_JUDGE_EXPLANATION</span><span class="p">,</span> <span class="n">OPTIMIZE_JUDGE_TRIALS</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.clients.azure_openai_client</span><span class="w"> </span><span class="kn">import</span> <span class="n">AzureOpenAIClient</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">asyncio</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data_subgoal</span> <span class="o">=</span> <span class="n">load_subgoal</span><span class="p">(</span><span class="n">sample_path</span><span class="p">)</span> <span class="c1"># Load subgoal</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">agent_turn_traces</span> <span class="o">=</span> <span class="n">load_agent_turn_traces</span><span class="p">(</span><span class="n">trace_file_path</span><span class="p">)</span> <span class="c1"># Load agent trajectory information</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">client</span> <span class="o">=</span> <span class="n">AzureOpenAIClient</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="s2">&quot;gpt-4.1&quot;</span><span class="p">,</span> <span class="n">max_tokens</span><span class="o">=</span><span class="mi">4096</span><span class="p">)</span> <span class="c1"># create client needed for LLM-based metric</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">validator</span> <span class="o">=</span> <span class="n">SubGoalCompletionValidator</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">llm_client</span><span class="o">=</span><span class="n">client</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">config</span><span class="o">=</span><span class="p">{</span><span class="n">INCLUDE_JUDGE_EXPLANATION</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="n">OPTIMIZE_JUDGE_TRIALS</span><span class="p">:</span> <span class="kc">False</span><span class="p">}</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">validator_result</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">validator</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span>
+<span class="gp">... </span>        <span class="n">turn_traces</span><span class="o">=</span><span class="n">agent_turn_traces</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="n">sub_goal</span><span class="o">=</span><span class="n">data_subgoal</span>
+<span class="gp">... </span>    <span class="p">)</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">validator_result</span><span class="o">.</span><span class="n">is_completed</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="agent_inspect.metrics.validator.subgoal_completion.SubGoalCompletionValidator.validate_dynamic">
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">validate_dynamic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">turn_traces</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sub_goal</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user_instruction</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/metrics/validator/subgoal_completion.html#SubGoalCompletionValidator.validate_dynamic"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.metrics.validator.subgoal_completion.SubGoalCompletionValidator.validate_dynamic" title="Link to this definition"></a></dt>
+<dd><p>Returns the LLM-as-a-judge binary score given the subgoal, user task instructions (optional), and the agent’s trace up to the current turn in a <code class="docutils literal notranslate"><span class="pre">dynamic</span></code> conversation setting.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>turn_traces</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="agent_inspect.models.metrics.html#agent_inspect.models.metrics.agent_trace.TurnTrace" title="agent_inspect.models.metrics.agent_trace.TurnTrace"><code class="xref py py-class docutils literal notranslate"><span class="pre">TurnTrace</span></code></a>]</span>) – a <code class="xref py py-obj docutils literal notranslate"><span class="pre">List</span></code> [<a class="reference internal" href="agent_inspect.models.metrics.html#agent_inspect.models.metrics.agent_trace.TurnTrace" title="agent_inspect.models.metrics.agent_trace.TurnTrace"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TurnTrace</span></code></a>] object constructed with the agent trajectory information from the first turn up to the current turn.</p></li>
+<li><p><strong>sub_goal</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="agent_inspect.models.metrics.html#agent_inspect.models.metrics.agent_data_sample.SubGoal" title="agent_inspect.models.metrics.agent_data_sample.SubGoal"><code class="xref py py-class docutils literal notranslate"><span class="pre">SubGoal</span></code></a></span>) – a <a class="reference internal" href="agent_inspect.models.metrics.html#agent_inspect.models.metrics.agent_data_sample.SubGoal" title="agent_inspect.models.metrics.agent_data_sample.SubGoal"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SubGoal</span></code></a> object representing a grading note in the form of a natural language text.</p></li>
+<li><p><strong>user_instruction</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code> | <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></span>) – a <code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code> object representing the user task instructions. Provide user task instruction through this variable to use judge template with user summary instruction. Otherwise, set it as empty string or None to use judge template without any user summary instruction.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="agent_inspect.models.metrics.html#agent_inspect.models.metrics.validation_result.SubGoalValidationResult" title="agent_inspect.models.metrics.validation_result.SubGoalValidationResult"><code class="xref py py-class docutils literal notranslate"><span class="pre">SubGoalValidationResult</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>a <a class="reference internal" href="agent_inspect.models.metrics.html#agent_inspect.models.metrics.validation_result.SubGoalValidationResult" title="agent_inspect.models.metrics.validation_result.SubGoalValidationResult"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SubGoalValidationResult</span></code></a> object containing the judge binary score, the subgoal details, and the judge explanations.</p>
+</dd>
+</dl>
+<p>Example:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.metrics.validator</span><span class="w"> </span><span class="kn">import</span> <span class="n">SubGoalCompletionValidator</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.metrics.constants</span><span class="w"> </span><span class="kn">import</span> <span class="n">INCLUDE_JUDGE_EXPLANATION</span><span class="p">,</span> <span class="n">OPTIMIZE_JUDGE_TRIALS</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.clients.azure_openai_client</span><span class="w"> </span><span class="kn">import</span> <span class="n">AzureOpenAIClient</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">asyncio</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data_subgoal</span><span class="p">,</span> <span class="n">user_instruct</span> <span class="o">=</span> <span class="n">load_subgoal_user_instruct</span><span class="p">(</span><span class="n">sample_path</span><span class="p">)</span> <span class="c1"># Load subgoal and user instructions</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">agent_turn_traces</span> <span class="o">=</span> <span class="n">load_agent_turn_traces</span><span class="p">(</span><span class="n">trace_file_path</span><span class="p">)</span> <span class="c1"># Load agent trajectory information</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">client</span> <span class="o">=</span> <span class="n">AzureOpenAIClient</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="s2">&quot;gpt-4.1&quot;</span><span class="p">,</span> <span class="n">max_tokens</span><span class="o">=</span><span class="mi">4096</span><span class="p">)</span> <span class="c1"># create client needed for LLM-based metric</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">validator</span> <span class="o">=</span> <span class="n">SubGoalCompletionValidator</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">llm_client</span><span class="o">=</span><span class="n">client</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">config</span><span class="o">=</span><span class="p">{</span><span class="n">INCLUDE_JUDGE_EXPLANATION</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="n">OPTIMIZE_JUDGE_TRIALS</span><span class="p">:</span> <span class="kc">False</span><span class="p">}</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">validator_result</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">validator</span><span class="o">.</span><span class="n">validate_dynamic</span><span class="p">(</span>
+<span class="gp">... </span>        <span class="n">turn_traces</span><span class="o">=</span><span class="n">agent_turn_traces</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="n">sub_goal</span><span class="o">=</span><span class="n">data_subgoal</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="n">user_instruction</span><span class="o">=</span><span class="n">user_instruct</span>
+<span class="gp">... </span>    <span class="p">)</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">validator_result</span><span class="o">.</span><span class="n">is_completed</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-agent_inspect.metrics.validator.templates">
+<span id="agent-inspect-metrics-validator-templates-module"></span><h2>agent_inspect.metrics.validator.templates module<a class="headerlink" href="#module-agent_inspect.metrics.validator.templates" title="Link to this heading"></a></h2>
+</section>
+<section id="module-agent_inspect.metrics.validator.tool_call_completion">
+<span id="agent-inspect-metrics-validator-tool-call-completion-module"></span><h2>agent_inspect.metrics.validator.tool_call_completion module<a class="headerlink" href="#module-agent_inspect.metrics.validator.tool_call_completion" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="agent_inspect.metrics.validator.tool_call_completion.ToolCallCompletionValidator">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agent_inspect.metrics.validator.tool_call_completion.</span></span><span class="sig-name descname"><span class="pre">ToolCallCompletionValidator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">llm_client</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/metrics/validator/tool_call_completion.html#ToolCallCompletionValidator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.metrics.validator.tool_call_completion.ToolCallCompletionValidator" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#agent_inspect.metrics.validator.validator.Validator" title="agent_inspect.metrics.validator.validator.Validator"><code class="xref py py-class docutils literal notranslate"><span class="pre">Validator</span></code></a></p>
+<p>Tool call completion validator using both exact match and LLM-as-a-judge approaches to assess whether the tool call is correctly completed.</p>
+<p>This validator performs a three-dimensional evaluation of tool calls:</p>
+<ol class="arabic simple">
+<li><p><strong>Tool name validation</strong>: Checks if the tool name in the agent’s trajectory matches the expected tool name exactly.</p></li>
+<li><p><strong>Tool input arguments validation</strong>: Validates each input parameter using either exact match (when the expected parameter specifies a <a class="reference internal" href="agent_inspect.models.metrics.html#agent_inspect.models.metrics.agent_data_sample.ToolInputParameter.value" title="agent_inspect.models.metrics.agent_data_sample.ToolInputParameter.value"><code class="xref py py-obj docutils literal notranslate"><span class="pre">value</span></code></a>) or LLM-as-a-judge (when the expected parameter specifies a <a class="reference internal" href="agent_inspect.models.metrics.html#agent_inspect.models.metrics.agent_data_sample.ToolInputParameter.check" title="agent_inspect.models.metrics.agent_data_sample.ToolInputParameter.check"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check</span></code></a>).</p></li>
+<li><p><strong>Tool output validation</strong>: Validates the tool’s output using either exact match (when the expected output specifies a <a class="reference internal" href="agent_inspect.models.metrics.html#agent_inspect.models.metrics.agent_data_sample.ToolOutput.value" title="agent_inspect.models.metrics.agent_data_sample.ToolOutput.value"><code class="xref py py-obj docutils literal notranslate"><span class="pre">value</span></code></a>) or LLM-as-a-judge (when the expected output specifies a <a class="reference internal" href="agent_inspect.models.metrics.html#agent_inspect.models.metrics.agent_data_sample.ToolOutput.check" title="agent_inspect.models.metrics.agent_data_sample.ToolOutput.check"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check</span></code></a>).</p></li>
+</ol>
+<p>A tool call is considered correctly completed only if all the above three dimensions pass validation. The validator iterates through all tool calls in the latest turn of the agent trace to find a matching tool call that satisfies all validation criteria set in <a class="reference internal" href="agent_inspect.models.metrics.html#agent_inspect.models.metrics.agent_data_sample.ExpectedToolCall" title="agent_inspect.models.metrics.agent_data_sample.ExpectedToolCall"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ExpectedToolCall</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>llm_client</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="agent_inspect.clients.html#agent_inspect.clients.llm_client.LLMClient" title="agent_inspect.clients.llm_client.LLMClient"><code class="xref py py-class docutils literal notranslate"><span class="pre">LLMClient</span></code></a></span>) – the client which allows connection to the LLM-as-a-judge model for evaluation.</p></li>
+<li><p><strong>config</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]]</span>) – <p>Default to <code class="docutils literal notranslate"><span class="pre">None</span></code>. Configuration options:</p>
+<ul>
+<li><p><strong>num_judge_trials</strong>: the number of LLM-as-a-judge runs. Default to <code class="docutils literal notranslate"><span class="pre">5</span></code>. A majority vote is used when the number of LLM-as-a-judge runs is set to a value larger than 1.</p></li>
+<li><p><strong>include_judge_explanation</strong>: a <code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code> flag to indicate whether the output should also return judge explanations. Default to <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p></li>
+</ul>
+</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="agent_inspect.metrics.validator.tool_call_completion.ToolCallCompletionValidator.validate_multi_turns">
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">validate_multi_turns</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">agent_trace_turns</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expected_tool_call</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/metrics/validator/tool_call_completion.html#ToolCallCompletionValidator.validate_multi_turns"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.metrics.validator.tool_call_completion.ToolCallCompletionValidator.validate_multi_turns" title="Link to this definition"></a></dt>
+<dd><p>Returns a <a class="reference internal" href="agent_inspect.models.metrics.html#agent_inspect.models.metrics.validation_result.ToolCallValidationResult" title="agent_inspect.models.metrics.validation_result.ToolCallValidationResult"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ToolCallValidationResult</span></code></a> indicating whether the tool call is correctly completed by the agent in any turn of the agent trace.
+Iterates through all user provided turn traces from first to last, stopping as soon as a valid tool call is found or when the last turn is reached.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>agent_trace_turns</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="agent_inspect.models.metrics.html#agent_inspect.models.metrics.agent_trace.TurnTrace" title="agent_inspect.models.metrics.agent_trace.TurnTrace"><code class="xref py py-class docutils literal notranslate"><span class="pre">TurnTrace</span></code></a>]</span>) – A list of <a class="reference internal" href="agent_inspect.models.metrics.html#agent_inspect.models.metrics.agent_trace.TurnTrace" title="agent_inspect.models.metrics.agent_trace.TurnTrace"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TurnTrace</span></code></a> representing the entire agent trace.</p></li>
+<li><p><strong>expected_tool_call</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="agent_inspect.models.metrics.html#agent_inspect.models.metrics.agent_data_sample.ExpectedToolCall" title="agent_inspect.models.metrics.agent_data_sample.ExpectedToolCall"><code class="xref py py-class docutils literal notranslate"><span class="pre">ExpectedToolCall</span></code></a></span>) – An <a class="reference internal" href="agent_inspect.models.metrics.html#agent_inspect.models.metrics.agent_data_sample.ExpectedToolCall" title="agent_inspect.models.metrics.agent_data_sample.ExpectedToolCall"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ExpectedToolCall</span></code></a> representing the expected tool call checklist to validate against.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="agent_inspect.models.metrics.html#agent_inspect.models.metrics.validation_result.ToolCallValidationResult" title="agent_inspect.models.metrics.validation_result.ToolCallValidationResult"><code class="xref py py-class docutils literal notranslate"><span class="pre">ToolCallValidationResult</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>a <a class="reference internal" href="agent_inspect.models.metrics.html#agent_inspect.models.metrics.validation_result.ToolCallValidationResult" title="agent_inspect.models.metrics.validation_result.ToolCallValidationResult"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ToolCallValidationResult</span></code></a> indicating whether the tool call is correctly completed by the agent.</p>
+</dd>
+</dl>
+<p>Example:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.metrics.validator</span><span class="w"> </span><span class="kn">import</span> <span class="n">ToolCallCompletionValidator</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.metrics.constants</span><span class="w"> </span><span class="kn">import</span> <span class="n">NUM_JUDGE_TRIALS</span><span class="p">,</span> <span class="n">INCLUDE_JUDGE_EXPLANATION</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.clients.azure_openai_client</span><span class="w"> </span><span class="kn">import</span> <span class="n">AzureOpenAIClient</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">asyncio</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">expected_tool_call</span> <span class="o">=</span> <span class="n">load_expected_tool_call</span><span class="p">(</span><span class="n">expected_tool_call_file_path</span><span class="p">)</span> <span class="c1"># Load expected tool call checklist</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">agent_turn_traces</span> <span class="o">=</span> <span class="n">load_agent_turn_traces</span><span class="p">(</span><span class="n">trace_file_path</span><span class="p">)</span> <span class="c1"># Load agent trajectory information</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">client</span> <span class="o">=</span> <span class="n">AzureOpenAIClient</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="s2">&quot;gpt-4.1&quot;</span><span class="p">,</span> <span class="n">max_tokens</span><span class="o">=</span><span class="mi">4096</span><span class="p">)</span> <span class="c1"># create client needed for LLM-based metric</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">validator</span> <span class="o">=</span> <span class="n">ToolCallCompletionValidator</span><span class="p">(</span>
+<span class="gp">... </span>   <span class="n">llm_client</span><span class="o">=</span><span class="n">client</span><span class="p">,</span>
+<span class="gp">... </span>   <span class="n">config</span><span class="o">=</span><span class="p">{</span><span class="n">NUM_JUDGE_TRIALS</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="n">INCLUDE_JUDGE_EXPLANATION</span><span class="p">:</span> <span class="kc">True</span><span class="p">}</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">validation_result</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
+<span class="gp">... </span>  <span class="n">validator</span><span class="o">.</span><span class="n">validate_multi_turns</span><span class="p">(</span>
+<span class="gp">... </span>       <span class="n">agent_trace_turns</span> <span class="o">=</span> <span class="n">agent_turn_traces</span><span class="p">,</span>
+<span class="gp">... </span>       <span class="n">expected_tool_call</span> <span class="o">=</span> <span class="n">expected_tool_call</span>
+<span class="gp">... </span>   <span class="p">)</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">validation_result</span><span class="o">.</span><span class="n">is_completed</span><span class="p">)</span>  <span class="c1"># True or False</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="agent_inspect.metrics.validator.tool_call_completion.ToolCallCompletionValidator.validate_static_last_turn">
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">validate_static_last_turn</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">agent_trace_turns</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expected_tool_call</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/metrics/validator/tool_call_completion.html#ToolCallCompletionValidator.validate_static_last_turn"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.metrics.validator.tool_call_completion.ToolCallCompletionValidator.validate_static_last_turn" title="Link to this definition"></a></dt>
+<dd><p>Returns a <a class="reference internal" href="agent_inspect.models.metrics.html#agent_inspect.models.metrics.validation_result.ToolCallValidationResult" title="agent_inspect.models.metrics.validation_result.ToolCallValidationResult"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ToolCallValidationResult</span></code></a> indicating whether the tool call is correctly completed by the agent in the latest turn of the agent trace.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>agent_trace_turns</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="agent_inspect.models.metrics.html#agent_inspect.models.metrics.agent_trace.TurnTrace" title="agent_inspect.models.metrics.agent_trace.TurnTrace"><code class="xref py py-class docutils literal notranslate"><span class="pre">TurnTrace</span></code></a>]</span>) – A list of <a class="reference internal" href="agent_inspect.models.metrics.html#agent_inspect.models.metrics.agent_trace.TurnTrace" title="agent_inspect.models.metrics.agent_trace.TurnTrace"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TurnTrace</span></code></a> representing the entire agent trace up to the current turn.</p></li>
+<li><p><strong>expected_tool_call</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="agent_inspect.models.metrics.html#agent_inspect.models.metrics.agent_data_sample.ExpectedToolCall" title="agent_inspect.models.metrics.agent_data_sample.ExpectedToolCall"><code class="xref py py-class docutils literal notranslate"><span class="pre">ExpectedToolCall</span></code></a></span>) – An <a class="reference internal" href="agent_inspect.models.metrics.html#agent_inspect.models.metrics.agent_data_sample.ExpectedToolCall" title="agent_inspect.models.metrics.agent_data_sample.ExpectedToolCall"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ExpectedToolCall</span></code></a> representing the expected tool call checklist to validate against.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="agent_inspect.models.metrics.html#agent_inspect.models.metrics.validation_result.ToolCallValidationResult" title="agent_inspect.models.metrics.validation_result.ToolCallValidationResult"><code class="xref py py-class docutils literal notranslate"><span class="pre">ToolCallValidationResult</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>a <a class="reference internal" href="agent_inspect.models.metrics.html#agent_inspect.models.metrics.validation_result.ToolCallValidationResult" title="agent_inspect.models.metrics.validation_result.ToolCallValidationResult"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ToolCallValidationResult</span></code></a> indicating whether the tool call is correctly completed by the agent.</p>
+</dd>
+</dl>
+<p>Example:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.metrics.validator</span><span class="w"> </span><span class="kn">import</span> <span class="n">ToolCallCompletionValidator</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.metrics.constants</span><span class="w"> </span><span class="kn">import</span> <span class="n">NUM_JUDGE_TRIALS</span><span class="p">,</span> <span class="n">INCLUDE_JUDGE_EXPLANATION</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.clients.azure_openai_client</span><span class="w"> </span><span class="kn">import</span> <span class="n">AzureOpenAIClient</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">asyncio</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">expected_tool_call</span> <span class="o">=</span> <span class="n">load_expected_tool_call</span><span class="p">(</span><span class="n">expected_tool_call_file_path</span><span class="p">)</span> <span class="c1"># Load expected tool call checklist</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">agent_turn_traces</span> <span class="o">=</span> <span class="n">load_agent_turn_traces</span><span class="p">(</span><span class="n">trace_file_path</span><span class="p">)</span> <span class="c1"># Load agent trajectory information</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">client</span> <span class="o">=</span> <span class="n">AzureOpenAIClient</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="s2">&quot;gpt-4.1&quot;</span><span class="p">,</span> <span class="n">max_tokens</span><span class="o">=</span><span class="mi">4096</span><span class="p">)</span> <span class="c1"># create client needed for LLM-based metric</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">validator</span> <span class="o">=</span> <span class="n">ToolCallCompletionValidator</span><span class="p">(</span>
+<span class="gp">... </span>   <span class="n">llm_client</span><span class="o">=</span><span class="n">client</span><span class="p">,</span>
+<span class="gp">... </span>   <span class="n">config</span><span class="o">=</span><span class="p">{</span><span class="n">NUM_JUDGE_TRIALS</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="n">INCLUDE_JUDGE_EXPLANATION</span><span class="p">:</span> <span class="kc">True</span><span class="p">}</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">validation_result</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
+<span class="gp">... </span>  <span class="n">validator</span><span class="o">.</span><span class="n">validate_static_last_turn</span><span class="p">(</span>
+<span class="gp">... </span>       <span class="n">agent_trace_turns</span> <span class="o">=</span> <span class="n">agent_turn_traces</span><span class="p">,</span>
+<span class="gp">... </span>       <span class="n">expected_tool_call</span> <span class="o">=</span> <span class="n">expected_tool_call</span>
+<span class="gp">... </span>   <span class="p">)</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">validation_result</span><span class="o">.</span><span class="n">is_completed</span><span class="p">)</span>  <span class="c1"># True or False</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-agent_inspect.metrics.validator.validator">
+<span id="agent-inspect-metrics-validator-validator-module"></span><h2>agent_inspect.metrics.validator.validator module<a class="headerlink" href="#module-agent_inspect.metrics.validator.validator" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="agent_inspect.metrics.validator.validator.Validator">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agent_inspect.metrics.validator.validator.</span></span><span class="sig-name descname"><span class="pre">Validator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">llm_client</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/metrics/validator/validator.html#Validator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.metrics.validator.validator.Validator" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Abstract class which should be extended for actual implementation of validators.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>llm_client</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="agent_inspect.clients.html#agent_inspect.clients.llm_client.LLMClient" title="agent_inspect.clients.llm_client.LLMClient"><code class="xref py py-class docutils literal notranslate"><span class="pre">LLMClient</span></code></a></span>) – the client which allows connection to the llm-as-a-judge model for evaluations.</p></li>
+<li><p><strong>config</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]]</span>) – configuration for validator initialization. Default to <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="agent_inspect.metrics.validator.validator.Validator.get_majority_voted_score_from_judge_responses">
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_majority_voted_score_from_judge_responses</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prompt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">regex_pattern</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'(?i)GRADE\\\\s*:\\\\s*([CPI])(.*)$'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grade_choices</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['C',</span> <span class="pre">'I']</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/metrics/validator/validator.html#Validator.get_majority_voted_score_from_judge_responses"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.metrics.validator.validator.Validator.get_majority_voted_score_from_judge_responses" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]]</span></p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>prompt</strong> (<em>str</em>)</p></li>
+<li><p><strong>regex_pattern</strong> (<em>str</em>)</p></li>
+<li><p><strong>grade_choices</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="agent_inspect.metrics.validator.validator.Validator.validate">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">validate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">turn_traces</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/metrics/validator/validator.html#Validator.validate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.metrics.validator.validator.Validator.validate" title="Link to this definition"></a></dt>
+<dd><p>This is an abstract method and should be implemented in a concrete class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>turn_traces</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="agent_inspect.models.metrics.html#agent_inspect.models.metrics.agent_trace.TurnTrace" title="agent_inspect.models.metrics.agent_trace.TurnTrace"><code class="xref py py-class docutils literal notranslate"><span class="pre">TurnTrace</span></code></a>]</span>) – a <code class="xref py py-obj docutils literal notranslate"><span class="pre">List</span></code> [<a class="reference internal" href="agent_inspect.models.metrics.html#agent_inspect.models.metrics.agent_trace.TurnTrace" title="agent_inspect.models.metrics.agent_trace.TurnTrace"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TurnTrace</span></code></a>] object constructed with the agent trajectory information from the first turn up to the current turn.</p></li>
+<li><p><strong>kwargs</strong> – Additional keyword arguments that may be required for specific validation logic. These arguments can be used to pass optional parameters or configuration settings to the validator.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="agent_inspect.models.metrics.html#agent_inspect.models.metrics.validation_result.ValidationResult" title="agent_inspect.models.metrics.validation_result.ValidationResult"><code class="xref py py-class docutils literal notranslate"><span class="pre">ValidationResult</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>a <a class="reference internal" href="agent_inspect.models.metrics.html#agent_inspect.models.metrics.validation_result.ValidationResult" title="agent_inspect.models.metrics.validation_result.ValidationResult"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ValidationResult</span></code></a> object containing the validation output.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-agent_inspect.metrics.validator">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-agent_inspect.metrics.validator" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="agent_inspect.metrics.validator.SubGoalCompletionValidator">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agent_inspect.metrics.validator.</span></span><span class="sig-name descname"><span class="pre">SubGoalCompletionValidator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">llm_client</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/metrics/validator/subgoal_completion.html#SubGoalCompletionValidator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.metrics.validator.SubGoalCompletionValidator" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#agent_inspect.metrics.validator.validator.Validator" title="agent_inspect.metrics.validator.validator.Validator"><code class="xref py py-class docutils literal notranslate"><span class="pre">Validator</span></code></a></p>
+<p>Validator based on LLM-as-a-judge to assess whether the agent has completed the specified subgoal.</p>
+<div class="math notranslate nohighlight">
+\[LLM_{judge}(i, g_{i, j}, \tau_i ) = 1 \ \mathrm{if \ agent \ accomplish} \ g_{i,j}, \mathrm{and} \ 0 \ \mathrm{otherwise},\]</div>
+<p>where <span class="math notranslate nohighlight">\(g_{i,j}\)</span> is the <span class="math notranslate nohighlight">\(j\)</span>-th grading note for the task sample <span class="math notranslate nohighlight">\(i\)</span> and
+<span class="math notranslate nohighlight">\(\tau_i\)</span> is the agent trajectory consisting of tool calls, agent responses, and user inputs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>llm_client</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="agent_inspect.clients.html#agent_inspect.clients.llm_client.LLMClient" title="agent_inspect.clients.llm_client.LLMClient"><code class="xref py py-class docutils literal notranslate"><span class="pre">LLMClient</span></code></a></span>) – the client which allows connection to the LLM-as-a-judge model for evaluation.</p></li>
+<li><p><strong>config</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]]</span>) – <p>Default to <code class="docutils literal notranslate"><span class="pre">None</span></code>. Configuration options:</p>
+<ul>
+<li><p><strong>templates_subgoal</strong>: a user provided LLM-as-a-judge template which will be sent to the judge with user inputs (static setting), subgoal, trajectory, agent responses, user task (dynamic setting), and user utterances (dynamic setting). If this is not provided, the default template for either static or dynamic conversation setting will be used.</p></li>
+<li><p><strong>num_judge_trials</strong>: the number of LLM-as-a-judge runs. Default to <code class="docutils literal notranslate"><span class="pre">5</span></code>. A majority vote is used when the number of LLM-as-a-judge runs is set to a value larger than 1.</p></li>
+<li><p><strong>include_judge_explanation</strong>: a <code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code> flag to indicate whether the output should also return judge explanations. Default to <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p></li>
+<li><p><strong>optimize_judge_trials</strong>: a <code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code> flag to indicate whether to use optimized judge runs when doing a majority vote. Default to <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p></li>
+<li><p><strong>max_retry_judge_trials</strong>: an <code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code> value indicating the maximum number of retry attempts for each judge trial in case of errors related to LLM as a judge. Default to <code class="docutils literal notranslate"><span class="pre">5</span></code>. This will be ignored if <code class="docutils literal notranslate"><span class="pre">optimize_judge_trials</span></code> is set to <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p></li>
+<li><p><strong>include_entire_prompt_in_validation_result</strong>: a <code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code> flag to indicate whether to include the entire prompt sent to LLM-as-a-judge in the SubGoalValidationResult. Use this in the debugging tool UI for display. Default to <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p></li>
+</ul>
+</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="agent_inspect.metrics.validator.SubGoalCompletionValidator.validate">
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">validate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">turn_traces</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sub_goal</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/metrics/validator/subgoal_completion.html#SubGoalCompletionValidator.validate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.metrics.validator.SubGoalCompletionValidator.validate" title="Link to this definition"></a></dt>
+<dd><p>Returns the LLM-as-a-judge binary score given the subgoal and the agent’s trace up to the current turn in a <code class="docutils literal notranslate"><span class="pre">static</span></code> conversation setting.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>turn_traces</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="agent_inspect.models.metrics.html#agent_inspect.models.metrics.agent_trace.TurnTrace" title="agent_inspect.models.metrics.agent_trace.TurnTrace"><code class="xref py py-class docutils literal notranslate"><span class="pre">TurnTrace</span></code></a>]</span>) – a <code class="xref py py-obj docutils literal notranslate"><span class="pre">List</span></code> [<a class="reference internal" href="agent_inspect.models.metrics.html#agent_inspect.models.metrics.agent_trace.TurnTrace" title="agent_inspect.models.metrics.agent_trace.TurnTrace"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TurnTrace</span></code></a>] object constructed with the agent trajectory information from the first turn up to the current turn.</p></li>
+<li><p><strong>sub_goal</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="agent_inspect.models.metrics.html#agent_inspect.models.metrics.agent_data_sample.SubGoal" title="agent_inspect.models.metrics.agent_data_sample.SubGoal"><code class="xref py py-class docutils literal notranslate"><span class="pre">SubGoal</span></code></a></span>) – a <a class="reference internal" href="agent_inspect.models.metrics.html#agent_inspect.models.metrics.agent_data_sample.SubGoal" title="agent_inspect.models.metrics.agent_data_sample.SubGoal"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SubGoal</span></code></a> object representing a grading note in the form of a natural language text.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="agent_inspect.models.metrics.html#agent_inspect.models.metrics.validation_result.SubGoalValidationResult" title="agent_inspect.models.metrics.validation_result.SubGoalValidationResult"><code class="xref py py-class docutils literal notranslate"><span class="pre">SubGoalValidationResult</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>a <a class="reference internal" href="agent_inspect.models.metrics.html#agent_inspect.models.metrics.validation_result.SubGoalValidationResult" title="agent_inspect.models.metrics.validation_result.SubGoalValidationResult"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SubGoalValidationResult</span></code></a> object containing the judge binary score, the subgoal details, and the judge explanations.</p>
+</dd>
+</dl>
+<p>Example:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.metrics.validator</span><span class="w"> </span><span class="kn">import</span> <span class="n">SubGoalCompletionValidator</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.metrics.constants</span><span class="w"> </span><span class="kn">import</span> <span class="n">INCLUDE_JUDGE_EXPLANATION</span><span class="p">,</span> <span class="n">OPTIMIZE_JUDGE_TRIALS</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.clients.azure_openai_client</span><span class="w"> </span><span class="kn">import</span> <span class="n">AzureOpenAIClient</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">asyncio</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data_subgoal</span> <span class="o">=</span> <span class="n">load_subgoal</span><span class="p">(</span><span class="n">sample_path</span><span class="p">)</span> <span class="c1"># Load subgoal</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">agent_turn_traces</span> <span class="o">=</span> <span class="n">load_agent_turn_traces</span><span class="p">(</span><span class="n">trace_file_path</span><span class="p">)</span> <span class="c1"># Load agent trajectory information</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">client</span> <span class="o">=</span> <span class="n">AzureOpenAIClient</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="s2">&quot;gpt-4.1&quot;</span><span class="p">,</span> <span class="n">max_tokens</span><span class="o">=</span><span class="mi">4096</span><span class="p">)</span> <span class="c1"># create client needed for LLM-based metric</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">validator</span> <span class="o">=</span> <span class="n">SubGoalCompletionValidator</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">llm_client</span><span class="o">=</span><span class="n">client</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">config</span><span class="o">=</span><span class="p">{</span><span class="n">INCLUDE_JUDGE_EXPLANATION</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="n">OPTIMIZE_JUDGE_TRIALS</span><span class="p">:</span> <span class="kc">False</span><span class="p">}</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">validator_result</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">validator</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span>
+<span class="gp">... </span>        <span class="n">turn_traces</span><span class="o">=</span><span class="n">agent_turn_traces</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="n">sub_goal</span><span class="o">=</span><span class="n">data_subgoal</span>
+<span class="gp">... </span>    <span class="p">)</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">validator_result</span><span class="o">.</span><span class="n">is_completed</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="agent_inspect.metrics.validator.SubGoalCompletionValidator.validate_dynamic">
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">validate_dynamic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">turn_traces</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sub_goal</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user_instruction</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/metrics/validator/subgoal_completion.html#SubGoalCompletionValidator.validate_dynamic"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.metrics.validator.SubGoalCompletionValidator.validate_dynamic" title="Link to this definition"></a></dt>
+<dd><p>Returns the LLM-as-a-judge binary score given the subgoal, user task instructions (optional), and the agent’s trace up to the current turn in a <code class="docutils literal notranslate"><span class="pre">dynamic</span></code> conversation setting.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>turn_traces</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="agent_inspect.models.metrics.html#agent_inspect.models.metrics.agent_trace.TurnTrace" title="agent_inspect.models.metrics.agent_trace.TurnTrace"><code class="xref py py-class docutils literal notranslate"><span class="pre">TurnTrace</span></code></a>]</span>) – a <code class="xref py py-obj docutils literal notranslate"><span class="pre">List</span></code> [<a class="reference internal" href="agent_inspect.models.metrics.html#agent_inspect.models.metrics.agent_trace.TurnTrace" title="agent_inspect.models.metrics.agent_trace.TurnTrace"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TurnTrace</span></code></a>] object constructed with the agent trajectory information from the first turn up to the current turn.</p></li>
+<li><p><strong>sub_goal</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="agent_inspect.models.metrics.html#agent_inspect.models.metrics.agent_data_sample.SubGoal" title="agent_inspect.models.metrics.agent_data_sample.SubGoal"><code class="xref py py-class docutils literal notranslate"><span class="pre">SubGoal</span></code></a></span>) – a <a class="reference internal" href="agent_inspect.models.metrics.html#agent_inspect.models.metrics.agent_data_sample.SubGoal" title="agent_inspect.models.metrics.agent_data_sample.SubGoal"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SubGoal</span></code></a> object representing a grading note in the form of a natural language text.</p></li>
+<li><p><strong>user_instruction</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code> | <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></span>) – a <code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code> object representing the user task instructions. Provide user task instruction through this variable to use judge template with user summary instruction. Otherwise, set it as empty string or None to use judge template without any user summary instruction.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="agent_inspect.models.metrics.html#agent_inspect.models.metrics.validation_result.SubGoalValidationResult" title="agent_inspect.models.metrics.validation_result.SubGoalValidationResult"><code class="xref py py-class docutils literal notranslate"><span class="pre">SubGoalValidationResult</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>a <a class="reference internal" href="agent_inspect.models.metrics.html#agent_inspect.models.metrics.validation_result.SubGoalValidationResult" title="agent_inspect.models.metrics.validation_result.SubGoalValidationResult"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SubGoalValidationResult</span></code></a> object containing the judge binary score, the subgoal details, and the judge explanations.</p>
+</dd>
+</dl>
+<p>Example:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.metrics.validator</span><span class="w"> </span><span class="kn">import</span> <span class="n">SubGoalCompletionValidator</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.metrics.constants</span><span class="w"> </span><span class="kn">import</span> <span class="n">INCLUDE_JUDGE_EXPLANATION</span><span class="p">,</span> <span class="n">OPTIMIZE_JUDGE_TRIALS</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.clients.azure_openai_client</span><span class="w"> </span><span class="kn">import</span> <span class="n">AzureOpenAIClient</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">asyncio</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data_subgoal</span><span class="p">,</span> <span class="n">user_instruct</span> <span class="o">=</span> <span class="n">load_subgoal_user_instruct</span><span class="p">(</span><span class="n">sample_path</span><span class="p">)</span> <span class="c1"># Load subgoal and user instructions</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">agent_turn_traces</span> <span class="o">=</span> <span class="n">load_agent_turn_traces</span><span class="p">(</span><span class="n">trace_file_path</span><span class="p">)</span> <span class="c1"># Load agent trajectory information</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">client</span> <span class="o">=</span> <span class="n">AzureOpenAIClient</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="s2">&quot;gpt-4.1&quot;</span><span class="p">,</span> <span class="n">max_tokens</span><span class="o">=</span><span class="mi">4096</span><span class="p">)</span> <span class="c1"># create client needed for LLM-based metric</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">validator</span> <span class="o">=</span> <span class="n">SubGoalCompletionValidator</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">llm_client</span><span class="o">=</span><span class="n">client</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">config</span><span class="o">=</span><span class="p">{</span><span class="n">INCLUDE_JUDGE_EXPLANATION</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="n">OPTIMIZE_JUDGE_TRIALS</span><span class="p">:</span> <span class="kc">False</span><span class="p">}</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">validator_result</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">validator</span><span class="o">.</span><span class="n">validate_dynamic</span><span class="p">(</span>
+<span class="gp">... </span>        <span class="n">turn_traces</span><span class="o">=</span><span class="n">agent_turn_traces</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="n">sub_goal</span><span class="o">=</span><span class="n">data_subgoal</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="n">user_instruction</span><span class="o">=</span><span class="n">user_instruct</span>
+<span class="gp">... </span>    <span class="p">)</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">validator_result</span><span class="o">.</span><span class="n">is_completed</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="agent_inspect.metrics.validator.ToolCallCompletionValidator">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agent_inspect.metrics.validator.</span></span><span class="sig-name descname"><span class="pre">ToolCallCompletionValidator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">llm_client</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/metrics/validator/tool_call_completion.html#ToolCallCompletionValidator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.metrics.validator.ToolCallCompletionValidator" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#agent_inspect.metrics.validator.validator.Validator" title="agent_inspect.metrics.validator.validator.Validator"><code class="xref py py-class docutils literal notranslate"><span class="pre">Validator</span></code></a></p>
+<p>Tool call completion validator using both exact match and LLM-as-a-judge approaches to assess whether the tool call is correctly completed.</p>
+<p>This validator performs a three-dimensional evaluation of tool calls:</p>
+<ol class="arabic simple">
+<li><p><strong>Tool name validation</strong>: Checks if the tool name in the agent’s trajectory matches the expected tool name exactly.</p></li>
+<li><p><strong>Tool input arguments validation</strong>: Validates each input parameter using either exact match (when the expected parameter specifies a <a class="reference internal" href="agent_inspect.models.metrics.html#agent_inspect.models.metrics.agent_data_sample.ToolInputParameter.value" title="agent_inspect.models.metrics.agent_data_sample.ToolInputParameter.value"><code class="xref py py-obj docutils literal notranslate"><span class="pre">value</span></code></a>) or LLM-as-a-judge (when the expected parameter specifies a <a class="reference internal" href="agent_inspect.models.metrics.html#agent_inspect.models.metrics.agent_data_sample.ToolInputParameter.check" title="agent_inspect.models.metrics.agent_data_sample.ToolInputParameter.check"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check</span></code></a>).</p></li>
+<li><p><strong>Tool output validation</strong>: Validates the tool’s output using either exact match (when the expected output specifies a <a class="reference internal" href="agent_inspect.models.metrics.html#agent_inspect.models.metrics.agent_data_sample.ToolOutput.value" title="agent_inspect.models.metrics.agent_data_sample.ToolOutput.value"><code class="xref py py-obj docutils literal notranslate"><span class="pre">value</span></code></a>) or LLM-as-a-judge (when the expected output specifies a <a class="reference internal" href="agent_inspect.models.metrics.html#agent_inspect.models.metrics.agent_data_sample.ToolOutput.check" title="agent_inspect.models.metrics.agent_data_sample.ToolOutput.check"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check</span></code></a>).</p></li>
+</ol>
+<p>A tool call is considered correctly completed only if all the above three dimensions pass validation. The validator iterates through all tool calls in the latest turn of the agent trace to find a matching tool call that satisfies all validation criteria set in <a class="reference internal" href="agent_inspect.models.metrics.html#agent_inspect.models.metrics.agent_data_sample.ExpectedToolCall" title="agent_inspect.models.metrics.agent_data_sample.ExpectedToolCall"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ExpectedToolCall</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>llm_client</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="agent_inspect.clients.html#agent_inspect.clients.llm_client.LLMClient" title="agent_inspect.clients.llm_client.LLMClient"><code class="xref py py-class docutils literal notranslate"><span class="pre">LLMClient</span></code></a></span>) – the client which allows connection to the LLM-as-a-judge model for evaluation.</p></li>
+<li><p><strong>config</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]]</span>) – <p>Default to <code class="docutils literal notranslate"><span class="pre">None</span></code>. Configuration options:</p>
+<ul>
+<li><p><strong>num_judge_trials</strong>: the number of LLM-as-a-judge runs. Default to <code class="docutils literal notranslate"><span class="pre">5</span></code>. A majority vote is used when the number of LLM-as-a-judge runs is set to a value larger than 1.</p></li>
+<li><p><strong>include_judge_explanation</strong>: a <code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code> flag to indicate whether the output should also return judge explanations. Default to <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p></li>
+</ul>
+</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="agent_inspect.metrics.validator.ToolCallCompletionValidator.validate_multi_turns">
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">validate_multi_turns</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">agent_trace_turns</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expected_tool_call</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/metrics/validator/tool_call_completion.html#ToolCallCompletionValidator.validate_multi_turns"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.metrics.validator.ToolCallCompletionValidator.validate_multi_turns" title="Link to this definition"></a></dt>
+<dd><p>Returns a <a class="reference internal" href="agent_inspect.models.metrics.html#agent_inspect.models.metrics.validation_result.ToolCallValidationResult" title="agent_inspect.models.metrics.validation_result.ToolCallValidationResult"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ToolCallValidationResult</span></code></a> indicating whether the tool call is correctly completed by the agent in any turn of the agent trace.
+Iterates through all user provided turn traces from first to last, stopping as soon as a valid tool call is found or when the last turn is reached.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>agent_trace_turns</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="agent_inspect.models.metrics.html#agent_inspect.models.metrics.agent_trace.TurnTrace" title="agent_inspect.models.metrics.agent_trace.TurnTrace"><code class="xref py py-class docutils literal notranslate"><span class="pre">TurnTrace</span></code></a>]</span>) – A list of <a class="reference internal" href="agent_inspect.models.metrics.html#agent_inspect.models.metrics.agent_trace.TurnTrace" title="agent_inspect.models.metrics.agent_trace.TurnTrace"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TurnTrace</span></code></a> representing the entire agent trace.</p></li>
+<li><p><strong>expected_tool_call</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="agent_inspect.models.metrics.html#agent_inspect.models.metrics.agent_data_sample.ExpectedToolCall" title="agent_inspect.models.metrics.agent_data_sample.ExpectedToolCall"><code class="xref py py-class docutils literal notranslate"><span class="pre">ExpectedToolCall</span></code></a></span>) – An <a class="reference internal" href="agent_inspect.models.metrics.html#agent_inspect.models.metrics.agent_data_sample.ExpectedToolCall" title="agent_inspect.models.metrics.agent_data_sample.ExpectedToolCall"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ExpectedToolCall</span></code></a> representing the expected tool call checklist to validate against.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="agent_inspect.models.metrics.html#agent_inspect.models.metrics.validation_result.ToolCallValidationResult" title="agent_inspect.models.metrics.validation_result.ToolCallValidationResult"><code class="xref py py-class docutils literal notranslate"><span class="pre">ToolCallValidationResult</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>a <a class="reference internal" href="agent_inspect.models.metrics.html#agent_inspect.models.metrics.validation_result.ToolCallValidationResult" title="agent_inspect.models.metrics.validation_result.ToolCallValidationResult"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ToolCallValidationResult</span></code></a> indicating whether the tool call is correctly completed by the agent.</p>
+</dd>
+</dl>
+<p>Example:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.metrics.validator</span><span class="w"> </span><span class="kn">import</span> <span class="n">ToolCallCompletionValidator</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.metrics.constants</span><span class="w"> </span><span class="kn">import</span> <span class="n">NUM_JUDGE_TRIALS</span><span class="p">,</span> <span class="n">INCLUDE_JUDGE_EXPLANATION</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.clients.azure_openai_client</span><span class="w"> </span><span class="kn">import</span> <span class="n">AzureOpenAIClient</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">asyncio</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">expected_tool_call</span> <span class="o">=</span> <span class="n">load_expected_tool_call</span><span class="p">(</span><span class="n">expected_tool_call_file_path</span><span class="p">)</span> <span class="c1"># Load expected tool call checklist</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">agent_turn_traces</span> <span class="o">=</span> <span class="n">load_agent_turn_traces</span><span class="p">(</span><span class="n">trace_file_path</span><span class="p">)</span> <span class="c1"># Load agent trajectory information</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">client</span> <span class="o">=</span> <span class="n">AzureOpenAIClient</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="s2">&quot;gpt-4.1&quot;</span><span class="p">,</span> <span class="n">max_tokens</span><span class="o">=</span><span class="mi">4096</span><span class="p">)</span> <span class="c1"># create client needed for LLM-based metric</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">validator</span> <span class="o">=</span> <span class="n">ToolCallCompletionValidator</span><span class="p">(</span>
+<span class="gp">... </span>   <span class="n">llm_client</span><span class="o">=</span><span class="n">client</span><span class="p">,</span>
+<span class="gp">... </span>   <span class="n">config</span><span class="o">=</span><span class="p">{</span><span class="n">NUM_JUDGE_TRIALS</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="n">INCLUDE_JUDGE_EXPLANATION</span><span class="p">:</span> <span class="kc">True</span><span class="p">}</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">validation_result</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
+<span class="gp">... </span>  <span class="n">validator</span><span class="o">.</span><span class="n">validate_multi_turns</span><span class="p">(</span>
+<span class="gp">... </span>       <span class="n">agent_trace_turns</span> <span class="o">=</span> <span class="n">agent_turn_traces</span><span class="p">,</span>
+<span class="gp">... </span>       <span class="n">expected_tool_call</span> <span class="o">=</span> <span class="n">expected_tool_call</span>
+<span class="gp">... </span>   <span class="p">)</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">validation_result</span><span class="o">.</span><span class="n">is_completed</span><span class="p">)</span>  <span class="c1"># True or False</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="agent_inspect.metrics.validator.ToolCallCompletionValidator.validate_static_last_turn">
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">validate_static_last_turn</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">agent_trace_turns</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expected_tool_call</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/metrics/validator/tool_call_completion.html#ToolCallCompletionValidator.validate_static_last_turn"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.metrics.validator.ToolCallCompletionValidator.validate_static_last_turn" title="Link to this definition"></a></dt>
+<dd><p>Returns a <a class="reference internal" href="agent_inspect.models.metrics.html#agent_inspect.models.metrics.validation_result.ToolCallValidationResult" title="agent_inspect.models.metrics.validation_result.ToolCallValidationResult"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ToolCallValidationResult</span></code></a> indicating whether the tool call is correctly completed by the agent in the latest turn of the agent trace.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>agent_trace_turns</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="agent_inspect.models.metrics.html#agent_inspect.models.metrics.agent_trace.TurnTrace" title="agent_inspect.models.metrics.agent_trace.TurnTrace"><code class="xref py py-class docutils literal notranslate"><span class="pre">TurnTrace</span></code></a>]</span>) – A list of <a class="reference internal" href="agent_inspect.models.metrics.html#agent_inspect.models.metrics.agent_trace.TurnTrace" title="agent_inspect.models.metrics.agent_trace.TurnTrace"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TurnTrace</span></code></a> representing the entire agent trace up to the current turn.</p></li>
+<li><p><strong>expected_tool_call</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="agent_inspect.models.metrics.html#agent_inspect.models.metrics.agent_data_sample.ExpectedToolCall" title="agent_inspect.models.metrics.agent_data_sample.ExpectedToolCall"><code class="xref py py-class docutils literal notranslate"><span class="pre">ExpectedToolCall</span></code></a></span>) – An <a class="reference internal" href="agent_inspect.models.metrics.html#agent_inspect.models.metrics.agent_data_sample.ExpectedToolCall" title="agent_inspect.models.metrics.agent_data_sample.ExpectedToolCall"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ExpectedToolCall</span></code></a> representing the expected tool call checklist to validate against.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="agent_inspect.models.metrics.html#agent_inspect.models.metrics.validation_result.ToolCallValidationResult" title="agent_inspect.models.metrics.validation_result.ToolCallValidationResult"><code class="xref py py-class docutils literal notranslate"><span class="pre">ToolCallValidationResult</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>a <a class="reference internal" href="agent_inspect.models.metrics.html#agent_inspect.models.metrics.validation_result.ToolCallValidationResult" title="agent_inspect.models.metrics.validation_result.ToolCallValidationResult"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ToolCallValidationResult</span></code></a> indicating whether the tool call is correctly completed by the agent.</p>
+</dd>
+</dl>
+<p>Example:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.metrics.validator</span><span class="w"> </span><span class="kn">import</span> <span class="n">ToolCallCompletionValidator</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.metrics.constants</span><span class="w"> </span><span class="kn">import</span> <span class="n">NUM_JUDGE_TRIALS</span><span class="p">,</span> <span class="n">INCLUDE_JUDGE_EXPLANATION</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.clients.azure_openai_client</span><span class="w"> </span><span class="kn">import</span> <span class="n">AzureOpenAIClient</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">asyncio</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">expected_tool_call</span> <span class="o">=</span> <span class="n">load_expected_tool_call</span><span class="p">(</span><span class="n">expected_tool_call_file_path</span><span class="p">)</span> <span class="c1"># Load expected tool call checklist</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">agent_turn_traces</span> <span class="o">=</span> <span class="n">load_agent_turn_traces</span><span class="p">(</span><span class="n">trace_file_path</span><span class="p">)</span> <span class="c1"># Load agent trajectory information</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">client</span> <span class="o">=</span> <span class="n">AzureOpenAIClient</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="s2">&quot;gpt-4.1&quot;</span><span class="p">,</span> <span class="n">max_tokens</span><span class="o">=</span><span class="mi">4096</span><span class="p">)</span> <span class="c1"># create client needed for LLM-based metric</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">validator</span> <span class="o">=</span> <span class="n">ToolCallCompletionValidator</span><span class="p">(</span>
+<span class="gp">... </span>   <span class="n">llm_client</span><span class="o">=</span><span class="n">client</span><span class="p">,</span>
+<span class="gp">... </span>   <span class="n">config</span><span class="o">=</span><span class="p">{</span><span class="n">NUM_JUDGE_TRIALS</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="n">INCLUDE_JUDGE_EXPLANATION</span><span class="p">:</span> <span class="kc">True</span><span class="p">}</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">validation_result</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
+<span class="gp">... </span>  <span class="n">validator</span><span class="o">.</span><span class="n">validate_static_last_turn</span><span class="p">(</span>
+<span class="gp">... </span>       <span class="n">agent_trace_turns</span> <span class="o">=</span> <span class="n">agent_turn_traces</span><span class="p">,</span>
+<span class="gp">... </span>       <span class="n">expected_tool_call</span> <span class="o">=</span> <span class="n">expected_tool_call</span>
+<span class="gp">... </span>   <span class="p">)</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">validation_result</span><span class="o">.</span><span class="n">is_completed</span><span class="p">)</span>  <span class="c1"># True or False</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="agent_inspect.metrics.validator.Validator">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agent_inspect.metrics.validator.</span></span><span class="sig-name descname"><span class="pre">Validator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">llm_client</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/metrics/validator/validator.html#Validator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.metrics.validator.Validator" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Abstract class which should be extended for actual implementation of validators.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>llm_client</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="agent_inspect.clients.html#agent_inspect.clients.llm_client.LLMClient" title="agent_inspect.clients.llm_client.LLMClient"><code class="xref py py-class docutils literal notranslate"><span class="pre">LLMClient</span></code></a></span>) – the client which allows connection to the llm-as-a-judge model for evaluations.</p></li>
+<li><p><strong>config</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]]</span>) – configuration for validator initialization. Default to <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="agent_inspect.metrics.validator.Validator.get_majority_voted_score_from_judge_responses">
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_majority_voted_score_from_judge_responses</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prompt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">regex_pattern</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'(?i)GRADE\\\\s*:\\\\s*([CPI])(.*)$'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grade_choices</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['C',</span> <span class="pre">'I']</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/metrics/validator/validator.html#Validator.get_majority_voted_score_from_judge_responses"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.metrics.validator.Validator.get_majority_voted_score_from_judge_responses" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]]</span></p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>prompt</strong> (<em>str</em>)</p></li>
+<li><p><strong>regex_pattern</strong> (<em>str</em>)</p></li>
+<li><p><strong>grade_choices</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="agent_inspect.metrics.validator.Validator.validate">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">validate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">turn_traces</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/metrics/validator/validator.html#Validator.validate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.metrics.validator.Validator.validate" title="Link to this definition"></a></dt>
+<dd><p>This is an abstract method and should be implemented in a concrete class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>turn_traces</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="agent_inspect.models.metrics.html#agent_inspect.models.metrics.agent_trace.TurnTrace" title="agent_inspect.models.metrics.agent_trace.TurnTrace"><code class="xref py py-class docutils literal notranslate"><span class="pre">TurnTrace</span></code></a>]</span>) – a <code class="xref py py-obj docutils literal notranslate"><span class="pre">List</span></code> [<a class="reference internal" href="agent_inspect.models.metrics.html#agent_inspect.models.metrics.agent_trace.TurnTrace" title="agent_inspect.models.metrics.agent_trace.TurnTrace"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TurnTrace</span></code></a>] object constructed with the agent trajectory information from the first turn up to the current turn.</p></li>
+<li><p><strong>kwargs</strong> – Additional keyword arguments that may be required for specific validation logic. These arguments can be used to pass optional parameters or configuration settings to the validator.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="agent_inspect.models.metrics.html#agent_inspect.models.metrics.validation_result.ValidationResult" title="agent_inspect.models.metrics.validation_result.ValidationResult"><code class="xref py py-class docutils literal notranslate"><span class="pre">ValidationResult</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>a <a class="reference internal" href="agent_inspect.models.metrics.html#agent_inspect.models.metrics.validation_result.ValidationResult" title="agent_inspect.models.metrics.validation_result.ValidationResult"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ValidationResult</span></code></a> object containing the validation output.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="agent_inspect.metrics.validator.exact_match">
+<span class="sig-prename descclassname"><span class="pre">agent_inspect.metrics.validator.</span></span><span class="sig-name descname"><span class="pre">exact_match</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">candidate</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ground_truth</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/metrics/validator/exact_match.html#exact_match"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.metrics.validator.exact_match" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></span></p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>candidate</strong> (<em>str</em>)</p></li>
+<li><p><strong>ground_truth</strong> (<em>str</em>)</p></li>
+<li><p><strong>config</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>] </em><em>| </em><em>None</em>)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="agent_inspect.metrics.validator.llm_check">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agent_inspect.metrics.validator.</span></span><span class="sig-name descname"><span class="pre">llm_check</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">variables</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">template</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">post_process</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/metrics/validator/llm_check.html#llm_check"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.metrics.validator.llm_check" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></span></p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>client</strong> (<a class="reference internal" href="agent_inspect.clients.html#agent_inspect.clients.llm_client.LLMClient" title="agent_inspect.clients.llm_client.LLMClient"><em>LLMClient</em></a>)</p></li>
+<li><p><strong>variables</strong> (<em>Dict</em>)</p></li>
+<li><p><strong>template</strong> (<em>str</em>)</p></li>
+<li><p><strong>post_process</strong> (<em>Callable</em><em>[</em><em>[</em><a class="reference internal" href="agent_inspect.models.html#agent_inspect.models.llm_response.LLMResponse" title="agent_inspect.models.llm_response.LLMResponse"><em>LLMResponse</em></a><em>]</em><em>, </em><em>bool</em><em>]</em>)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="agent_inspect.metrics.validator.regex_match">
+<span class="sig-prename descclassname"><span class="pre">agent_inspect.metrics.validator.</span></span><span class="sig-name descname"><span class="pre">regex_match</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">candidate</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pattern</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/metrics/validator/regex_match.html#regex_match"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.metrics.validator.regex_match" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></span></p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>candidate</strong> (<em>str</em>)</p></li>
+<li><p><strong>pattern</strong> (<em>str</em>)</p></li>
+<li><p><strong>config</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>] </em><em>| </em><em>None</em>)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="agent_inspect.metrics.utils.html" class="btn btn-neutral float-left" title="agent_inspect.metrics.utils package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="agent_inspect.models.html" class="btn btn-neutral float-right" title="agent_inspect.models package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, &#34;&#34;.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

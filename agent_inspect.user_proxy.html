@@ -1,0 +1,298 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>agent_inspect.user_proxy package &mdash; agent_inspect 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=eea1f72d" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=f2a433a1"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="agent_inspect.user_proxy.utils package" href="agent_inspect.user_proxy.utils.html" />
+    <link rel="prev" title="agent_inspect.tools.error_analysis package" href="agent_inspect.tools.error_analysis.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            agent_inspect
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">agent_inspect</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">agent_inspect</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">agent_inspect</a></li>
+          <li class="breadcrumb-item"><a href="agent_inspect.html">agent_inspect package</a></li>
+      <li class="breadcrumb-item active">agent_inspect.user_proxy package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/agent_inspect.user_proxy.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="agent-inspect-user-proxy-package">
+<h1>agent_inspect.user_proxy package<a class="headerlink" href="#agent-inspect-user-proxy-package" title="Link to this heading"></a></h1>
+<section id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Link to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="agent_inspect.user_proxy.utils.html">agent_inspect.user_proxy.utils package</a></li>
+</ul>
+</div>
+</section>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-agent_inspect.user_proxy.constants">
+<span id="agent-inspect-user-proxy-constants-module"></span><h2>agent_inspect.user_proxy.constants module<a class="headerlink" href="#module-agent_inspect.user_proxy.constants" title="Link to this heading"></a></h2>
+</section>
+<section id="module-agent_inspect.user_proxy.llm_proxy_agent">
+<span id="agent-inspect-user-proxy-llm-proxy-agent-module"></span><h2>agent_inspect.user_proxy.llm_proxy_agent module<a class="headerlink" href="#module-agent_inspect.user_proxy.llm_proxy_agent" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="agent_inspect.user_proxy.llm_proxy_agent.LLMProxyAgent">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agent_inspect.user_proxy.llm_proxy_agent.</span></span><span class="sig-name descname"><span class="pre">LLMProxyAgent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">llm_client</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/user_proxy/llm_proxy_agent.html#LLMProxyAgent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.user_proxy.llm_proxy_agent.LLMProxyAgent" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
+<p>Abstract class which should be extended for actual implementation of LLM agent.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>llm_client</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="agent_inspect.clients.html#agent_inspect.clients.llm_client.LLMClient" title="agent_inspect.clients.llm_client.LLMClient"><code class="xref py py-class docutils literal notranslate"><span class="pre">LLMClient</span></code></a></span>) – the connection to the llm client for response generation.</p></li>
+<li><p><strong>config</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]]</span>) – configuration for LLM agent initialization. Default to <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="agent_inspect.user_proxy.llm_proxy_agent.LLMProxyAgent.generate_message_from_chat_history">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">generate_message_from_chat_history</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">chat_history</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/user_proxy/llm_proxy_agent.html#LLMProxyAgent.generate_message_from_chat_history"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.user_proxy.llm_proxy_agent.LLMProxyAgent.generate_message_from_chat_history" title="Link to this definition"></a></dt>
+<dd><p>This is an abstract method and should be implemented in a concrete class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>chat_history</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="agent_inspect.models.user_proxy.html#agent_inspect.models.user_proxy.chat.ChatHistory" title="agent_inspect.models.user_proxy.chat.ChatHistory"><code class="xref py py-class docutils literal notranslate"><span class="pre">ChatHistory</span></code></a></span>) – a <a class="reference internal" href="agent_inspect.models.user_proxy.html#agent_inspect.models.user_proxy.chat.ChatHistory" title="agent_inspect.models.user_proxy.chat.ChatHistory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ChatHistory</span></code></a> object containing the conversation history.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="agent_inspect.models.user_proxy.html#agent_inspect.models.user_proxy.chat.UserProxyMessage" title="agent_inspect.models.user_proxy.chat.UserProxyMessage"><code class="xref py py-class docutils literal notranslate"><span class="pre">UserProxyMessage</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>a <a class="reference internal" href="agent_inspect.models.user_proxy.html#agent_inspect.models.user_proxy.chat.UserProxyMessage" title="agent_inspect.models.user_proxy.chat.UserProxyMessage"><code class="xref py py-obj docutils literal notranslate"><span class="pre">UserProxyMessage</span></code></a> object containing the LLM agent response.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-agent_inspect.user_proxy.templates">
+<span id="agent-inspect-user-proxy-templates-module"></span><h2>agent_inspect.user_proxy.templates module<a class="headerlink" href="#module-agent_inspect.user_proxy.templates" title="Link to this heading"></a></h2>
+</section>
+<section id="module-agent_inspect.user_proxy.user_proxy_agent">
+<span id="agent-inspect-user-proxy-user-proxy-agent-module"></span><h2>agent_inspect.user_proxy.user_proxy_agent module<a class="headerlink" href="#module-agent_inspect.user_proxy.user_proxy_agent" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="agent_inspect.user_proxy.user_proxy_agent.UserProxyAgent">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agent_inspect.user_proxy.user_proxy_agent.</span></span><span class="sig-name descname"><span class="pre">UserProxyAgent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">llm_client</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">task_summary</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">terminating_conditions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent_description</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial_message</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/user_proxy/user_proxy_agent.html#UserProxyAgent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.user_proxy.user_proxy_agent.UserProxyAgent" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#agent_inspect.user_proxy.llm_proxy_agent.LLMProxyAgent" title="agent_inspect.user_proxy.llm_proxy_agent.LLMProxyAgent"><code class="xref py py-class docutils literal notranslate"><span class="pre">LLMProxyAgent</span></code></a></p>
+<p>User proxy (a.k.a. simulated user) class which generates the user utterances during a dynamic conversation with the AI agent. The dynamic user utterances are generated based on the user task instruction and user persona (e.g., expert or non-expert) prompt templates via a two-step process—reflection followed by response generation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>llm_client</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="agent_inspect.clients.html#agent_inspect.clients.llm_client.LLMClient" title="agent_inspect.clients.llm_client.LLMClient"><code class="xref py py-class docutils literal notranslate"><span class="pre">LLMClient</span></code></a></span>) – the connection to the llm client for user utterances generation.</p></li>
+<li><p><strong>task_summary</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>) – a user task instruction describing the summary of the task user wants the AI agent to complete.</p></li>
+<li><p><strong>terminating_conditions</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="agent_inspect.models.user_proxy.html#agent_inspect.models.user_proxy.terminating_condition.TerminatingCondition" title="agent_inspect.models.user_proxy.terminating_condition.TerminatingCondition"><code class="xref py py-class docutils literal notranslate"><span class="pre">TerminatingCondition</span></code></a>]</span>) – a <code class="xref py py-obj docutils literal notranslate"><span class="pre">List</span></code> [<a class="reference internal" href="agent_inspect.models.user_proxy.html#agent_inspect.models.user_proxy.terminating_condition.TerminatingCondition" title="agent_inspect.models.user_proxy.terminating_condition.TerminatingCondition"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TerminatingCondition</span></code></a>] object where each element in the list is a terminating condition for the user proxy to exit the user-agent conversation early.</p></li>
+<li><p><strong>agent_description</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>) – the description of the AI agent that will interact with the user proxy, provided as additional context for the user proxy. Default to empty string.</p></li>
+<li><p><strong>initial_message</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>) – a static message that is used as the user proxy’s initial message (if available) to the AI agent. Default to empty string.</p></li>
+<li><p><strong>config</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]]</span>) – <p>Default to <code class="docutils literal notranslate"><span class="pre">None</span></code>. Configuration options:</p>
+<ul>
+<li><p><strong>use_expert_agent</strong>: a <code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code> flag to indicate whether the user proxy should use an expert persona; otherwise, it uses a non-expert persona. Default to <code class="docutils literal notranslate"><span class="pre">True</span></code> to use an expert persona.</p></li>
+<li><p><strong>terminating_condition_mode</strong>: a <code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code> variable to indicate whether the user proxy is configured with single terminating condition or multiple terminating conditions. The value can be either <code class="docutils literal notranslate"><span class="pre">&quot;single&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;multiple&quot;</span></code>. Default to <code class="docutils literal notranslate"><span class="pre">&quot;single&quot;</span></code>.</p></li>
+</ul>
+</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="agent_inspect.user_proxy.user_proxy_agent.UserProxyAgent.generate_message_from_chat_history">
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">generate_message_from_chat_history</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">chat_history</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/user_proxy/user_proxy_agent.html#UserProxyAgent.generate_message_from_chat_history"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.user_proxy.user_proxy_agent.UserProxyAgent.generate_message_from_chat_history" title="Link to this definition"></a></dt>
+<dd><p>Generates the next user utterance given a <a class="reference internal" href="agent_inspect.models.user_proxy.html#agent_inspect.models.user_proxy.chat.ChatHistory" title="agent_inspect.models.user_proxy.chat.ChatHistory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ChatHistory</span></code></a> object containing the user-agent conversation history as input.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>chat_history</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="agent_inspect.models.user_proxy.html#agent_inspect.models.user_proxy.chat.ChatHistory" title="agent_inspect.models.user_proxy.chat.ChatHistory"><code class="xref py py-class docutils literal notranslate"><span class="pre">ChatHistory</span></code></a></span>) – a <a class="reference internal" href="agent_inspect.models.user_proxy.html#agent_inspect.models.user_proxy.chat.ChatHistory" title="agent_inspect.models.user_proxy.chat.ChatHistory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ChatHistory</span></code></a> object containing the user-agent conversation history.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="agent_inspect.models.user_proxy.html#agent_inspect.models.user_proxy.chat.UserProxyMessage" title="agent_inspect.models.user_proxy.chat.UserProxyMessage"><code class="xref py py-class docutils literal notranslate"><span class="pre">UserProxyMessage</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>a <a class="reference internal" href="agent_inspect.models.user_proxy.html#agent_inspect.models.user_proxy.chat.UserProxyMessage" title="agent_inspect.models.user_proxy.chat.UserProxyMessage"><code class="xref py py-obj docutils literal notranslate"><span class="pre">UserProxyMessage</span></code></a> object containing the next user utterance. For the first user utterance, if the input variable <code class="docutils literal notranslate"><span class="pre">chat_history</span></code> is <code class="docutils literal notranslate"><span class="pre">None</span></code> and <code class="docutils literal notranslate"><span class="pre">self.initial_message</span></code> is not an empty string,  the method returns the <code class="docutils literal notranslate"><span class="pre">self.initial_message</span></code> as the initial user utterance, otherwise it generates the user utterance based on the conversation history. All subsequent user utterances are generated based on the conversation history.</p>
+</dd>
+</dl>
+<p>Example:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.user_proxy</span><span class="w"> </span><span class="kn">import</span> <span class="n">UserProxyAgent</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.models.user_proxy</span><span class="w"> </span><span class="kn">import</span> <span class="n">ChatHistory</span> <span class="n">TerminatingCondition</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.user_proxy.constants</span><span class="w"> </span><span class="kn">import</span> <span class="n">USE_EXPERT_AGENT</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.clients.azure_openai_client</span><span class="w"> </span><span class="kn">import</span> <span class="n">AzureOpenAIClient</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">uuid</span><span class="w"> </span><span class="kn">import</span> <span class="n">uuid4</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">asyncio</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">user_instruct</span><span class="p">,</span> <span class="n">term_condition</span> <span class="o">=</span> <span class="n">load_user_instruct_term</span><span class="p">(</span><span class="n">sample_path</span><span class="p">)</span> <span class="c1"># Load user instruction and terminating condition</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">client</span> <span class="o">=</span> <span class="n">AzureOpenAIClient</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="s2">&quot;gpt-4.1&quot;</span><span class="p">,</span> <span class="n">max_tokens</span><span class="o">=</span><span class="mi">4096</span><span class="p">)</span> <span class="c1"># create llm client for user proxy</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">user</span> <span class="o">=</span> <span class="n">UserProxyAgent</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">llm_client</span><span class="o">=</span><span class="n">client</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">task_summary</span><span class="o">=</span><span class="n">user_instruct</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">terminating_conditions</span><span class="o">=</span><span class="p">[</span>
+<span class="gp">... </span>        <span class="n">TerminatingCondition</span><span class="p">(</span><span class="n">check</span><span class="o">=</span><span class="n">term_condition</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="p">],</span>
+<span class="gp">... </span>    <span class="n">config</span><span class="o">=</span><span class="p">{</span><span class="n">USE_EXPERT_AGENT</span><span class="p">:</span> <span class="kc">True</span><span class="p">}</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">chat_history</span> <span class="o">=</span> <span class="n">ChatHistory</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">uuid4</span><span class="p">()),</span> <span class="n">conversations</span><span class="o">=</span><span class="p">[])</span> <span class="c1"># start from an empty conversation</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">user_response</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">user</span><span class="o">.</span><span class="n">generate_message_from_chat_history</span><span class="p">(</span><span class="n">chat_history</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">user_response</span><span class="o">.</span><span class="n">message_str</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-agent_inspect.user_proxy">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-agent_inspect.user_proxy" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="agent_inspect.user_proxy.UserProxyAgent">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agent_inspect.user_proxy.</span></span><span class="sig-name descname"><span class="pre">UserProxyAgent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">llm_client</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">task_summary</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">terminating_conditions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent_description</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial_message</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/user_proxy/user_proxy_agent.html#UserProxyAgent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.user_proxy.UserProxyAgent" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#agent_inspect.user_proxy.llm_proxy_agent.LLMProxyAgent" title="agent_inspect.user_proxy.llm_proxy_agent.LLMProxyAgent"><code class="xref py py-class docutils literal notranslate"><span class="pre">LLMProxyAgent</span></code></a></p>
+<p>User proxy (a.k.a. simulated user) class which generates the user utterances during a dynamic conversation with the AI agent. The dynamic user utterances are generated based on the user task instruction and user persona (e.g., expert or non-expert) prompt templates via a two-step process—reflection followed by response generation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>llm_client</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="agent_inspect.clients.html#agent_inspect.clients.llm_client.LLMClient" title="agent_inspect.clients.llm_client.LLMClient"><code class="xref py py-class docutils literal notranslate"><span class="pre">LLMClient</span></code></a></span>) – the connection to the llm client for user utterances generation.</p></li>
+<li><p><strong>task_summary</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>) – a user task instruction describing the summary of the task user wants the AI agent to complete.</p></li>
+<li><p><strong>terminating_conditions</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="agent_inspect.models.user_proxy.html#agent_inspect.models.user_proxy.terminating_condition.TerminatingCondition" title="agent_inspect.models.user_proxy.terminating_condition.TerminatingCondition"><code class="xref py py-class docutils literal notranslate"><span class="pre">TerminatingCondition</span></code></a>]</span>) – a <code class="xref py py-obj docutils literal notranslate"><span class="pre">List</span></code> [<a class="reference internal" href="agent_inspect.models.user_proxy.html#agent_inspect.models.user_proxy.terminating_condition.TerminatingCondition" title="agent_inspect.models.user_proxy.terminating_condition.TerminatingCondition"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TerminatingCondition</span></code></a>] object where each element in the list is a terminating condition for the user proxy to exit the user-agent conversation early.</p></li>
+<li><p><strong>agent_description</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>) – the description of the AI agent that will interact with the user proxy, provided as additional context for the user proxy. Default to empty string.</p></li>
+<li><p><strong>initial_message</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>) – a static message that is used as the user proxy’s initial message (if available) to the AI agent. Default to empty string.</p></li>
+<li><p><strong>config</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]]</span>) – <p>Default to <code class="docutils literal notranslate"><span class="pre">None</span></code>. Configuration options:</p>
+<ul>
+<li><p><strong>use_expert_agent</strong>: a <code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code> flag to indicate whether the user proxy should use an expert persona; otherwise, it uses a non-expert persona. Default to <code class="docutils literal notranslate"><span class="pre">True</span></code> to use an expert persona.</p></li>
+<li><p><strong>terminating_condition_mode</strong>: a <code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code> variable to indicate whether the user proxy is configured with single terminating condition or multiple terminating conditions. The value can be either <code class="docutils literal notranslate"><span class="pre">&quot;single&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;multiple&quot;</span></code>. Default to <code class="docutils literal notranslate"><span class="pre">&quot;single&quot;</span></code>.</p></li>
+</ul>
+</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="agent_inspect.user_proxy.UserProxyAgent.generate_message_from_chat_history">
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">generate_message_from_chat_history</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">chat_history</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/user_proxy/user_proxy_agent.html#UserProxyAgent.generate_message_from_chat_history"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.user_proxy.UserProxyAgent.generate_message_from_chat_history" title="Link to this definition"></a></dt>
+<dd><p>Generates the next user utterance given a <a class="reference internal" href="agent_inspect.models.user_proxy.html#agent_inspect.models.user_proxy.chat.ChatHistory" title="agent_inspect.models.user_proxy.chat.ChatHistory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ChatHistory</span></code></a> object containing the user-agent conversation history as input.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>chat_history</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="agent_inspect.models.user_proxy.html#agent_inspect.models.user_proxy.chat.ChatHistory" title="agent_inspect.models.user_proxy.chat.ChatHistory"><code class="xref py py-class docutils literal notranslate"><span class="pre">ChatHistory</span></code></a></span>) – a <a class="reference internal" href="agent_inspect.models.user_proxy.html#agent_inspect.models.user_proxy.chat.ChatHistory" title="agent_inspect.models.user_proxy.chat.ChatHistory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ChatHistory</span></code></a> object containing the user-agent conversation history.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="agent_inspect.models.user_proxy.html#agent_inspect.models.user_proxy.chat.UserProxyMessage" title="agent_inspect.models.user_proxy.chat.UserProxyMessage"><code class="xref py py-class docutils literal notranslate"><span class="pre">UserProxyMessage</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>a <a class="reference internal" href="agent_inspect.models.user_proxy.html#agent_inspect.models.user_proxy.chat.UserProxyMessage" title="agent_inspect.models.user_proxy.chat.UserProxyMessage"><code class="xref py py-obj docutils literal notranslate"><span class="pre">UserProxyMessage</span></code></a> object containing the next user utterance. For the first user utterance, if the input variable <code class="docutils literal notranslate"><span class="pre">chat_history</span></code> is <code class="docutils literal notranslate"><span class="pre">None</span></code> and <code class="docutils literal notranslate"><span class="pre">self.initial_message</span></code> is not an empty string,  the method returns the <code class="docutils literal notranslate"><span class="pre">self.initial_message</span></code> as the initial user utterance, otherwise it generates the user utterance based on the conversation history. All subsequent user utterances are generated based on the conversation history.</p>
+</dd>
+</dl>
+<p>Example:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.user_proxy</span><span class="w"> </span><span class="kn">import</span> <span class="n">UserProxyAgent</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.models.user_proxy</span><span class="w"> </span><span class="kn">import</span> <span class="n">ChatHistory</span> <span class="n">TerminatingCondition</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.user_proxy.constants</span><span class="w"> </span><span class="kn">import</span> <span class="n">USE_EXPERT_AGENT</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.clients.azure_openai_client</span><span class="w"> </span><span class="kn">import</span> <span class="n">AzureOpenAIClient</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">uuid</span><span class="w"> </span><span class="kn">import</span> <span class="n">uuid4</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">asyncio</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">user_instruct</span><span class="p">,</span> <span class="n">term_condition</span> <span class="o">=</span> <span class="n">load_user_instruct_term</span><span class="p">(</span><span class="n">sample_path</span><span class="p">)</span> <span class="c1"># Load user instruction and terminating condition</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">client</span> <span class="o">=</span> <span class="n">AzureOpenAIClient</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="s2">&quot;gpt-4.1&quot;</span><span class="p">,</span> <span class="n">max_tokens</span><span class="o">=</span><span class="mi">4096</span><span class="p">)</span> <span class="c1"># create llm client for user proxy</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">user</span> <span class="o">=</span> <span class="n">UserProxyAgent</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">llm_client</span><span class="o">=</span><span class="n">client</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">task_summary</span><span class="o">=</span><span class="n">user_instruct</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">terminating_conditions</span><span class="o">=</span><span class="p">[</span>
+<span class="gp">... </span>        <span class="n">TerminatingCondition</span><span class="p">(</span><span class="n">check</span><span class="o">=</span><span class="n">term_condition</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="p">],</span>
+<span class="gp">... </span>    <span class="n">config</span><span class="o">=</span><span class="p">{</span><span class="n">USE_EXPERT_AGENT</span><span class="p">:</span> <span class="kc">True</span><span class="p">}</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">chat_history</span> <span class="o">=</span> <span class="n">ChatHistory</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">uuid4</span><span class="p">()),</span> <span class="n">conversations</span><span class="o">=</span><span class="p">[])</span> <span class="c1"># start from an empty conversation</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">user_response</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">user</span><span class="o">.</span><span class="n">generate_message_from_chat_history</span><span class="p">(</span><span class="n">chat_history</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">user_response</span><span class="o">.</span><span class="n">message_str</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="agent_inspect.tools.error_analysis.html" class="btn btn-neutral float-left" title="agent_inspect.tools.error_analysis package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="agent_inspect.user_proxy.utils.html" class="btn btn-neutral float-right" title="agent_inspect.user_proxy.utils package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, &#34;&#34;.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

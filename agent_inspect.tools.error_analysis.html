@@ -1,0 +1,601 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>agent_inspect.tools.error_analysis package &mdash; agent_inspect 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=eea1f72d" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=f2a433a1"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="agent_inspect.user_proxy package" href="agent_inspect.user_proxy.html" />
+    <link rel="prev" title="agent_inspect.tools package" href="agent_inspect.tools.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            agent_inspect
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">agent_inspect</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">agent_inspect</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">agent_inspect</a></li>
+          <li class="breadcrumb-item"><a href="agent_inspect.html">agent_inspect package</a></li>
+          <li class="breadcrumb-item"><a href="agent_inspect.tools.html">agent_inspect.tools package</a></li>
+      <li class="breadcrumb-item active">agent_inspect.tools.error_analysis package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/agent_inspect.tools.error_analysis.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="agent-inspect-tools-error-analysis-package">
+<h1>agent_inspect.tools.error_analysis package<a class="headerlink" href="#agent-inspect-tools-error-analysis-package" title="Link to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-agent_inspect.tools.error_analysis.base_error_analysis">
+<span id="agent-inspect-tools-error-analysis-base-error-analysis-module"></span><h2>agent_inspect.tools.error_analysis.base_error_analysis module<a class="headerlink" href="#module-agent_inspect.tools.error_analysis.base_error_analysis" title="Link to this heading"></a></h2>
+<section id="error-analysis-module-class-hierarchy">
+<h3>Error Analysis Module - Class Hierarchy<a class="headerlink" href="#error-analysis-module-class-hierarchy" title="Link to this heading"></a></h3>
+<p>This module defines the base class for error analysis implementations.</p>
+<p>Class Hierarchy Diagram:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>                                ErrorAnalysis (ABC)
+                                      |
+                                      | (abstract base)
+                ______________________|_______________________
+               |                                              |
+        ToolCallErrorAnalysis (ABC)              SubgoalErrorAnalysis (ABC)
+        (tool call errors)                       (subgoal errors)
+               |                                              |
+     __________|__________                           _________|_________
+    |                     |                         |                   |
+SemisupervisedTool      DeterministicTool       UnsupervisedSubgoal     SemisupervisedSubgoal
+CallErrorAnalysis       CallErrorAnalysis       ErrorAnalysis           ErrorAnalysis
+(LLM-based              (Regex-based            (Dynamic clustering     (Predefined clusters
+classification)         classification)         with LLM)               with LLM)
+</pre></div>
+</div>
+<p>Algorithm Types:</p>
+<ol class="arabic simple">
+<li><p><strong>Unsupervised</strong>: Discovers error patterns dynamically without predefined categories
+- Uses LLM for error summarization and semantic clustering
+- Generates error categories from data</p></li>
+<li><p><strong>Semi-supervised</strong>: Classifies errors into predefined error clusters
+- Uses LLM with structured prompts for classification
+- More consistent and interpretable results
+- Supports custom error cluster definitions</p></li>
+<li><p><strong>Deterministic</strong>: Rule-based classification using regex patterns
+- No LLM required (faster, cheaper)
+- Works only for tool call errors with specific explanation formats</p></li>
+</ol>
+</section>
+<dl class="py class">
+<dt class="sig sig-object py" id="agent_inspect.tools.error_analysis.base_error_analysis.ErrorAnalysis">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agent_inspect.tools.error_analysis.base_error_analysis.</span></span><span class="sig-name descname"><span class="pre">ErrorAnalysis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/tools/error_analysis/base_error_analysis.html#ErrorAnalysis"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.tools.error_analysis.base_error_analysis.ErrorAnalysis" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
+<p>Abstract base class for all error analysis implementations.</p>
+<p>This class provides common functionality for error analysis operations:</p>
+<ul class="simple">
+<li><p>Configuration management via config dictionary</p></li>
+<li><p>Thread pool executor for concurrent processing</p></li>
+<li><p>Retry logic for LLM requests with JSON decode errors</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>config</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]]</span>) – <p>Optional configuration dictionary. Supported keys:</p>
+<ul class="simple">
+<li><p><strong>max_workers</strong>: Maximum number of concurrent workers (default: 20)</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-agent_inspect.tools.error_analysis.deterministic_tool_call_error_analysis">
+<span id="agent-inspect-tools-error-analysis-deterministic-tool-call-error-analysis-module"></span><h2>agent_inspect.tools.error_analysis.deterministic_tool_call_error_analysis module<a class="headerlink" href="#module-agent_inspect.tools.error_analysis.deterministic_tool_call_error_analysis" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="agent_inspect.tools.error_analysis.deterministic_tool_call_error_analysis.DeterministicToolCallErrorAnalysis">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agent_inspect.tools.error_analysis.deterministic_tool_call_error_analysis.</span></span><span class="sig-name descname"><span class="pre">DeterministicToolCallErrorAnalysis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/tools/error_analysis/deterministic_tool_call_error_analysis.html#DeterministicToolCallErrorAnalysis"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.tools.error_analysis.deterministic_tool_call_error_analysis.DeterministicToolCallErrorAnalysis" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#agent_inspect.tools.error_analysis.tool_call_error_analysis.ToolCallErrorAnalysis" title="agent_inspect.tools.error_analysis.tool_call_error_analysis.ToolCallErrorAnalysis"><code class="xref py py-class docutils literal notranslate"><span class="pre">ToolCallErrorAnalysis</span></code></a></p>
+<p>Deterministic (rule-based) error analysis for tool call validations.</p>
+<p>This class classifies tool validation failures into predefined error clusters
+using regex pattern matching on validation explanations. It provides a fast,
+LLM-free alternative to <code class="xref py py-class docutils literal notranslate"><span class="pre">SemisupervisedToolCallErrorAnalysis</span></code>.</p>
+<p><strong>Cluster Labels (in priority order):</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference internal" href="agent_inspect.models.tools.html#agent_inspect.models.tools.error_cluster.IncorrectToolInputCluster" title="agent_inspect.models.tools.error_cluster.IncorrectToolInputCluster"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IncorrectToolInputCluster</span></code></a></p></li>
+<li><p><a class="reference internal" href="agent_inspect.models.tools.html#agent_inspect.models.tools.error_cluster.IncorrectToolOutputHandlingCluster" title="agent_inspect.models.tools.error_cluster.IncorrectToolOutputHandlingCluster"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IncorrectToolOutputHandlingCluster</span></code></a></p></li>
+<li><p><a class="reference internal" href="agent_inspect.models.tools.html#agent_inspect.models.tools.error_cluster.WrongToolSelectionCluster" title="agent_inspect.models.tools.error_cluster.WrongToolSelectionCluster"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WrongToolSelectionCluster</span></code></a></p></li>
+</ul>
+</div></blockquote>
+<p><strong>Priority Behavior:</strong>
+When multiple failures occur (e.g., both argument AND output fail),
+the highest priority label is assigned based on the order above.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>config</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]]</span>) – <p>Optional configuration dictionary. Supported keys:</p>
+<ul class="simple">
+<li><p><strong>max_workers</strong>: Maximum number of concurrent workers (default: 20)</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+<p>Example:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.tools</span><span class="w"> </span><span class="kn">import</span> <span class="n">DeterministicToolCallErrorAnalysis</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.models.tools</span><span class="w"> </span><span class="kn">import</span> <span class="n">ToolCallErrorAnalysisDataSample</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">analyzer</span> <span class="o">=</span> <span class="n">DeterministicToolCallErrorAnalysis</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;max_workers&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">result</span> <span class="o">=</span> <span class="n">analyzer</span><span class="o">.</span><span class="n">analyze_batch</span><span class="p">(</span><span class="n">tool_validation_data_samples</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">cluster_label</span><span class="p">,</span> <span class="n">validations</span> <span class="ow">in</span> <span class="n">result</span><span class="o">.</span><span class="n">analyzed_validations_clustered_by_errors</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">cluster_label</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">validations</span><span class="p">)</span><span class="si">}</span><span class="s2"> errors&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</section>
+<section id="module-agent_inspect.tools.error_analysis.llm_output_schemas">
+<span id="agent-inspect-tools-error-analysis-llm-output-schemas-module"></span><h2>agent_inspect.tools.error_analysis.llm_output_schemas module<a class="headerlink" href="#module-agent_inspect.tools.error_analysis.llm_output_schemas" title="Link to this heading"></a></h2>
+</section>
+<section id="module-agent_inspect.tools.error_analysis.llm_templates">
+<span id="agent-inspect-tools-error-analysis-llm-templates-module"></span><h2>agent_inspect.tools.error_analysis.llm_templates module<a class="headerlink" href="#module-agent_inspect.tools.error_analysis.llm_templates" title="Link to this heading"></a></h2>
+</section>
+<section id="module-agent_inspect.tools.error_analysis.semisupervised_subgoal_error_analysis">
+<span id="agent-inspect-tools-error-analysis-semisupervised-subgoal-error-analysis-module"></span><h2>agent_inspect.tools.error_analysis.semisupervised_subgoal_error_analysis module<a class="headerlink" href="#module-agent_inspect.tools.error_analysis.semisupervised_subgoal_error_analysis" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="agent_inspect.tools.error_analysis.semisupervised_subgoal_error_analysis.SemisupervisedSubgoalErrorAnalysis">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agent_inspect.tools.error_analysis.semisupervised_subgoal_error_analysis.</span></span><span class="sig-name descname"><span class="pre">SemisupervisedSubgoalErrorAnalysis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">llm_client</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">error_clusters</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/tools/error_analysis/semisupervised_subgoal_error_analysis.html#SemisupervisedSubgoalErrorAnalysis"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.tools.error_analysis.semisupervised_subgoal_error_analysis.SemisupervisedSubgoalErrorAnalysis" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#agent_inspect.tools.error_analysis.subgoal_error_analysis.SubgoalErrorAnalysis" title="agent_inspect.tools.error_analysis.subgoal_error_analysis.SubgoalErrorAnalysis"><code class="xref py py-class docutils literal notranslate"><span class="pre">SubgoalErrorAnalysis</span></code></a></p>
+<p>Semi-supervised algorithm for subgoal-based error analysis.</p>
+<p>This implementation uses predefined error clusters to classify failures, making it
+more efficient and consistent than unsupervised approaches. The algorithm:</p>
+<ol class="arabic simple">
+<li><p><strong>Error Summarization</strong>: For each failed subgoal validation, generates a concise
+error description using LLM analysis of judge trial explanations</p></li>
+<li><p><strong>Semi-Supervised Clustering</strong>: Classifies errors into predefined categories using
+semantic matching. When error doesn’t fit existing categories, it will be assigned to “Unclassified”. No new clusters will be created in this approach.</p></li>
+<li><p><strong>Result Organization</strong>: Groups analyzed validations by error cluster</p></li>
+</ol>
+<p>Notes: There is a small efficiency optimization compared with the unsupervised approach:
+When subgoal validations have mixed judge scores (some complete, some incomplete),
+only analyzes the first incomplete judge trial explanation rather than performing majority voting across all trials.</p>
+<p><strong>Default predefined clusters</strong>:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference internal" href="agent_inspect.models.tools.html#agent_inspect.models.tools.error_cluster.IncorrectToolInputCluster" title="agent_inspect.models.tools.error_cluster.IncorrectToolInputCluster"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IncorrectToolInputCluster</span></code></a></p></li>
+<li><p><a class="reference internal" href="agent_inspect.models.tools.html#agent_inspect.models.tools.error_cluster.IncorrectToolOutputHandlingCluster" title="agent_inspect.models.tools.error_cluster.IncorrectToolOutputHandlingCluster"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IncorrectToolOutputHandlingCluster</span></code></a></p></li>
+<li><p><a class="reference internal" href="agent_inspect.models.tools.html#agent_inspect.models.tools.error_cluster.WrongToolSelectionCluster" title="agent_inspect.models.tools.error_cluster.WrongToolSelectionCluster"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WrongToolSelectionCluster</span></code></a></p></li>
+<li><p><a class="reference internal" href="agent_inspect.models.tools.html#agent_inspect.models.tools.error_cluster.MissedToolCallCluster" title="agent_inspect.models.tools.error_cluster.MissedToolCallCluster"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MissedToolCallCluster</span></code></a></p></li>
+<li><p><a class="reference internal" href="agent_inspect.models.tools.html#agent_inspect.models.tools.error_cluster.InstructionFollowingErrorCluster" title="agent_inspect.models.tools.error_cluster.InstructionFollowingErrorCluster"><code class="xref py py-obj docutils literal notranslate"><span class="pre">InstructionFollowingErrorCluster</span></code></a></p></li>
+<li><p><a class="reference internal" href="agent_inspect.models.tools.html#agent_inspect.models.tools.error_cluster.IncompleteCommunicationCluster" title="agent_inspect.models.tools.error_cluster.IncompleteCommunicationCluster"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IncompleteCommunicationCluster</span></code></a></p></li>
+<li><p><a class="reference internal" href="agent_inspect.models.tools.html#agent_inspect.models.tools.error_cluster.FaithfulnessErrorCluster" title="agent_inspect.models.tools.error_cluster.FaithfulnessErrorCluster"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FaithfulnessErrorCluster</span></code></a></p></li>
+<li><p><a class="reference internal" href="agent_inspect.models.tools.html#agent_inspect.models.tools.error_cluster.LogicalReasoningErrorCluster" title="agent_inspect.models.tools.error_cluster.LogicalReasoningErrorCluster"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LogicalReasoningErrorCluster</span></code></a></p></li>
+<li><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">UnclassifiedCluster</span></code></p></li>
+</ul>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>llm_client</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="agent_inspect.clients.html#agent_inspect.clients.llm_client.LLMClient" title="agent_inspect.clients.llm_client.LLMClient"><code class="xref py py-class docutils literal notranslate"><span class="pre">LLMClient</span></code></a></span>) – The <a class="reference internal" href="agent_inspect.clients.html#agent_inspect.clients.LLMClient" title="agent_inspect.clients.LLMClient"><code class="xref py py-class docutils literal notranslate"><span class="pre">LLMClient</span></code></a> for performing error analysis and clustering.</p></li>
+<li><p><strong>config</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]]</span>) – <p>Optional configuration dictionary. Supported keys:</p>
+<ul>
+<li><p><strong>max_workers</strong>: Maximum number of concurrent workers (default: 20)</p></li>
+</ul>
+</p></li>
+<li><p><strong>error_clusters</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="agent_inspect.models.tools.html#agent_inspect.models.tools.error_cluster.ErrorCluster" title="agent_inspect.models.tools.error_cluster.ErrorCluster"><code class="xref py py-class docutils literal notranslate"><span class="pre">ErrorCluster</span></code></a>]]</span>) – Optional list of predefined error clusters. If not provided, uses the default clusters.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="agent_inspect.exception.html#agent_inspect.exception.exception.InvalidInputValueError" title="agent_inspect.exception.exception.InvalidInputValueError"><strong>InvalidInputValueError</strong></a> – If llm_client is None or error_clusters are invalid (wrong format, empty list, etc.)</p>
+</dd>
+</dl>
+<dl>
+<dt>Example:</dt><dd><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.clients.azure_openai_client</span><span class="w"> </span><span class="kn">import</span> <span class="n">AzureOpenAIClient</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.models.tools</span><span class="w"> </span><span class="kn">import</span> <span class="n">SubgoalErrorAnalysisDataSample</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.tools</span><span class="w"> </span><span class="kn">import</span> <span class="n">SemisupervisedSubgoalErrorAnalysis</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">llm_client</span> <span class="o">=</span> <span class="n">AzureOpenAIClient</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="s2">&quot;gpt-4.1&quot;</span><span class="p">,</span> <span class="n">max_tokens</span><span class="o">=</span><span class="mi">4096</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Prepare data samples with subgoal validations</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data_samples</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">SubgoalErrorAnalysisDataSample</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="o">...</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Run analysis with default clusters</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">analyzer</span> <span class="o">=</span> <span class="n">SemisupervisedSubgoalErrorAnalysis</span><span class="p">(</span><span class="n">llm_client</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">result</span> <span class="o">=</span> <span class="n">analyzer</span><span class="o">.</span><span class="n">analyze_batch</span><span class="p">(</span><span class="n">data_samples</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Or use custom clusters</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.models.tools.error_cluster</span><span class="w"> </span><span class="kn">import</span> <span class="n">ErrorCluster</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nd">@dataclass</span><span class="p">(</span><span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="gp">... </span><span class="k">class</span><span class="w"> </span><span class="nc">APIRateLimitCluster</span><span class="p">(</span><span class="n">ErrorCluster</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="n">cluster_label</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;API Rate Limiting&quot;</span>
+<span class="gp">... </span>    <span class="n">description</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Agent hit rate limits on external APIs&quot;</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">custom_clusters</span> <span class="o">=</span> <span class="p">[</span><span class="n">APIRateLimitCluster</span><span class="p">()]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">analyzer</span> <span class="o">=</span> <span class="n">SemisupervisedSubgoalErrorAnalysis</span><span class="p">(</span><span class="n">llm_client</span><span class="p">,</span> <span class="n">error_clusters</span><span class="o">=</span><span class="n">custom_clusters</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">result</span> <span class="o">=</span> <span class="n">analyzer</span><span class="o">.</span><span class="n">analyze_batch</span><span class="p">(</span><span class="n">data_samples</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-agent_inspect.tools.error_analysis.semisupervised_tool_call_error_analysis">
+<span id="agent-inspect-tools-error-analysis-semisupervised-tool-call-error-analysis-module"></span><h2>agent_inspect.tools.error_analysis.semisupervised_tool_call_error_analysis module<a class="headerlink" href="#module-agent_inspect.tools.error_analysis.semisupervised_tool_call_error_analysis" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="agent_inspect.tools.error_analysis.semisupervised_tool_call_error_analysis.SemisupervisedToolCallErrorAnalysis">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agent_inspect.tools.error_analysis.semisupervised_tool_call_error_analysis.</span></span><span class="sig-name descname"><span class="pre">SemisupervisedToolCallErrorAnalysis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">llm_client</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">error_clusters</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/tools/error_analysis/semisupervised_tool_call_error_analysis.html#SemisupervisedToolCallErrorAnalysis"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.tools.error_analysis.semisupervised_tool_call_error_analysis.SemisupervisedToolCallErrorAnalysis" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#agent_inspect.tools.error_analysis.tool_call_error_analysis.ToolCallErrorAnalysis" title="agent_inspect.tools.error_analysis.tool_call_error_analysis.ToolCallErrorAnalysis"><code class="xref py py-class docutils literal notranslate"><span class="pre">ToolCallErrorAnalysis</span></code></a></p>
+<p>Performs semi-supervised error analysis on tool call validations using LLMs.</p>
+<p>This implementation uses a direct classification approach where each validation error
+is classified into predefined error clusters using an LLM judge. The validation
+explanation serves as the base error description, and the LLM assigns the most
+appropriate error cluster label.</p>
+<p>Unlike unsupervised methods that discover patterns through clustering, this semi-supervised
+approach leverages predefined error categories to provide more interpretable and consistent
+error classification across evaluations. When a validation error does not fit well into any of the predefined clusters, it will be labeled as “Unclassified”. No new clusters will be created in this approach.</p>
+<p><strong>Default predefined clusters</strong>:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference internal" href="agent_inspect.models.tools.html#agent_inspect.models.tools.error_cluster.IncorrectToolInputCluster" title="agent_inspect.models.tools.error_cluster.IncorrectToolInputCluster"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IncorrectToolInputCluster</span></code></a></p></li>
+<li><p><a class="reference internal" href="agent_inspect.models.tools.html#agent_inspect.models.tools.error_cluster.IncorrectToolOutputHandlingCluster" title="agent_inspect.models.tools.error_cluster.IncorrectToolOutputHandlingCluster"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IncorrectToolOutputHandlingCluster</span></code></a></p></li>
+<li><p><a class="reference internal" href="agent_inspect.models.tools.html#agent_inspect.models.tools.error_cluster.WrongToolSelectionCluster" title="agent_inspect.models.tools.error_cluster.WrongToolSelectionCluster"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WrongToolSelectionCluster</span></code></a></p></li>
+</ul>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>llm_client</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="agent_inspect.clients.html#agent_inspect.clients.llm_client.LLMClient" title="agent_inspect.clients.llm_client.LLMClient"><code class="xref py py-class docutils literal notranslate"><span class="pre">LLMClient</span></code></a></span>) – The <a class="reference internal" href="agent_inspect.clients.html#agent_inspect.clients.LLMClient" title="agent_inspect.clients.LLMClient"><code class="xref py py-class docutils literal notranslate"><span class="pre">LLMClient</span></code></a> to use for error classification. Must implement the <a class="reference internal" href="agent_inspect.clients.html#agent_inspect.clients.LLMClient" title="agent_inspect.clients.LLMClient"><code class="xref py py-class docutils literal notranslate"><span class="pre">LLMClient</span></code></a> interface for making LLM requests.</p></li>
+<li><p><strong>config</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]]</span>) – <p>Optional configuration dictionary. Supported keys:</p>
+<ul>
+<li><p><strong>max_workers</strong>: Maximum number of concurrent workers for processing validations (default: 20)</p></li>
+</ul>
+</p></li>
+<li><p><strong>error_clusters</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="agent_inspect.models.tools.html#agent_inspect.models.tools.error_cluster.ErrorCluster" title="agent_inspect.models.tools.error_cluster.ErrorCluster"><code class="xref py py-class docutils literal notranslate"><span class="pre">ErrorCluster</span></code></a>]]</span>) – Optional list of error cluster definitions. If not provided, uses the default tool call error clusters.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="agent_inspect.exception.html#agent_inspect.exception.exception.InvalidInputValueError" title="agent_inspect.exception.exception.InvalidInputValueError"><strong>InvalidInputValueError</strong></a> – If llm_client is None or if error_clusters are invalid.</p>
+</dd>
+</dl>
+<dl>
+<dt>Example:</dt><dd><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.clients.azure_openai_client</span><span class="w"> </span><span class="kn">import</span> <span class="n">AzureOpenAIClient</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.models.tools.analysis_models</span><span class="w"> </span><span class="kn">import</span> <span class="n">ToolCallErrorAnalysisDataSample</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Initialize with LLM client</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">llm_client</span> <span class="o">=</span> <span class="n">AzureOpenAIClient</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="s2">&quot;gpt-4.1&quot;</span><span class="p">,</span> <span class="n">max_tokens</span><span class="o">=</span><span class="mi">4096</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">analyzer</span> <span class="o">=</span> <span class="n">SemisupervisedToolCallErrorAnalysis</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">llm_client</span><span class="o">=</span><span class="n">llm_client</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">config</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;max_workers&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">}</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Prepare data samples with tool call validations</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data_samples</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">ToolCallErrorAnalysisDataSample</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="o">...</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Run error analysis with default clusters</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">results</span> <span class="o">=</span> <span class="n">analyzer</span><span class="o">.</span><span class="n">analyze_batch</span><span class="p">(</span><span class="n">data_samples</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Or provide custom error clusters</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.models.tools.error_cluster</span><span class="w"> </span><span class="kn">import</span> <span class="n">ErrorCluster</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nd">@dataclass</span><span class="p">(</span><span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">CustomErrorCluster</span><span class="p">(</span><span class="n">ErrorCluster</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="n">cluster_label</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Custom Error Type&quot;</span>
+<span class="gp">... </span>    <span class="n">description</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Description of when this error occurs&quot;</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">custom_clusters</span> <span class="o">=</span> <span class="p">[</span><span class="n">CustomErrorCluster</span><span class="p">()]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">custom_analyzer</span> <span class="o">=</span> <span class="n">SemisupervisedToolCallErrorAnalysis</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">llm_client</span><span class="o">=</span><span class="n">llm_client</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">error_clusters</span><span class="o">=</span><span class="n">custom_clusters</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">results</span> <span class="o">=</span> <span class="n">custom_analyzer</span><span class="o">.</span><span class="n">analyze_batch</span><span class="p">(</span><span class="n">data_samples</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Inspect results</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">cluster_label</span><span class="p">,</span> <span class="n">validations</span> <span class="ow">in</span> <span class="n">results</span><span class="o">.</span><span class="n">analyzed_validations_clustered_by_errors</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">cluster_label</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">validations</span><span class="p">)</span><span class="si">}</span><span class="s2"> errors&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="agent-inspect-tools-error-analysis-statistic-analysis-module">
+<h2>agent_inspect.tools.error_analysis.statistic_analysis module<a class="headerlink" href="#agent-inspect-tools-error-analysis-statistic-analysis-module" title="Link to this heading"></a></h2>
+</section>
+<section id="module-agent_inspect.tools.error_analysis.subgoal_error_analysis">
+<span id="agent-inspect-tools-error-analysis-subgoal-error-analysis-module"></span><h2>agent_inspect.tools.error_analysis.subgoal_error_analysis module<a class="headerlink" href="#module-agent_inspect.tools.error_analysis.subgoal_error_analysis" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="agent_inspect.tools.error_analysis.subgoal_error_analysis.SubgoalErrorAnalysis">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agent_inspect.tools.error_analysis.subgoal_error_analysis.</span></span><span class="sig-name descname"><span class="pre">SubgoalErrorAnalysis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">llm_client</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/tools/error_analysis/subgoal_error_analysis.html#SubgoalErrorAnalysis"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.tools.error_analysis.subgoal_error_analysis.SubgoalErrorAnalysis" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#agent_inspect.tools.error_analysis.base_error_analysis.ErrorAnalysis" title="agent_inspect.tools.error_analysis.base_error_analysis.ErrorAnalysis"><code class="xref py py-class docutils literal notranslate"><span class="pre">ErrorAnalysis</span></code></a></p>
+<p>Abstract base class for subgoal-based error analysis implementations.</p>
+<p>This class provides common functionality for analyzing errors in subgoal validations, including:</p>
+<ul class="simple">
+<li><p>LLM client management</p></li>
+<li><p>Helper methods for processing judge trial explanations</p></li>
+<li><p>Splitting validations by completeness status</p></li>
+<li><p>Concurrent processing of data samples using thread pool executors</p></li>
+</ul>
+<p>Subclasses implement specific algorithms (unsupervised, semi-supervised) for
+identifying and clustering errors.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>llm_client</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="agent_inspect.clients.html#agent_inspect.clients.llm_client.LLMClient" title="agent_inspect.clients.llm_client.LLMClient"><code class="xref py py-class docutils literal notranslate"><span class="pre">LLMClient</span></code></a></span>) – The LLM client used for error analysis operations.</p></li>
+<li><p><strong>config</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]]</span>) – <p>Optional configuration dictionary. Supported keys:</p>
+<ul>
+<li><p><strong>max_workers</strong>: Maximum number of concurrent workers (default: 20)</p></li>
+</ul>
+</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="agent_inspect.tools.error_analysis.subgoal_error_analysis.SubgoalErrorAnalysis.analyze_batch">
+<span class="sig-name descname"><span class="pre">analyze_batch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_samples</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/tools/error_analysis/subgoal_error_analysis.html#SubgoalErrorAnalysis.analyze_batch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.tools.error_analysis.subgoal_error_analysis.SubgoalErrorAnalysis.analyze_batch" title="Link to this definition"></a></dt>
+<dd><p>Analyze a batch of data samples and return results.</p>
+<p>This is a synchronous wrapper around <a class="reference internal" href="#agent_inspect.tools.error_analysis.subgoal_error_analysis.SubgoalErrorAnalysis.analyze_batch_async" title="agent_inspect.tools.error_analysis.subgoal_error_analysis.SubgoalErrorAnalysis.analyze_batch_async"><code class="xref py py-meth docutils literal notranslate"><span class="pre">analyze_batch_async()</span></code></a>. Use this method
+when calling from a synchronous context. If you’re already in an async context
+(i.e., inside an async function with an event loop running), use <a class="reference internal" href="#agent_inspect.tools.error_analysis.subgoal_error_analysis.SubgoalErrorAnalysis.analyze_batch_async" title="agent_inspect.tools.error_analysis.subgoal_error_analysis.SubgoalErrorAnalysis.analyze_batch_async"><code class="xref py py-meth docutils literal notranslate"><span class="pre">analyze_batch_async()</span></code></a> instead.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data_samples</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="agent_inspect.models.tools.html#agent_inspect.models.tools.analysis_models.SubgoalErrorAnalysisDataSample" title="agent_inspect.models.tools.analysis_models.SubgoalErrorAnalysisDataSample"><code class="xref py py-class docutils literal notranslate"><span class="pre">SubgoalErrorAnalysisDataSample</span></code></a>]</span>) – a <code class="xref py py-obj docutils literal notranslate"><span class="pre">List</span></code> of <a class="reference internal" href="agent_inspect.models.tools.html#agent_inspect.models.tools.analysis_models.SubgoalErrorAnalysisDataSample" title="agent_inspect.models.tools.analysis_models.SubgoalErrorAnalysisDataSample"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SubgoalErrorAnalysisDataSample</span></code></a> objects to analyze.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="agent_inspect.models.tools.html#agent_inspect.models.tools.analysis_models.SubgoalErrorAnalysisResult" title="agent_inspect.models.tools.analysis_models.SubgoalErrorAnalysisResult"><code class="xref py py-class docutils literal notranslate"><span class="pre">SubgoalErrorAnalysisResult</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>an <a class="reference internal" href="agent_inspect.models.tools.html#agent_inspect.models.tools.analysis_models.SubgoalErrorAnalysisResult" title="agent_inspect.models.tools.analysis_models.SubgoalErrorAnalysisResult"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SubgoalErrorAnalysisResult</span></code></a> object with clustered errors.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="agent_inspect.tools.error_analysis.subgoal_error_analysis.SubgoalErrorAnalysis.analyze_batch_async">
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">analyze_batch_async</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_samples</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/tools/error_analysis/subgoal_error_analysis.html#SubgoalErrorAnalysis.analyze_batch_async"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.tools.error_analysis.subgoal_error_analysis.SubgoalErrorAnalysis.analyze_batch_async" title="Link to this definition"></a></dt>
+<dd><p>Performs error analysis on a batch of data samples.</p>
+<p>Use this method when calling from an async context (i.e., when an event loop is already running).
+If you are calling from a synchronous context, use the <code class="xref py py-meth docutils literal notranslate"><span class="pre">analyze_batch()</span></code> method instead</p>
+<p>Returns the <a class="reference internal" href="agent_inspect.models.tools.html#agent_inspect.models.tools.analysis_models.SubgoalErrorAnalysisResult" title="agent_inspect.models.tools.analysis_models.SubgoalErrorAnalysisResult"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SubgoalErrorAnalysisResult</span></code></a> containing the clustered error types with their associated subgoal validations and the rest of subgoal validations that don’t have errors.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data_samples</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="agent_inspect.models.tools.html#agent_inspect.models.tools.analysis_models.SubgoalErrorAnalysisDataSample" title="agent_inspect.models.tools.analysis_models.SubgoalErrorAnalysisDataSample"><code class="xref py py-class docutils literal notranslate"><span class="pre">SubgoalErrorAnalysisDataSample</span></code></a>]</span>) – a <code class="xref py py-obj docutils literal notranslate"><span class="pre">List</span></code> of <a class="reference internal" href="agent_inspect.models.tools.html#agent_inspect.models.tools.analysis_models.SubgoalErrorAnalysisDataSample" title="agent_inspect.models.tools.analysis_models.SubgoalErrorAnalysisDataSample"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SubgoalErrorAnalysisDataSample</span></code></a> objects to perform error analysis on. Each data sample contains multiple subgoal validations.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="agent_inspect.models.tools.html#agent_inspect.models.tools.analysis_models.SubgoalErrorAnalysisResult" title="agent_inspect.models.tools.analysis_models.SubgoalErrorAnalysisResult"><code class="xref py py-class docutils literal notranslate"><span class="pre">SubgoalErrorAnalysisResult</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><p>an <a class="reference internal" href="agent_inspect.models.tools.html#agent_inspect.models.tools.analysis_models.SubgoalErrorAnalysisResult" title="agent_inspect.models.tools.analysis_models.SubgoalErrorAnalysisResult"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SubgoalErrorAnalysisResult</span></code></a> object containing the error analysis results:</p>
+<ul class="simple">
+<li><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">analyzed_validations_clustered_by_errors</span></code>: Dictionary mapping clustered error types to lists of incomplete subgoal validations exhibiting those errors</p></li>
+<li><p><a class="reference internal" href="agent_inspect.models.tools.html#agent_inspect.models.tools.analysis_models.SubgoalErrorAnalysisResult.completed_subgoal_validations" title="agent_inspect.models.tools.analysis_models.SubgoalErrorAnalysisResult.completed_subgoal_validations"><code class="xref py py-obj docutils literal notranslate"><span class="pre">completed_subgoal_validations</span></code></a>: List of subgoal validations that were successfully completed without errors</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-agent_inspect.tools.error_analysis.tool_call_error_analysis">
+<span id="agent-inspect-tools-error-analysis-tool-call-error-analysis-module"></span><h2>agent_inspect.tools.error_analysis.tool_call_error_analysis module<a class="headerlink" href="#module-agent_inspect.tools.error_analysis.tool_call_error_analysis" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="agent_inspect.tools.error_analysis.tool_call_error_analysis.ToolCallErrorAnalysis">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agent_inspect.tools.error_analysis.tool_call_error_analysis.</span></span><span class="sig-name descname"><span class="pre">ToolCallErrorAnalysis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/tools/error_analysis/tool_call_error_analysis.html#ToolCallErrorAnalysis"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.tools.error_analysis.tool_call_error_analysis.ToolCallErrorAnalysis" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#agent_inspect.tools.error_analysis.base_error_analysis.ErrorAnalysis" title="agent_inspect.tools.error_analysis.base_error_analysis.ErrorAnalysis"><code class="xref py py-class docutils literal notranslate"><span class="pre">ErrorAnalysis</span></code></a></p>
+<p>Abstract base class for tool call-based error analysis implementations.</p>
+<p>This class provides common functionality for analyzing errors in tool call validations.
+Tool call analysis focuses on lower-level tool execution errors such as:</p>
+<ul class="simple">
+<li><p>Wrong tool selection</p></li>
+<li><p>Incorrect tool inputs</p></li>
+<li><p>Incorrect tool output handling</p></li>
+</ul>
+<p>Subclasses implement specific algorithms (semi-supervised, deterministic) for
+identifying and clustering these errors.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>config</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]]</span>) – <p>Optional configuration dictionary. Supported keys:</p>
+<ul>
+<li><p><strong>max_workers</strong>: Maximum number of concurrent workers (default: 20)</p></li>
+</ul>
+</p></li>
+<li><p><strong>error_clusters</strong> – Optional list of predefined error clusters for classification.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="agent_inspect.tools.error_analysis.tool_call_error_analysis.ToolCallErrorAnalysis.analyze_batch">
+<span class="sig-name descname"><span class="pre">analyze_batch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_samples</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/tools/error_analysis/tool_call_error_analysis.html#ToolCallErrorAnalysis.analyze_batch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.tools.error_analysis.tool_call_error_analysis.ToolCallErrorAnalysis.analyze_batch" title="Link to this definition"></a></dt>
+<dd><p>Analyze a batch of data samples and return results.</p>
+<p>This is a synchronous wrapper around <a class="reference internal" href="#agent_inspect.tools.error_analysis.tool_call_error_analysis.ToolCallErrorAnalysis.analyze_batch_async" title="agent_inspect.tools.error_analysis.tool_call_error_analysis.ToolCallErrorAnalysis.analyze_batch_async"><code class="xref py py-meth docutils literal notranslate"><span class="pre">analyze_batch_async()</span></code></a>. Use this method
+when calling from a synchronous context. If you’re already in an async context
+(i.e., inside an async function with an event loop running), use <a class="reference internal" href="#agent_inspect.tools.error_analysis.tool_call_error_analysis.ToolCallErrorAnalysis.analyze_batch_async" title="agent_inspect.tools.error_analysis.tool_call_error_analysis.ToolCallErrorAnalysis.analyze_batch_async"><code class="xref py py-meth docutils literal notranslate"><span class="pre">analyze_batch_async()</span></code></a> instead.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data_samples</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="agent_inspect.models.tools.html#agent_inspect.models.tools.analysis_models.ToolCallErrorAnalysisDataSample" title="agent_inspect.models.tools.analysis_models.ToolCallErrorAnalysisDataSample"><code class="xref py py-class docutils literal notranslate"><span class="pre">ToolCallErrorAnalysisDataSample</span></code></a>]</span>) – a <code class="xref py py-obj docutils literal notranslate"><span class="pre">List</span></code> of <a class="reference internal" href="agent_inspect.models.tools.html#agent_inspect.models.tools.analysis_models.ToolCallErrorAnalysisDataSample" title="agent_inspect.models.tools.analysis_models.ToolCallErrorAnalysisDataSample"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ToolCallErrorAnalysisDataSample</span></code></a> objects to analyze.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="agent_inspect.models.tools.html#agent_inspect.models.tools.analysis_models.ToolCallErrorAnalysisResult" title="agent_inspect.models.tools.analysis_models.ToolCallErrorAnalysisResult"><code class="xref py py-class docutils literal notranslate"><span class="pre">ToolCallErrorAnalysisResult</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>an <a class="reference internal" href="agent_inspect.models.tools.html#agent_inspect.models.tools.analysis_models.ToolCallErrorAnalysisResult" title="agent_inspect.models.tools.analysis_models.ToolCallErrorAnalysisResult"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ToolCallErrorAnalysisResult</span></code></a> object with clustered errors.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="agent_inspect.tools.error_analysis.tool_call_error_analysis.ToolCallErrorAnalysis.analyze_batch_async">
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">analyze_batch_async</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_samples</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/tools/error_analysis/tool_call_error_analysis.html#ToolCallErrorAnalysis.analyze_batch_async"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.tools.error_analysis.tool_call_error_analysis.ToolCallErrorAnalysis.analyze_batch_async" title="Link to this definition"></a></dt>
+<dd><p>Async version of <code class="xref py py-meth docutils literal notranslate"><span class="pre">analyze_batch()</span></code>. Performs error analysis on a batch of data samples with tool call validations.</p>
+<p>Use this method when calling from an async context (i.e., when an event loop is already running).</p>
+<p>Returns the <a class="reference internal" href="agent_inspect.models.tools.html#agent_inspect.models.tools.analysis_models.ToolCallErrorAnalysisResult" title="agent_inspect.models.tools.analysis_models.ToolCallErrorAnalysisResult"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ToolCallErrorAnalysisResult</span></code></a> containing the clustered error types with their associated tool call validations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data_samples</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="agent_inspect.models.tools.html#agent_inspect.models.tools.analysis_models.ToolCallErrorAnalysisDataSample" title="agent_inspect.models.tools.analysis_models.ToolCallErrorAnalysisDataSample"><code class="xref py py-class docutils literal notranslate"><span class="pre">ToolCallErrorAnalysisDataSample</span></code></a>]</span>) – a <code class="xref py py-obj docutils literal notranslate"><span class="pre">List</span></code> of <a class="reference internal" href="agent_inspect.models.tools.html#agent_inspect.models.tools.analysis_models.ToolCallErrorAnalysisDataSample" title="agent_inspect.models.tools.analysis_models.ToolCallErrorAnalysisDataSample"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ToolCallErrorAnalysisDataSample</span></code></a> objects to perform error analysis on. Each data sample contains multiple tool call validations.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="agent_inspect.models.tools.html#agent_inspect.models.tools.analysis_models.ToolCallErrorAnalysisResult" title="agent_inspect.models.tools.analysis_models.ToolCallErrorAnalysisResult"><code class="xref py py-class docutils literal notranslate"><span class="pre">ToolCallErrorAnalysisResult</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><p>an <a class="reference internal" href="agent_inspect.models.tools.html#agent_inspect.models.tools.analysis_models.ToolCallErrorAnalysisResult" title="agent_inspect.models.tools.analysis_models.ToolCallErrorAnalysisResult"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ToolCallErrorAnalysisResult</span></code></a> object containing the error analysis results:</p>
+<ul class="simple">
+<li><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">analyzed_validations_clustered_by_errors</span></code>: Dictionary mapping clustered error types to lists of incomplete tool call validations exhibiting those errors.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-agent_inspect.tools.error_analysis.unsupervised_subgoal_error_analysis">
+<span id="agent-inspect-tools-error-analysis-unsupervised-subgoal-error-analysis-module"></span><h2>agent_inspect.tools.error_analysis.unsupervised_subgoal_error_analysis module<a class="headerlink" href="#module-agent_inspect.tools.error_analysis.unsupervised_subgoal_error_analysis" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="agent_inspect.tools.error_analysis.unsupervised_subgoal_error_analysis.UnsupervisedSubgoalErrorAnalysis">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agent_inspect.tools.error_analysis.unsupervised_subgoal_error_analysis.</span></span><span class="sig-name descname"><span class="pre">UnsupervisedSubgoalErrorAnalysis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">llm_client</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/tools/error_analysis/unsupervised_subgoal_error_analysis.html#UnsupervisedSubgoalErrorAnalysis"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.tools.error_analysis.unsupervised_subgoal_error_analysis.UnsupervisedSubgoalErrorAnalysis" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#agent_inspect.tools.error_analysis.subgoal_error_analysis.SubgoalErrorAnalysis" title="agent_inspect.tools.error_analysis.subgoal_error_analysis.SubgoalErrorAnalysis"><code class="xref py py-class docutils literal notranslate"><span class="pre">SubgoalErrorAnalysis</span></code></a></p>
+<p>Unsupervised error analysis for subgoal validations.</p>
+<p>This class implements an unsupervised learning approach to error analysis that:
+1) Identifies low-level errors from individual subgoal validation failures
+2) Dynamically clusters similar low-level errors into error categories
+3) Error clusters are generated on-the-fly based on the low-level errors, without relying on any predefined error categories.</p>
+<p>The analysis follows a two-step process:</p>
+<ul class="simple">
+<li><p><strong>Step 1</strong>: For each failed subgoal validation, summarize the issues raised by
+the judge trials into a concise base error description.</p></li>
+<li><p><strong>Step 2</strong>: Cluster all base errors semantically using an LLM to identify
+common failure patterns.</p></li>
+</ul>
+<p>This approach is useful when you want to discover error patterns without prior
+assumptions about what kinds of errors might occur.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>llm_client</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="agent_inspect.clients.html#agent_inspect.clients.llm_client.LLMClient" title="agent_inspect.clients.llm_client.LLMClient"><code class="xref py py-class docutils literal notranslate"><span class="pre">LLMClient</span></code></a></span>) – The <a class="reference internal" href="agent_inspect.clients.html#agent_inspect.clients.llm_client.LLMClient" title="agent_inspect.clients.llm_client.LLMClient"><code class="xref py py-class docutils literal notranslate"><span class="pre">LLMClient</span></code></a> for performing error analysis operations.</p></li>
+<li><p><strong>config</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]]</span>) – <p>Optional configuration dictionary. Supported keys:</p>
+<ul>
+<li><p><strong>max_workers</strong>: Maximum number of concurrent workers (default: 20)</p></li>
+</ul>
+</p></li>
+</ul>
+</dd>
+</dl>
+<dl>
+<dt>Example:</dt><dd><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.models.tools</span><span class="w"> </span><span class="kn">import</span> <span class="n">SubgoalErrorAnalysisDataSample</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.tools.error_analysis</span><span class="w"> </span><span class="kn">import</span> <span class="n">UnsupervisedSubgoalErrorAnalysis</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.clients.azure_openai_client</span><span class="w"> </span><span class="kn">import</span> <span class="n">AzureOpenAIClient</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Prepare your data samples</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data_samples</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">SubgoalErrorAnalysisDataSample</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="o">...</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Initialize the analyzer</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">llm_client</span> <span class="o">=</span> <span class="n">AzureOpenAIClient</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="s2">&quot;gpt-4.1&quot;</span><span class="p">,</span> <span class="n">max_tokens</span><span class="o">=</span><span class="mi">4096</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">analyzer</span> <span class="o">=</span> <span class="n">UnsupervisedSubgoalErrorAnalysis</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">llm_client</span><span class="o">=</span><span class="n">llm_client</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">config</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;max_workers&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">}</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Run error analysis</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">results</span> <span class="o">=</span> <span class="n">analyzer</span><span class="o">.</span><span class="n">analyze_batch</span><span class="p">(</span><span class="n">data_samples</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">error_categories</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">analyzed_validations_clustered_by_errors</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Discovered error categories: </span><span class="si">{</span><span class="n">error_categories</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-contents">
+<h2>Module contents<a class="headerlink" href="#module-contents" title="Link to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="agent_inspect.tools.html" class="btn btn-neutral float-left" title="agent_inspect.tools package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="agent_inspect.user_proxy.html" class="btn btn-neutral float-right" title="agent_inspect.user_proxy package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, &#34;&#34;.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

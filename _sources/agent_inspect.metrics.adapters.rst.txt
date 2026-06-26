@@ -1,0 +1,37 @@
+agent\_inspect.metrics.adapters package
+=======================================
+
+Submodules
+----------
+
+agent\_inspect.metrics.adapters.base\_adapter module
+----------------------------------------------------
+
+.. automodule:: agent_inspect.metrics.adapters.base_adapter
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+agent\_inspect.metrics.adapters.tau2bench\_adapter module
+---------------------------------------------------------
+
+.. automodule:: agent_inspect.metrics.adapters.tau2bench_adapter
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+agent\_inspect.metrics.adapters.toolsandbox\_adapter module
+-----------------------------------------------------------
+
+.. automodule:: agent_inspect.metrics.adapters.toolsandbox_adapter
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: agent_inspect.metrics.adapters
+   :members:
+   :undoc-members:
+   :show-inheritance:

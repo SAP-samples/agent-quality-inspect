@@ -1,0 +1,23 @@
+agent\_inspect package
+======================
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 1
+
+   agent_inspect.clients
+   agent_inspect.exception
+   agent_inspect.metrics
+   agent_inspect.models
+   agent_inspect.tools
+   agent_inspect.user_proxy
+
+Module contents
+---------------
+
+.. automodule:: agent_inspect
+   :members:
+   :undoc-members:
+   :show-inheritance:

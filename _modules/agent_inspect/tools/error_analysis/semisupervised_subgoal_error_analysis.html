@@ -1,0 +1,317 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>agent_inspect.tools.error_analysis.semisupervised_subgoal_error_analysis &mdash; agent_inspect 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/custom.css?v=eea1f72d" />
+
+  
+      <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../_static/documentation_options.js?v=f2a433a1"></script>
+      <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            agent_inspect
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules.html">agent_inspect</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">agent_inspect</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">agent_inspect.tools.error_analysis.semisupervised_subgoal_error_analysis</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for agent_inspect.tools.error_analysis.semisupervised_subgoal_error_analysis</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Optional</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.clients.llm_client</span><span class="w"> </span><span class="kn">import</span> <span class="n">LLMClient</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.exception.exception</span><span class="w"> </span><span class="kn">import</span> <span class="n">InvalidInputValueError</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.exception.error_codes</span><span class="w"> </span><span class="kn">import</span> <span class="n">ErrorCode</span><span class="p">,</span> <span class="n">ToolComponent</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.models.tools.analysis_models</span><span class="w"> </span><span class="kn">import</span> <span class="n">AnalyzedSubgoalValidation</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.models.tools.error_cluster</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">ErrorCluster</span><span class="p">,</span>
+    <span class="n">DEFAULT_SUBGOAL_ERROR_CLUSTERS</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.models.metrics.validation_result</span><span class="w"> </span><span class="kn">import</span> <span class="n">SubGoalValidationResult</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.models.llm_payload</span><span class="w"> </span><span class="kn">import</span> <span class="n">LLMPayload</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.core.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">match_to_int</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.tools.error_analysis.subgoal_error_analysis</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">SubgoalErrorAnalysis</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.tools.error_analysis.utils.validator</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">validate_user_defined_clusters</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.tools.error_analysis.llm_templates</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">SEMI_SUPERVISED_CLUSTERING_PROMPT_TEMPLATE</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.tools.error_analysis.llm_output_schemas</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">SEMI_SUPERVISED_CLUSTERING_OUTPUT_SCHEMA</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.metrics.constants</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">COMPLETE_INCOMPLETE_GRADE_PATTERN</span><span class="p">,</span>
+    <span class="n">COMPLETE_INCOMPLETE_PAIR</span><span class="p">,</span>
+<span class="p">)</span>
+
+
+<div class="viewcode-block" id="SemisupervisedSubgoalErrorAnalysis">
+<a class="viewcode-back" href="../../../../agent_inspect.tools.error_analysis.html#agent_inspect.tools.error_analysis.semisupervised_subgoal_error_analysis.SemisupervisedSubgoalErrorAnalysis">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">SemisupervisedSubgoalErrorAnalysis</span><span class="p">(</span><span class="n">SubgoalErrorAnalysis</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Semi-supervised algorithm for subgoal-based error analysis.</span>
+
+<span class="sd">    This implementation uses predefined error clusters to classify failures, making it</span>
+<span class="sd">    more efficient and consistent than unsupervised approaches. The algorithm:</span>
+
+<span class="sd">    1. **Error Summarization**: For each failed subgoal validation, generates a concise</span>
+<span class="sd">       error description using LLM analysis of judge trial explanations</span>
+<span class="sd">    2. **Semi-Supervised Clustering**: Classifies errors into predefined categories using</span>
+<span class="sd">       semantic matching. When error doesn&#39;t fit existing categories, it will be assigned to &quot;Unclassified&quot;. No new clusters will be created in this approach.</span>
+<span class="sd">    3. **Result Organization**: Groups analyzed validations by error cluster</span>
+
+<span class="sd">    Notes: There is a small efficiency optimization compared with the unsupervised approach:</span>
+<span class="sd">    When subgoal validations have mixed judge scores (some complete, some incomplete),</span>
+<span class="sd">    only analyzes the first incomplete judge trial explanation rather than performing majority voting across all trials.</span>
+
+<span class="sd">    **Default predefined clusters**:</span>
+
+<span class="sd">            - :obj:`~agent_inspect.models.tools.error_cluster.IncorrectToolInputCluster`</span>
+<span class="sd">            - :obj:`~agent_inspect.models.tools.error_cluster.IncorrectToolOutputHandlingCluster`</span>
+<span class="sd">            - :obj:`~agent_inspect.models.tools.error_cluster.WrongToolSelectionCluster`</span>
+<span class="sd">            - :obj:`~agent_inspect.models.tools.error_cluster.MissedToolCallCluster`</span>
+<span class="sd">            - :obj:`~agent_inspect.models.tools.error_cluster.InstructionFollowingErrorCluster`</span>
+<span class="sd">            - :obj:`~agent_inspect.models.tools.error_cluster.IncompleteCommunicationCluster`</span>
+<span class="sd">            - :obj:`~agent_inspect.models.tools.error_cluster.FaithfulnessErrorCluster`</span>
+<span class="sd">            - :obj:`~agent_inspect.models.tools.error_cluster.LogicalReasoningErrorCluster`</span>
+<span class="sd">            - :obj:`~agent_inspect.models.tools.error_cluster.UnclassifiedCluster`</span>
+
+<span class="sd">    :param llm_client: The :class:`~agent_inspect.clients.LLMClient` for performing error analysis and clustering.</span>
+<span class="sd">    :param config: Optional configuration dictionary. Supported keys:</span>
+
+<span class="sd">        - **max_workers**: Maximum number of concurrent workers (default: 20)</span>
+
+<span class="sd">    :param error_clusters: Optional list of predefined error clusters. If not provided, uses the default clusters.</span>
+
+<span class="sd">    :raises InvalidInputValueError: If llm_client is None or error_clusters are invalid (wrong format, empty list, etc.)</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; from agent_inspect.clients.azure_openai_client import AzureOpenAIClient</span>
+<span class="sd">        &gt;&gt;&gt; from agent_inspect.models.tools import SubgoalErrorAnalysisDataSample</span>
+<span class="sd">        &gt;&gt;&gt; from agent_inspect.tools import SemisupervisedSubgoalErrorAnalysis</span>
+<span class="sd">        &gt;&gt;&gt;</span>
+<span class="sd">        &gt;&gt;&gt; llm_client = AzureOpenAIClient(model=&quot;gpt-4.1&quot;, max_tokens=4096)</span>
+<span class="sd">        &gt;&gt;&gt;</span>
+<span class="sd">        &gt;&gt;&gt; # Prepare data samples with subgoal validations</span>
+<span class="sd">        &gt;&gt;&gt; data_samples: List[SubgoalErrorAnalysisDataSample] = [...]</span>
+<span class="sd">        &gt;&gt;&gt;</span>
+<span class="sd">        &gt;&gt;&gt; # Run analysis with default clusters</span>
+<span class="sd">        &gt;&gt;&gt; analyzer = SemisupervisedSubgoalErrorAnalysis(llm_client)</span>
+<span class="sd">        &gt;&gt;&gt; result = analyzer.analyze_batch(data_samples)</span>
+<span class="sd">        &gt;&gt;&gt;</span>
+<span class="sd">        &gt;&gt;&gt; # Or use custom clusters</span>
+<span class="sd">        &gt;&gt;&gt; from agent_inspect.models.tools.error_cluster import ErrorCluster</span>
+<span class="sd">        &gt;&gt;&gt; from dataclasses import dataclass</span>
+<span class="sd">        &gt;&gt;&gt;</span>
+<span class="sd">        &gt;&gt;&gt; @dataclass(frozen=True)</span>
+<span class="sd">        ... class APIRateLimitCluster(ErrorCluster):</span>
+<span class="sd">        ...     cluster_label: str = &quot;API Rate Limiting&quot;</span>
+<span class="sd">        ...     description: str = &quot;Agent hit rate limits on external APIs&quot;</span>
+<span class="sd">        &gt;&gt;&gt;</span>
+<span class="sd">        &gt;&gt;&gt; custom_clusters = [APIRateLimitCluster()]</span>
+<span class="sd">        &gt;&gt;&gt; analyzer = SemisupervisedSubgoalErrorAnalysis(llm_client, error_clusters=custom_clusters)</span>
+<span class="sd">        &gt;&gt;&gt; result = analyzer.analyze_batch(data_samples)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">llm_client</span><span class="p">:</span> <span class="n">LLMClient</span><span class="p">,</span>
+        <span class="n">config</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">error_clusters</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">ErrorCluster</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="k">if</span> <span class="n">llm_client</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">InvalidInputValueError</span><span class="p">(</span>
+                <span class="n">internal_code</span><span class="o">=</span><span class="n">ErrorCode</span><span class="o">.</span><span class="n">MISSING_VALUE</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+                <span class="n">message</span><span class="o">=</span><span class="s2">&quot;LLM client must be provided for SemisupervisedSubgoalErrorAnalysis.&quot;</span><span class="p">,</span>
+                <span class="n">component_code</span><span class="o">=</span><span class="n">ToolComponent</span><span class="o">.</span><span class="n">TOOL_ERROR_CODE</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+            <span class="p">)</span>
+
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">llm_client</span><span class="p">,</span> <span class="n">config</span><span class="p">)</span>
+
+        <span class="c1"># Default to DEFAULT_SUBGOAL_ERROR_CLUSTERS if not provided or is empty list</span>
+        <span class="k">if</span> <span class="n">error_clusters</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="p">(</span>
+            <span class="nb">isinstance</span><span class="p">(</span><span class="n">error_clusters</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">error_clusters</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
+        <span class="p">):</span>
+            <span class="n">error_clusters</span> <span class="o">=</span> <span class="n">DEFAULT_SUBGOAL_ERROR_CLUSTERS</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">validate_user_defined_clusters</span><span class="p">(</span><span class="n">error_clusters</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">error_clusters</span> <span class="o">=</span> <span class="n">error_clusters</span>
+
+    <span class="c1"># ==================== Algorithm-Specific Methods (implementing abstract methods) ====================</span>
+
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">_summarize_errors_into_base_error</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">subgoal_validation</span><span class="p">:</span> <span class="n">SubGoalValidationResult</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Analyze a single subgoal validation to summarize the issues raised by judge trials.</span>
+
+<span class="sd">        Semi-supervised optimization: When judge trials have mixed scores (some complete,</span>
+<span class="sd">        some incomplete), uses only the first incomplete judge trial explanation rather</span>
+<span class="sd">        than performing majority voting across all trials.</span>
+
+<span class="sd">        :param subgoal_validation: a :obj:`~agent_inspect.models.metrics.validation_result.SubGoalValidationResult` object to analyze.</span>
+<span class="sd">        :return: A concise error description if the subgoal is incomplete, None if completed.</span>
+
+<span class="sd">        Behavior:</span>
+
+<span class="sd">        - If subgoal is completed: Returns None (no error)</span>
+<span class="sd">        - If all judge trials failed consistently: Summarizes first judge trial explanation</span>
+<span class="sd">        - If mixed judge scores: Uses first incomplete judge trial explanation (optimization)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">subgoal_validation</span><span class="o">.</span><span class="n">is_completed</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="n">judge_trial_explanations</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_judge_trial_explanations_from_subgoal_validation</span><span class="p">(</span>
+            <span class="n">subgoal_validation</span>
+        <span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_has_failed_consistently</span><span class="p">(</span><span class="n">subgoal_validation</span><span class="p">):</span>
+            <span class="c1"># All judge trials failed - take first judge trial explanation as representative</span>
+            <span class="n">base_error</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_summarize_error</span><span class="p">(</span>
+                <span class="n">judge_trial_explanations</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">subgoal_validation</span><span class="o">.</span><span class="n">sub_goal</span><span class="o">.</span><span class="n">details</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># Majority says incomplete, use first incomplete judge trial explanation</span>
+            <span class="n">base_error</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">for</span> <span class="n">explanation</span> <span class="ow">in</span> <span class="n">judge_trial_explanations</span><span class="p">:</span>
+                <span class="c1"># Use match_to_int to check if this judge explanation trial is incomplete (score = 0)</span>
+                <span class="n">score</span> <span class="o">=</span> <span class="n">match_to_int</span><span class="p">(</span>
+                    <span class="n">explanation</span><span class="p">,</span>
+                    <span class="n">COMPLETE_INCOMPLETE_GRADE_PATTERN</span><span class="p">,</span>
+                    <span class="n">COMPLETE_INCOMPLETE_PAIR</span><span class="p">,</span>
+                <span class="p">)</span>
+                <span class="k">if</span> <span class="n">score</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>  <span class="c1"># Incomplete</span>
+                    <span class="n">base_error</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_summarize_error</span><span class="p">(</span>
+                        <span class="n">explanation</span><span class="p">,</span> <span class="n">subgoal_validation</span><span class="o">.</span><span class="n">sub_goal</span><span class="o">.</span><span class="n">details</span>
+                    <span class="p">)</span>
+                    <span class="k">break</span>
+
+        <span class="k">return</span> <span class="n">base_error</span>
+
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">_cluster_errors</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">analyzed_subgoal_validations</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">AnalyzedSubgoalValidation</span><span class="p">]</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Cluster analyzed subgoal validations using semi-supervised approach.</span>
+
+<span class="sd">        Uses predefined error clusters to classify base errors via semantic matching.</span>
+<span class="sd">        The LLM assigns each error to the most appropriate predefined cluster or creates</span>
+<span class="sd">        new clusters only when errors don&#39;t fit existing categories.</span>
+
+<span class="sd">        :param analyzed_subgoal_validations: a :obj:`~typing.List` of :obj:`~agent_inspect.models.tools.analysis_models.AnalyzedSubgoalValidation` objects with base errors.</span>
+<span class="sd">        :return: Dictionary mapping cluster labels to lists of analyzed subgoal validations.</span>
+<span class="sd">        :raises ToolError: If LLM clustering request fails or produces invalid output.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Build index -&gt; base_error mapping, and get all unique subgoals to prepare LLM prompt</span>
+        <span class="n">index_to_error_mapping</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="nb">str</span><span class="p">(</span><span class="n">idx</span><span class="p">):</span> <span class="n">analyzed_subgoal_validation</span><span class="o">.</span><span class="n">base_error</span>
+            <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">analyzed_subgoal_validation</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">analyzed_subgoal_validations</span><span class="p">)</span>
+        <span class="p">}</span>
+        <span class="n">unique_subgoals</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span>
+            <span class="nb">dict</span><span class="o">.</span><span class="n">fromkeys</span><span class="p">(</span>
+                <span class="n">analysed_subgoal_validation</span><span class="o">.</span><span class="n">subgoal_validation</span><span class="o">.</span><span class="n">sub_goal</span><span class="o">.</span><span class="n">details</span>
+                <span class="k">for</span> <span class="n">analysed_subgoal_validation</span> <span class="ow">in</span> <span class="n">analyzed_subgoal_validations</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Convert error cluster dataclasses to dicts for LLM prompt</span>
+        <span class="n">predefined_clusters_dicts</span> <span class="o">=</span> <span class="p">[</span><span class="n">cluster</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span> <span class="k">for</span> <span class="n">cluster</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">error_clusters</span><span class="p">]</span>
+
+        <span class="c1"># Create LLM payload for semi-supervised clustering</span>
+        <span class="n">payload</span> <span class="o">=</span> <span class="n">LLMPayload</span><span class="p">(</span>
+            <span class="n">user_prompt</span><span class="o">=</span><span class="n">SEMI_SUPERVISED_CLUSTERING_PROMPT_TEMPLATE</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="n">predefined_clusters</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">predefined_clusters_dicts</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span>
+                <span class="n">error_types</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">index_to_error_mapping</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span>
+                <span class="n">subgoals</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">unique_subgoals</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span>
+            <span class="p">),</span>
+            <span class="n">structured_output</span><span class="o">=</span><span class="n">SEMI_SUPERVISED_CLUSTERING_OUTPUT_SCHEMA</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_request_and_parse_json_with_retry</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">llm_client</span><span class="p">,</span> <span class="n">payload</span><span class="p">)</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, &#34;&#34;.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

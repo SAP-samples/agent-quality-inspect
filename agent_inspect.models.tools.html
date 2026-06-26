@@ -1,0 +1,1272 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>agent_inspect.models.tools package &mdash; agent_inspect 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=eea1f72d" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=f2a433a1"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="agent_inspect.models.user_proxy package" href="agent_inspect.models.user_proxy.html" />
+    <link rel="prev" title="agent_inspect.models.metrics package" href="agent_inspect.models.metrics.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            agent_inspect
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">agent_inspect</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">agent_inspect</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">agent_inspect</a></li>
+          <li class="breadcrumb-item"><a href="agent_inspect.html">agent_inspect package</a></li>
+          <li class="breadcrumb-item"><a href="agent_inspect.models.html">agent_inspect.models package</a></li>
+      <li class="breadcrumb-item active">agent_inspect.models.tools package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/agent_inspect.models.tools.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="agent-inspect-models-tools-package">
+<h1>agent_inspect.models.tools package<a class="headerlink" href="#agent-inspect-models-tools-package" title="Link to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-agent_inspect.models.tools.analysis_models">
+<span id="agent-inspect-models-tools-analysis-models-module"></span><h2>agent_inspect.models.tools.analysis_models module<a class="headerlink" href="#module-agent_inspect.models.tools.analysis_models" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.analysis_models.AnalyzedSubgoalValidation">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agent_inspect.models.tools.analysis_models.</span></span><span class="sig-name descname"><span class="pre">AnalyzedSubgoalValidation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_sample_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base_error</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subgoal_validation</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent_run_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/models/tools/analysis_models.html#AnalyzedSubgoalValidation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.models.tools.analysis_models.AnalyzedSubgoalValidation" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#agent_inspect.models.tools.analysis_models.AnalyzedValidation" title="agent_inspect.models.tools.analysis_models.AnalyzedValidation"><code class="xref py py-class docutils literal notranslate"><span class="pre">AnalyzedValidation</span></code></a></p>
+<p>Represents the error analysis result for a single subgoal validation within a data sample.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data_sample_id</strong> (<em>int</em>)</p></li>
+<li><p><strong>base_error</strong> (<em>str</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>subgoal_validation</strong> (<a class="reference internal" href="agent_inspect.models.metrics.html#agent_inspect.models.metrics.validation_result.SubGoalValidationResult" title="agent_inspect.models.metrics.validation_result.SubGoalValidationResult"><em>SubGoalValidationResult</em></a>)</p></li>
+<li><p><strong>agent_run_id</strong> (<em>int</em><em> | </em><em>None</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.analysis_models.AnalyzedSubgoalValidation.subgoal_validation">
+<span class="sig-name descname"><span class="pre">subgoal_validation</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="agent_inspect.models.metrics.html#agent_inspect.models.metrics.validation_result.SubGoalValidationResult" title="agent_inspect.models.metrics.validation_result.SubGoalValidationResult"><code class="xref py py-class docutils literal notranslate"><span class="pre">SubGoalValidationResult</span></code></a></em><a class="headerlink" href="#agent_inspect.models.tools.analysis_models.AnalyzedSubgoalValidation.subgoal_validation" title="Link to this definition"></a></dt>
+<dd><p>The subgoal validation result being analyzed.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.analysis_models.AnalyzedToolValidation">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agent_inspect.models.tools.analysis_models.</span></span><span class="sig-name descname"><span class="pre">AnalyzedToolValidation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_sample_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base_error</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tool_call_validation</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent_run_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/models/tools/analysis_models.html#AnalyzedToolValidation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.models.tools.analysis_models.AnalyzedToolValidation" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#agent_inspect.models.tools.analysis_models.AnalyzedValidation" title="agent_inspect.models.tools.analysis_models.AnalyzedValidation"><code class="xref py py-class docutils literal notranslate"><span class="pre">AnalyzedValidation</span></code></a></p>
+<p>Represents the error analysis result for a single tool call validation within a data sample.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data_sample_id</strong> (<em>int</em>)</p></li>
+<li><p><strong>base_error</strong> (<em>str</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>tool_call_validation</strong> (<a class="reference internal" href="agent_inspect.models.metrics.html#agent_inspect.models.metrics.validation_result.ToolCallValidationResult" title="agent_inspect.models.metrics.validation_result.ToolCallValidationResult"><em>ToolCallValidationResult</em></a>)</p></li>
+<li><p><strong>agent_run_id</strong> (<em>int</em><em> | </em><em>None</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.analysis_models.AnalyzedToolValidation.tool_call_validation">
+<span class="sig-name descname"><span class="pre">tool_call_validation</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="agent_inspect.models.metrics.html#agent_inspect.models.metrics.validation_result.ToolCallValidationResult" title="agent_inspect.models.metrics.validation_result.ToolCallValidationResult"><code class="xref py py-class docutils literal notranslate"><span class="pre">ToolCallValidationResult</span></code></a></em><a class="headerlink" href="#agent_inspect.models.tools.analysis_models.AnalyzedToolValidation.tool_call_validation" title="Link to this definition"></a></dt>
+<dd><p>The tool call validation result being analyzed.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.analysis_models.AnalyzedValidation">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agent_inspect.models.tools.analysis_models.</span></span><span class="sig-name descname"><span class="pre">AnalyzedValidation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_sample_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base_error</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent_run_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/models/tools/analysis_models.html#AnalyzedValidation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.models.tools.analysis_models.AnalyzedValidation" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Base class for analyzed validation results.</p>
+<dl>
+<dt>Attributes:</dt><dd><p>data_sample_id: The unique identifier of the data sample</p>
+<p>base_error: A description of the identified error</p>
+<p>agent_run_id: Optional unique identifier for the agent run</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data_sample_id</strong> (<em>int</em>)</p></li>
+<li><p><strong>base_error</strong> (<em>str</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>agent_run_id</strong> (<em>int</em><em> | </em><em>None</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.analysis_models.AnalyzedValidation.agent_run_id">
+<span class="sig-name descname"><span class="pre">agent_run_id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#agent_inspect.models.tools.analysis_models.AnalyzedValidation.agent_run_id" title="Link to this definition"></a></dt>
+<dd><p>Unique identifier for the agent run associated with this data sample.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.analysis_models.AnalyzedValidation.base_error">
+<span class="sig-name descname"><span class="pre">base_error</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">]</span></em><a class="headerlink" href="#agent_inspect.models.tools.analysis_models.AnalyzedValidation.base_error" title="Link to this definition"></a></dt>
+<dd><p>A description of the identified error in the validation.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.analysis_models.AnalyzedValidation.data_sample_id">
+<span class="sig-name descname"><span class="pre">data_sample_id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></em><a class="headerlink" href="#agent_inspect.models.tools.analysis_models.AnalyzedValidation.data_sample_id" title="Link to this definition"></a></dt>
+<dd><p>The unique identifier of the data sample that this result originates from.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.analysis_models.ErrorAnalysisDataSample">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agent_inspect.models.tools.analysis_models.</span></span><span class="sig-name descname"><span class="pre">ErrorAnalysisDataSample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_sample_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent_run_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/models/tools/analysis_models.html#ErrorAnalysisDataSample"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.models.tools.analysis_models.ErrorAnalysisDataSample" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Base class for error analysis data samples.</p>
+<dl>
+<dt>Attributes:</dt><dd><p>data_sample_id: Unique identifier for the data sample</p>
+<p>agent_run_id: Optional unique identifier for the agent run</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data_sample_id</strong> (<em>int</em>)</p></li>
+<li><p><strong>agent_run_id</strong> (<em>int</em><em> | </em><em>None</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.analysis_models.ErrorAnalysisDataSample.agent_run_id">
+<span class="sig-name descname"><span class="pre">agent_run_id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#agent_inspect.models.tools.analysis_models.ErrorAnalysisDataSample.agent_run_id" title="Link to this definition"></a></dt>
+<dd><p>Unique identifier for the agent run associated with this data sample.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.analysis_models.ErrorAnalysisDataSample.data_sample_id">
+<span class="sig-name descname"><span class="pre">data_sample_id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></em><a class="headerlink" href="#agent_inspect.models.tools.analysis_models.ErrorAnalysisDataSample.data_sample_id" title="Link to this definition"></a></dt>
+<dd><p>Unique identifier for the data sample. Final results of error analysis will reference this id.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.analysis_models.ErrorAnalysisResult">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agent_inspect.models.tools.analysis_models.</span></span><span class="sig-name descname"><span class="pre">ErrorAnalysisResult</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">analyzed_validations_clustered_by_errors</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/models/tools/analysis_models.html#ErrorAnalysisResult"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.models.tools.analysis_models.ErrorAnalysisResult" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Generic</span></code>[<code class="xref py py-obj docutils literal notranslate"><span class="pre">T</span></code>]</p>
+<p>Base class for error analysis results.</p>
+<dl class="simple">
+<dt>Attributes:</dt><dd><dl class="simple">
+<dt>analyzed_validations_clustered_by_errors: Mapping from error cluster labels</dt><dd><p>to lists of analyzed validations that exhibit those errors</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>analyzed_validations_clustered_by_errors</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>List</em><em>[</em><em>T</em><em>]</em><em>]</em>)</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.analysis_models.ErrorAnalysisResult.analyzed_validations_clustered_by_errors">
+<span class="sig-name descname"><span class="pre">analyzed_validations_clustered_by_errors</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">TypeVar</span></code><span class="pre">(</span><code class="docutils literal notranslate"><span class="pre">T</span></code><span class="pre">,</span> <span class="pre">bound=</span> <a class="reference internal" href="#agent_inspect.models.tools.analysis_models.AnalyzedValidation" title="agent_inspect.models.tools.analysis_models.AnalyzedValidation"><code class="xref py py-class docutils literal notranslate"><span class="pre">AnalyzedValidation</span></code></a><span class="pre">)]]</span></em><a class="headerlink" href="#agent_inspect.models.tools.analysis_models.ErrorAnalysisResult.analyzed_validations_clustered_by_errors" title="Link to this definition"></a></dt>
+<dd><p>A mapping from error cluster labels to lists of analyzed validations that exhibit those errors.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.analysis_models.StatisticAnalysisResult">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agent_inspect.models.tools.analysis_models.</span></span><span class="sig-name descname"><span class="pre">StatisticAnalysisResult</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_sample_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subgoal_validations</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">judge_expectation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">judge_std</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent_run_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/models/tools/analysis_models.html#StatisticAnalysisResult"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.models.tools.analysis_models.StatisticAnalysisResult" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents the statistical analysis result for a single data sample.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data_sample_id</strong> (<em>int</em>)</p></li>
+<li><p><strong>subgoal_validations</strong> (<em>List</em><em>[</em><a class="reference internal" href="agent_inspect.models.metrics.html#agent_inspect.models.metrics.validation_result.SubGoalValidationResult" title="agent_inspect.models.metrics.validation_result.SubGoalValidationResult"><em>SubGoalValidationResult</em></a><em>]</em>)</p></li>
+<li><p><strong>judge_expectation</strong> (<em>float</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>judge_std</strong> (<em>float</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>agent_run_id</strong> (<em>int</em><em> | </em><em>None</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.analysis_models.StatisticAnalysisResult.agent_run_id">
+<span class="sig-name descname"><span class="pre">agent_run_id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#agent_inspect.models.tools.analysis_models.StatisticAnalysisResult.agent_run_id" title="Link to this definition"></a></dt>
+<dd><p>Unique identifier for the agent run associated with this data sample.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.analysis_models.StatisticAnalysisResult.data_sample_id">
+<span class="sig-name descname"><span class="pre">data_sample_id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></em><a class="headerlink" href="#agent_inspect.models.tools.analysis_models.StatisticAnalysisResult.data_sample_id" title="Link to this definition"></a></dt>
+<dd><p>The unique identifier of the data sample that this statistic analysis result corresponds to.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.analysis_models.StatisticAnalysisResult.judge_expectation">
+<span class="sig-name descname"><span class="pre">judge_expectation</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#agent_inspect.models.tools.analysis_models.StatisticAnalysisResult.judge_expectation" title="Link to this definition"></a></dt>
+<dd><p>The computed expectation (mean) of judge scores across all subgoals in one data sample.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.analysis_models.StatisticAnalysisResult.judge_std">
+<span class="sig-name descname"><span class="pre">judge_std</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#agent_inspect.models.tools.analysis_models.StatisticAnalysisResult.judge_std" title="Link to this definition"></a></dt>
+<dd><p>The computed standard deviation of judge scores across all subgoals in one data sample.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.analysis_models.StatisticAnalysisResult.subgoal_validations">
+<span class="sig-name descname"><span class="pre">subgoal_validations</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code><span class="pre">[</span><a class="reference internal" href="agent_inspect.models.metrics.html#agent_inspect.models.metrics.validation_result.SubGoalValidationResult" title="agent_inspect.models.metrics.validation_result.SubGoalValidationResult"><code class="xref py py-class docutils literal notranslate"><span class="pre">SubGoalValidationResult</span></code></a><span class="pre">]</span></em><a class="headerlink" href="#agent_inspect.models.tools.analysis_models.StatisticAnalysisResult.subgoal_validations" title="Link to this definition"></a></dt>
+<dd><p>A list of subgoal validation results to perform error analysis on.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.analysis_models.SubgoalErrorAnalysisDataSample">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agent_inspect.models.tools.analysis_models.</span></span><span class="sig-name descname"><span class="pre">SubgoalErrorAnalysisDataSample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_sample_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent_run_id=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subgoal_validations=&lt;factory&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/models/tools/analysis_models.html#SubgoalErrorAnalysisDataSample"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.models.tools.analysis_models.SubgoalErrorAnalysisDataSample" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#agent_inspect.models.tools.analysis_models.ErrorAnalysisDataSample" title="agent_inspect.models.tools.analysis_models.ErrorAnalysisDataSample"><code class="xref py py-class docutils literal notranslate"><span class="pre">ErrorAnalysisDataSample</span></code></a></p>
+<p>Represents a single data sample with its associated subgoal validations.</p>
+<p>Note: subgoal_validations is technically optional with an empty default to satisfy
+dataclass inheritance constraints, but in practice should always be provided.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data_sample_id</strong> (<em>int</em>)</p></li>
+<li><p><strong>agent_run_id</strong> (<em>int</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>subgoal_validations</strong> (<em>List</em><em>[</em><a class="reference internal" href="agent_inspect.models.metrics.html#agent_inspect.models.metrics.validation_result.SubGoalValidationResult" title="agent_inspect.models.metrics.validation_result.SubGoalValidationResult"><em>SubGoalValidationResult</em></a><em>]</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.analysis_models.SubgoalErrorAnalysisDataSample.subgoal_validations">
+<span class="sig-name descname"><span class="pre">subgoal_validations</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code><span class="pre">[</span><a class="reference internal" href="agent_inspect.models.metrics.html#agent_inspect.models.metrics.validation_result.SubGoalValidationResult" title="agent_inspect.models.metrics.validation_result.SubGoalValidationResult"><code class="xref py py-class docutils literal notranslate"><span class="pre">SubGoalValidationResult</span></code></a><span class="pre">]</span></em><a class="headerlink" href="#agent_inspect.models.tools.analysis_models.SubgoalErrorAnalysisDataSample.subgoal_validations" title="Link to this definition"></a></dt>
+<dd><p>A list of ordered subgoal validation results to perform error analysis on.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.analysis_models.SubgoalErrorAnalysisResult">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agent_inspect.models.tools.analysis_models.</span></span><span class="sig-name descname"><span class="pre">SubgoalErrorAnalysisResult</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">analyzed_validations_clustered_by_errors</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">completed_subgoal_validations=&lt;factory&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/models/tools/analysis_models.html#SubgoalErrorAnalysisResult"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.models.tools.analysis_models.SubgoalErrorAnalysisResult" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#agent_inspect.models.tools.analysis_models.ErrorAnalysisResult" title="agent_inspect.models.tools.analysis_models.ErrorAnalysisResult"><code class="xref py py-class docutils literal notranslate"><span class="pre">ErrorAnalysisResult</span></code></a>[<a class="reference internal" href="#agent_inspect.models.tools.analysis_models.AnalyzedSubgoalValidation" title="agent_inspect.models.tools.analysis_models.AnalyzedSubgoalValidation"><code class="xref py py-class docutils literal notranslate"><span class="pre">AnalyzedSubgoalValidation</span></code></a>]</p>
+<p>Represents the overall error analysis result for a set of data samples (subgoal-based).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>analyzed_validations_clustered_by_errors</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>List</em><em>[</em><em>T</em><em>]</em><em>]</em>)</p></li>
+<li><p><strong>completed_subgoal_validations</strong> (<em>List</em><em>[</em><a class="reference internal" href="#agent_inspect.models.tools.analysis_models.AnalyzedSubgoalValidation" title="agent_inspect.models.tools.analysis_models.AnalyzedSubgoalValidation"><em>AnalyzedSubgoalValidation</em></a><em>]</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.analysis_models.SubgoalErrorAnalysisResult.completed_subgoal_validations">
+<span class="sig-name descname"><span class="pre">completed_subgoal_validations</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code><span class="pre">[</span><a class="reference internal" href="#agent_inspect.models.tools.analysis_models.AnalyzedSubgoalValidation" title="agent_inspect.models.tools.analysis_models.AnalyzedSubgoalValidation"><code class="xref py py-class docutils literal notranslate"><span class="pre">AnalyzedSubgoalValidation</span></code></a><span class="pre">]</span></em><a class="headerlink" href="#agent_inspect.models.tools.analysis_models.SubgoalErrorAnalysisResult.completed_subgoal_validations" title="Link to this definition"></a></dt>
+<dd><p>A list of analyzed subgoal validations consisting of the subgoal validations
+that were marked completed, and thus have no associated errors.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.analysis_models.ToolCallErrorAnalysisDataSample">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agent_inspect.models.tools.analysis_models.</span></span><span class="sig-name descname"><span class="pre">ToolCallErrorAnalysisDataSample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_sample_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent_run_id=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tool_call_validations=&lt;factory&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/models/tools/analysis_models.html#ToolCallErrorAnalysisDataSample"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.models.tools.analysis_models.ToolCallErrorAnalysisDataSample" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#agent_inspect.models.tools.analysis_models.ErrorAnalysisDataSample" title="agent_inspect.models.tools.analysis_models.ErrorAnalysisDataSample"><code class="xref py py-class docutils literal notranslate"><span class="pre">ErrorAnalysisDataSample</span></code></a></p>
+<p>Represents a single data sample with its associated tool call validations.</p>
+<p>Note: tool_call_validations is technically optional with an empty default to satisfy
+dataclass inheritance constraints, but in practice should always be provided.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data_sample_id</strong> (<em>int</em>)</p></li>
+<li><p><strong>agent_run_id</strong> (<em>int</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>tool_call_validations</strong> (<em>List</em><em>[</em><a class="reference internal" href="agent_inspect.models.metrics.html#agent_inspect.models.metrics.validation_result.ToolCallValidationResult" title="agent_inspect.models.metrics.validation_result.ToolCallValidationResult"><em>ToolCallValidationResult</em></a><em>]</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.analysis_models.ToolCallErrorAnalysisDataSample.tool_call_validations">
+<span class="sig-name descname"><span class="pre">tool_call_validations</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code><span class="pre">[</span><a class="reference internal" href="agent_inspect.models.metrics.html#agent_inspect.models.metrics.validation_result.ToolCallValidationResult" title="agent_inspect.models.metrics.validation_result.ToolCallValidationResult"><code class="xref py py-class docutils literal notranslate"><span class="pre">ToolCallValidationResult</span></code></a><span class="pre">]</span></em><a class="headerlink" href="#agent_inspect.models.tools.analysis_models.ToolCallErrorAnalysisDataSample.tool_call_validations" title="Link to this definition"></a></dt>
+<dd><p>A list of tool call validation results to perform error analysis on.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.analysis_models.ToolCallErrorAnalysisResult">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agent_inspect.models.tools.analysis_models.</span></span><span class="sig-name descname"><span class="pre">ToolCallErrorAnalysisResult</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">analyzed_validations_clustered_by_errors</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/models/tools/analysis_models.html#ToolCallErrorAnalysisResult"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.models.tools.analysis_models.ToolCallErrorAnalysisResult" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#agent_inspect.models.tools.analysis_models.ErrorAnalysisResult" title="agent_inspect.models.tools.analysis_models.ErrorAnalysisResult"><code class="xref py py-class docutils literal notranslate"><span class="pre">ErrorAnalysisResult</span></code></a>[<a class="reference internal" href="#agent_inspect.models.tools.analysis_models.AnalyzedToolValidation" title="agent_inspect.models.tools.analysis_models.AnalyzedToolValidation"><code class="xref py py-class docutils literal notranslate"><span class="pre">AnalyzedToolValidation</span></code></a>]</p>
+<p>Represents the overall error analysis result for a set of tool validation data samples.</p>
+<p>This result only contains failed validations clustered by error type.
+Passed validations are not included as they don’t require error analysis.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>analyzed_validations_clustered_by_errors</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>List</em><em>[</em><em>T</em><em>]</em><em>]</em>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-agent_inspect.models.tools.error_cluster">
+<span id="agent-inspect-models-tools-error-cluster-module"></span><h2>agent_inspect.models.tools.error_cluster module<a class="headerlink" href="#module-agent_inspect.models.tools.error_cluster" title="Link to this heading"></a></h2>
+<p>Error cluster definitions for error analysis.</p>
+<p>This module defines error cluster types used by error analysis implementations.
+Error clusters categorize common failure modes in agent behavior.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.error_cluster.ErrorCluster">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agent_inspect.models.tools.error_cluster.</span></span><span class="sig-name descname"><span class="pre">ErrorCluster</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cluster_label</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/models/tools/error_cluster.html#ErrorCluster"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.models.tools.error_cluster.ErrorCluster" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
+<p>Base class for error cluster definitions.</p>
+<p>Error clusters represent categories of agent failures. Each cluster has:
+- cluster_label: A short, human-readable name for the error type
+- description: A detailed explanation of when this error occurs</p>
+<p>This dataclass is frozen (immutable) to prevent accidental modification
+of the default cluster definitions.</p>
+<dl class="simple">
+<dt>Attributes:</dt><dd><p>cluster_label: Short name identifying the error type
+description: Detailed explanation of the error category</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cluster_label</strong> (<em>str</em>)</p></li>
+<li><p><strong>description</strong> (<em>str</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.error_cluster.ErrorCluster.cluster_label">
+<span class="sig-name descname"><span class="pre">cluster_label</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#agent_inspect.models.tools.error_cluster.ErrorCluster.cluster_label" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.error_cluster.ErrorCluster.description">
+<span class="sig-name descname"><span class="pre">description</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#agent_inspect.models.tools.error_cluster.ErrorCluster.description" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.error_cluster.ErrorCluster.to_dict">
+<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/models/tools/error_cluster.html#ErrorCluster.to_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.models.tools.error_cluster.ErrorCluster.to_dict" title="Link to this definition"></a></dt>
+<dd><p>Convert cluster to dictionary format for LLM prompts.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></span></p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>Dictionary with cluster_label and description keys</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.error_cluster.FaithfulnessErrorCluster">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agent_inspect.models.tools.error_cluster.</span></span><span class="sig-name descname"><span class="pre">FaithfulnessErrorCluster</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cluster_label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Faithfulness</span> <span class="pre">Error</span> <span class="pre">(Ungrounded)'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&quot;Agent's</span> <span class="pre">response</span> <span class="pre">contradicts</span> <span class="pre">or</span> <span class="pre">is</span> <span class="pre">not</span> <span class="pre">supported</span> <span class="pre">by</span> <span class="pre">the</span> <span class="pre">output</span> <span class="pre">of</span> <span class="pre">the</span> <span class="pre">tools</span> <span class="pre">it</span> <span class="pre">used.&quot;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/models/tools/error_cluster.html#FaithfulnessErrorCluster"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.models.tools.error_cluster.FaithfulnessErrorCluster" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#agent_inspect.models.tools.error_cluster.ErrorCluster" title="agent_inspect.models.tools.error_cluster.ErrorCluster"><code class="xref py py-class docutils literal notranslate"><span class="pre">ErrorCluster</span></code></a></p>
+<p>Agent’s response contradicts or is not supported by the output of the tools it used.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cluster_label</strong> (<em>str</em>)</p></li>
+<li><p><strong>description</strong> (<em>str</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.error_cluster.FaithfulnessErrorCluster.cluster_label">
+<span class="sig-name descname"><span class="pre">cluster_label</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Faithfulness</span> <span class="pre">Error</span> <span class="pre">(Ungrounded)'</span></em><a class="headerlink" href="#agent_inspect.models.tools.error_cluster.FaithfulnessErrorCluster.cluster_label" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.error_cluster.FaithfulnessErrorCluster.description">
+<span class="sig-name descname"><span class="pre">description</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&quot;Agent's</span> <span class="pre">response</span> <span class="pre">contradicts</span> <span class="pre">or</span> <span class="pre">is</span> <span class="pre">not</span> <span class="pre">supported</span> <span class="pre">by</span> <span class="pre">the</span> <span class="pre">output</span> <span class="pre">of</span> <span class="pre">the</span> <span class="pre">tools</span> <span class="pre">it</span> <span class="pre">used.&quot;</span></em><a class="headerlink" href="#agent_inspect.models.tools.error_cluster.FaithfulnessErrorCluster.description" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.error_cluster.IncompleteCommunicationCluster">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agent_inspect.models.tools.error_cluster.</span></span><span class="sig-name descname"><span class="pre">IncompleteCommunicationCluster</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cluster_label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Incomplete</span> <span class="pre">or</span> <span class="pre">Vague</span> <span class="pre">Communication'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&quot;Agent's</span> <span class="pre">response</span> <span class="pre">is</span> <span class="pre">missing</span> <span class="pre">necessary</span> <span class="pre">information</span> <span class="pre">or</span> <span class="pre">is</span> <span class="pre">too</span> <span class="pre">vague</span> <span class="pre">to</span> <span class="pre">be</span> <span class="pre">useful.&quot;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/models/tools/error_cluster.html#IncompleteCommunicationCluster"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.models.tools.error_cluster.IncompleteCommunicationCluster" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#agent_inspect.models.tools.error_cluster.ErrorCluster" title="agent_inspect.models.tools.error_cluster.ErrorCluster"><code class="xref py py-class docutils literal notranslate"><span class="pre">ErrorCluster</span></code></a></p>
+<p>Agent’s response is missing necessary information or is too vague to be useful.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cluster_label</strong> (<em>str</em>)</p></li>
+<li><p><strong>description</strong> (<em>str</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.error_cluster.IncompleteCommunicationCluster.cluster_label">
+<span class="sig-name descname"><span class="pre">cluster_label</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Incomplete</span> <span class="pre">or</span> <span class="pre">Vague</span> <span class="pre">Communication'</span></em><a class="headerlink" href="#agent_inspect.models.tools.error_cluster.IncompleteCommunicationCluster.cluster_label" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.error_cluster.IncompleteCommunicationCluster.description">
+<span class="sig-name descname"><span class="pre">description</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&quot;Agent's</span> <span class="pre">response</span> <span class="pre">is</span> <span class="pre">missing</span> <span class="pre">necessary</span> <span class="pre">information</span> <span class="pre">or</span> <span class="pre">is</span> <span class="pre">too</span> <span class="pre">vague</span> <span class="pre">to</span> <span class="pre">be</span> <span class="pre">useful.&quot;</span></em><a class="headerlink" href="#agent_inspect.models.tools.error_cluster.IncompleteCommunicationCluster.description" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.error_cluster.IncorrectToolInputCluster">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agent_inspect.models.tools.error_cluster.</span></span><span class="sig-name descname"><span class="pre">IncorrectToolInputCluster</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cluster_label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Incorrect</span> <span class="pre">Tool</span> <span class="pre">Input'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Agent</span> <span class="pre">called</span> <span class="pre">a</span> <span class="pre">tool</span> <span class="pre">with</span> <span class="pre">incorrect,</span> <span class="pre">missing,</span> <span class="pre">or</span> <span class="pre">malformed</span> <span class="pre">input</span> <span class="pre">parameters.'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/models/tools/error_cluster.html#IncorrectToolInputCluster"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.models.tools.error_cluster.IncorrectToolInputCluster" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#agent_inspect.models.tools.error_cluster.ErrorCluster" title="agent_inspect.models.tools.error_cluster.ErrorCluster"><code class="xref py py-class docutils literal notranslate"><span class="pre">ErrorCluster</span></code></a></p>
+<p>Agent called a tool with incorrect, missing, or malformed input parameters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cluster_label</strong> (<em>str</em>)</p></li>
+<li><p><strong>description</strong> (<em>str</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.error_cluster.IncorrectToolInputCluster.cluster_label">
+<span class="sig-name descname"><span class="pre">cluster_label</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Incorrect</span> <span class="pre">Tool</span> <span class="pre">Input'</span></em><a class="headerlink" href="#agent_inspect.models.tools.error_cluster.IncorrectToolInputCluster.cluster_label" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.error_cluster.IncorrectToolInputCluster.description">
+<span class="sig-name descname"><span class="pre">description</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Agent</span> <span class="pre">called</span> <span class="pre">a</span> <span class="pre">tool</span> <span class="pre">with</span> <span class="pre">incorrect,</span> <span class="pre">missing,</span> <span class="pre">or</span> <span class="pre">malformed</span> <span class="pre">input</span> <span class="pre">parameters.'</span></em><a class="headerlink" href="#agent_inspect.models.tools.error_cluster.IncorrectToolInputCluster.description" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.error_cluster.IncorrectToolOutputHandlingCluster">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agent_inspect.models.tools.error_cluster.</span></span><span class="sig-name descname"><span class="pre">IncorrectToolOutputHandlingCluster</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cluster_label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Incorrect</span> <span class="pre">Tool</span> <span class="pre">Output</span> <span class="pre">Handling'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Agent</span> <span class="pre">failed</span> <span class="pre">to</span> <span class="pre">correctly</span> <span class="pre">interpret,</span> <span class="pre">parse,</span> <span class="pre">or</span> <span class="pre">use</span> <span class="pre">the</span> <span class="pre">output</span> <span class="pre">returned</span> <span class="pre">by</span> <span class="pre">a</span> <span class="pre">tool.'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/models/tools/error_cluster.html#IncorrectToolOutputHandlingCluster"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.models.tools.error_cluster.IncorrectToolOutputHandlingCluster" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#agent_inspect.models.tools.error_cluster.ErrorCluster" title="agent_inspect.models.tools.error_cluster.ErrorCluster"><code class="xref py py-class docutils literal notranslate"><span class="pre">ErrorCluster</span></code></a></p>
+<p>Agent failed to correctly interpret, parse, or use the output returned by a tool.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cluster_label</strong> (<em>str</em>)</p></li>
+<li><p><strong>description</strong> (<em>str</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.error_cluster.IncorrectToolOutputHandlingCluster.cluster_label">
+<span class="sig-name descname"><span class="pre">cluster_label</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Incorrect</span> <span class="pre">Tool</span> <span class="pre">Output</span> <span class="pre">Handling'</span></em><a class="headerlink" href="#agent_inspect.models.tools.error_cluster.IncorrectToolOutputHandlingCluster.cluster_label" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.error_cluster.IncorrectToolOutputHandlingCluster.description">
+<span class="sig-name descname"><span class="pre">description</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Agent</span> <span class="pre">failed</span> <span class="pre">to</span> <span class="pre">correctly</span> <span class="pre">interpret,</span> <span class="pre">parse,</span> <span class="pre">or</span> <span class="pre">use</span> <span class="pre">the</span> <span class="pre">output</span> <span class="pre">returned</span> <span class="pre">by</span> <span class="pre">a</span> <span class="pre">tool.'</span></em><a class="headerlink" href="#agent_inspect.models.tools.error_cluster.IncorrectToolOutputHandlingCluster.description" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.error_cluster.InstructionFollowingErrorCluster">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agent_inspect.models.tools.error_cluster.</span></span><span class="sig-name descname"><span class="pre">InstructionFollowingErrorCluster</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cluster_label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Instruction</span> <span class="pre">Following</span> <span class="pre">Error'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Agent</span> <span class="pre">failed</span> <span class="pre">to</span> <span class="pre">follow</span> <span class="pre">explicit</span> <span class="pre">instructions</span> <span class="pre">or</span> <span class="pre">constraints</span> <span class="pre">from</span> <span class="pre">the</span> <span class="pre">user.'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/models/tools/error_cluster.html#InstructionFollowingErrorCluster"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.models.tools.error_cluster.InstructionFollowingErrorCluster" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#agent_inspect.models.tools.error_cluster.ErrorCluster" title="agent_inspect.models.tools.error_cluster.ErrorCluster"><code class="xref py py-class docutils literal notranslate"><span class="pre">ErrorCluster</span></code></a></p>
+<p>Agent failed to follow explicit instructions or constraints from the user.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cluster_label</strong> (<em>str</em>)</p></li>
+<li><p><strong>description</strong> (<em>str</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.error_cluster.InstructionFollowingErrorCluster.cluster_label">
+<span class="sig-name descname"><span class="pre">cluster_label</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Instruction</span> <span class="pre">Following</span> <span class="pre">Error'</span></em><a class="headerlink" href="#agent_inspect.models.tools.error_cluster.InstructionFollowingErrorCluster.cluster_label" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.error_cluster.InstructionFollowingErrorCluster.description">
+<span class="sig-name descname"><span class="pre">description</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Agent</span> <span class="pre">failed</span> <span class="pre">to</span> <span class="pre">follow</span> <span class="pre">explicit</span> <span class="pre">instructions</span> <span class="pre">or</span> <span class="pre">constraints</span> <span class="pre">from</span> <span class="pre">the</span> <span class="pre">user.'</span></em><a class="headerlink" href="#agent_inspect.models.tools.error_cluster.InstructionFollowingErrorCluster.description" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.error_cluster.LogicalReasoningErrorCluster">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agent_inspect.models.tools.error_cluster.</span></span><span class="sig-name descname"><span class="pre">LogicalReasoningErrorCluster</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cluster_label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Logical</span> <span class="pre">Reasoning</span> <span class="pre">Error'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&quot;Agent's</span> <span class="pre">reasoning</span> <span class="pre">process</span> <span class="pre">was</span> <span class="pre">flawed,</span> <span class="pre">got</span> <span class="pre">stuck</span> <span class="pre">in</span> <span class="pre">a</span> <span class="pre">loop,</span> <span class="pre">or</span> <span class="pre">gave</span> <span class="pre">up</span> <span class="pre">before</span> <span class="pre">the</span> <span class="pre">task</span> <span class="pre">was</span> <span class="pre">complete.&quot;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/models/tools/error_cluster.html#LogicalReasoningErrorCluster"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.models.tools.error_cluster.LogicalReasoningErrorCluster" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#agent_inspect.models.tools.error_cluster.ErrorCluster" title="agent_inspect.models.tools.error_cluster.ErrorCluster"><code class="xref py py-class docutils literal notranslate"><span class="pre">ErrorCluster</span></code></a></p>
+<p>Agent’s reasoning process was flawed, got stuck in a loop, or gave up before the task was complete.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cluster_label</strong> (<em>str</em>)</p></li>
+<li><p><strong>description</strong> (<em>str</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.error_cluster.LogicalReasoningErrorCluster.cluster_label">
+<span class="sig-name descname"><span class="pre">cluster_label</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Logical</span> <span class="pre">Reasoning</span> <span class="pre">Error'</span></em><a class="headerlink" href="#agent_inspect.models.tools.error_cluster.LogicalReasoningErrorCluster.cluster_label" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.error_cluster.LogicalReasoningErrorCluster.description">
+<span class="sig-name descname"><span class="pre">description</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&quot;Agent's</span> <span class="pre">reasoning</span> <span class="pre">process</span> <span class="pre">was</span> <span class="pre">flawed,</span> <span class="pre">got</span> <span class="pre">stuck</span> <span class="pre">in</span> <span class="pre">a</span> <span class="pre">loop,</span> <span class="pre">or</span> <span class="pre">gave</span> <span class="pre">up</span> <span class="pre">before</span> <span class="pre">the</span> <span class="pre">task</span> <span class="pre">was</span> <span class="pre">complete.&quot;</span></em><a class="headerlink" href="#agent_inspect.models.tools.error_cluster.LogicalReasoningErrorCluster.description" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.error_cluster.MissedToolCallCluster">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agent_inspect.models.tools.error_cluster.</span></span><span class="sig-name descname"><span class="pre">MissedToolCallCluster</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cluster_label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Missed</span> <span class="pre">Tool</span> <span class="pre">Call'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Agent</span> <span class="pre">failed</span> <span class="pre">to</span> <span class="pre">call</span> <span class="pre">a</span> <span class="pre">necessary</span> <span class="pre">tool</span> <span class="pre">to</span> <span class="pre">complete</span> <span class="pre">the</span> <span class="pre">subgoal.'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/models/tools/error_cluster.html#MissedToolCallCluster"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.models.tools.error_cluster.MissedToolCallCluster" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#agent_inspect.models.tools.error_cluster.ErrorCluster" title="agent_inspect.models.tools.error_cluster.ErrorCluster"><code class="xref py py-class docutils literal notranslate"><span class="pre">ErrorCluster</span></code></a></p>
+<p>Agent failed to call a necessary tool to complete the subgoal.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cluster_label</strong> (<em>str</em>)</p></li>
+<li><p><strong>description</strong> (<em>str</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.error_cluster.MissedToolCallCluster.cluster_label">
+<span class="sig-name descname"><span class="pre">cluster_label</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Missed</span> <span class="pre">Tool</span> <span class="pre">Call'</span></em><a class="headerlink" href="#agent_inspect.models.tools.error_cluster.MissedToolCallCluster.cluster_label" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.error_cluster.MissedToolCallCluster.description">
+<span class="sig-name descname"><span class="pre">description</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Agent</span> <span class="pre">failed</span> <span class="pre">to</span> <span class="pre">call</span> <span class="pre">a</span> <span class="pre">necessary</span> <span class="pre">tool</span> <span class="pre">to</span> <span class="pre">complete</span> <span class="pre">the</span> <span class="pre">subgoal.'</span></em><a class="headerlink" href="#agent_inspect.models.tools.error_cluster.MissedToolCallCluster.description" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.error_cluster.UnclassifiedErrorCluster">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agent_inspect.models.tools.error_cluster.</span></span><span class="sig-name descname"><span class="pre">UnclassifiedErrorCluster</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cluster_label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Unclassified'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Errors</span> <span class="pre">that</span> <span class="pre">do</span> <span class="pre">not</span> <span class="pre">fit</span> <span class="pre">into</span> <span class="pre">any</span> <span class="pre">of</span> <span class="pre">the</span> <span class="pre">other</span> <span class="pre">predefined</span> <span class="pre">error</span> <span class="pre">categories.</span> <span class="pre">'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/models/tools/error_cluster.html#UnclassifiedErrorCluster"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.models.tools.error_cluster.UnclassifiedErrorCluster" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#agent_inspect.models.tools.error_cluster.ErrorCluster" title="agent_inspect.models.tools.error_cluster.ErrorCluster"><code class="xref py py-class docutils literal notranslate"><span class="pre">ErrorCluster</span></code></a></p>
+<p>Errors that do not fit into any of the other predefined categories.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cluster_label</strong> (<em>str</em>)</p></li>
+<li><p><strong>description</strong> (<em>str</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.error_cluster.UnclassifiedErrorCluster.cluster_label">
+<span class="sig-name descname"><span class="pre">cluster_label</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Unclassified'</span></em><a class="headerlink" href="#agent_inspect.models.tools.error_cluster.UnclassifiedErrorCluster.cluster_label" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.error_cluster.UnclassifiedErrorCluster.description">
+<span class="sig-name descname"><span class="pre">description</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Errors</span> <span class="pre">that</span> <span class="pre">do</span> <span class="pre">not</span> <span class="pre">fit</span> <span class="pre">into</span> <span class="pre">any</span> <span class="pre">of</span> <span class="pre">the</span> <span class="pre">other</span> <span class="pre">predefined</span> <span class="pre">error</span> <span class="pre">categories.</span> <span class="pre">'</span></em><a class="headerlink" href="#agent_inspect.models.tools.error_cluster.UnclassifiedErrorCluster.description" title="Link to this definition"></a></dt>
+<dd><p>Also use this when you cannot identify a clear agent behavior or decision that caused the failure.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.error_cluster.WrongToolSelectionCluster">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agent_inspect.models.tools.error_cluster.</span></span><span class="sig-name descname"><span class="pre">WrongToolSelectionCluster</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cluster_label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Wrong</span> <span class="pre">Tool</span> <span class="pre">Selection'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Agent</span> <span class="pre">selected</span> <span class="pre">the</span> <span class="pre">wrong</span> <span class="pre">tool</span> <span class="pre">for</span> <span class="pre">the</span> <span class="pre">task</span> <span class="pre">or</span> <span class="pre">called</span> <span class="pre">tools</span> <span class="pre">in</span> <span class="pre">an</span> <span class="pre">incorrect</span> <span class="pre">sequence.'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/models/tools/error_cluster.html#WrongToolSelectionCluster"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.models.tools.error_cluster.WrongToolSelectionCluster" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#agent_inspect.models.tools.error_cluster.ErrorCluster" title="agent_inspect.models.tools.error_cluster.ErrorCluster"><code class="xref py py-class docutils literal notranslate"><span class="pre">ErrorCluster</span></code></a></p>
+<p>Agent selected the wrong tool for the task or called tools in an incorrect sequence.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cluster_label</strong> (<em>str</em>)</p></li>
+<li><p><strong>description</strong> (<em>str</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.error_cluster.WrongToolSelectionCluster.cluster_label">
+<span class="sig-name descname"><span class="pre">cluster_label</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Wrong</span> <span class="pre">Tool</span> <span class="pre">Selection'</span></em><a class="headerlink" href="#agent_inspect.models.tools.error_cluster.WrongToolSelectionCluster.cluster_label" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.error_cluster.WrongToolSelectionCluster.description">
+<span class="sig-name descname"><span class="pre">description</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Agent</span> <span class="pre">selected</span> <span class="pre">the</span> <span class="pre">wrong</span> <span class="pre">tool</span> <span class="pre">for</span> <span class="pre">the</span> <span class="pre">task</span> <span class="pre">or</span> <span class="pre">called</span> <span class="pre">tools</span> <span class="pre">in</span> <span class="pre">an</span> <span class="pre">incorrect</span> <span class="pre">sequence.'</span></em><a class="headerlink" href="#agent_inspect.models.tools.error_cluster.WrongToolSelectionCluster.description" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-agent_inspect.models.tools">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-agent_inspect.models.tools" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.AnalyzedSubgoalValidation">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agent_inspect.models.tools.</span></span><span class="sig-name descname"><span class="pre">AnalyzedSubgoalValidation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_sample_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base_error</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subgoal_validation</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent_run_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/models/tools/analysis_models.html#AnalyzedSubgoalValidation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.models.tools.AnalyzedSubgoalValidation" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#agent_inspect.models.tools.analysis_models.AnalyzedValidation" title="agent_inspect.models.tools.analysis_models.AnalyzedValidation"><code class="xref py py-class docutils literal notranslate"><span class="pre">AnalyzedValidation</span></code></a></p>
+<p>Represents the error analysis result for a single subgoal validation within a data sample.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data_sample_id</strong> (<em>int</em>)</p></li>
+<li><p><strong>base_error</strong> (<em>str</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>subgoal_validation</strong> (<a class="reference internal" href="agent_inspect.models.metrics.html#agent_inspect.models.metrics.validation_result.SubGoalValidationResult" title="agent_inspect.models.metrics.validation_result.SubGoalValidationResult"><em>SubGoalValidationResult</em></a>)</p></li>
+<li><p><strong>agent_run_id</strong> (<em>int</em><em> | </em><em>None</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.AnalyzedSubgoalValidation.base_error">
+<span class="sig-name descname"><span class="pre">base_error</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">]</span></em><a class="headerlink" href="#agent_inspect.models.tools.AnalyzedSubgoalValidation.base_error" title="Link to this definition"></a></dt>
+<dd><p>A description of the identified error in the validation.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.AnalyzedSubgoalValidation.data_sample_id">
+<span class="sig-name descname"><span class="pre">data_sample_id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></em><a class="headerlink" href="#agent_inspect.models.tools.AnalyzedSubgoalValidation.data_sample_id" title="Link to this definition"></a></dt>
+<dd><p>The unique identifier of the data sample that this result originates from.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.AnalyzedSubgoalValidation.subgoal_validation">
+<span class="sig-name descname"><span class="pre">subgoal_validation</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="agent_inspect.models.metrics.html#agent_inspect.models.metrics.validation_result.SubGoalValidationResult" title="agent_inspect.models.metrics.validation_result.SubGoalValidationResult"><code class="xref py py-class docutils literal notranslate"><span class="pre">SubGoalValidationResult</span></code></a></em><a class="headerlink" href="#agent_inspect.models.tools.AnalyzedSubgoalValidation.subgoal_validation" title="Link to this definition"></a></dt>
+<dd><p>The subgoal validation result being analyzed.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.AnalyzedToolValidation">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agent_inspect.models.tools.</span></span><span class="sig-name descname"><span class="pre">AnalyzedToolValidation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_sample_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base_error</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tool_call_validation</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent_run_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/models/tools/analysis_models.html#AnalyzedToolValidation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.models.tools.AnalyzedToolValidation" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#agent_inspect.models.tools.analysis_models.AnalyzedValidation" title="agent_inspect.models.tools.analysis_models.AnalyzedValidation"><code class="xref py py-class docutils literal notranslate"><span class="pre">AnalyzedValidation</span></code></a></p>
+<p>Represents the error analysis result for a single tool call validation within a data sample.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data_sample_id</strong> (<em>int</em>)</p></li>
+<li><p><strong>base_error</strong> (<em>str</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>tool_call_validation</strong> (<a class="reference internal" href="agent_inspect.models.metrics.html#agent_inspect.models.metrics.validation_result.ToolCallValidationResult" title="agent_inspect.models.metrics.validation_result.ToolCallValidationResult"><em>ToolCallValidationResult</em></a>)</p></li>
+<li><p><strong>agent_run_id</strong> (<em>int</em><em> | </em><em>None</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.AnalyzedToolValidation.base_error">
+<span class="sig-name descname"><span class="pre">base_error</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">]</span></em><a class="headerlink" href="#agent_inspect.models.tools.AnalyzedToolValidation.base_error" title="Link to this definition"></a></dt>
+<dd><p>A description of the identified error in the validation.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.AnalyzedToolValidation.data_sample_id">
+<span class="sig-name descname"><span class="pre">data_sample_id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></em><a class="headerlink" href="#agent_inspect.models.tools.AnalyzedToolValidation.data_sample_id" title="Link to this definition"></a></dt>
+<dd><p>The unique identifier of the data sample that this result originates from.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.AnalyzedToolValidation.tool_call_validation">
+<span class="sig-name descname"><span class="pre">tool_call_validation</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="agent_inspect.models.metrics.html#agent_inspect.models.metrics.validation_result.ToolCallValidationResult" title="agent_inspect.models.metrics.validation_result.ToolCallValidationResult"><code class="xref py py-class docutils literal notranslate"><span class="pre">ToolCallValidationResult</span></code></a></em><a class="headerlink" href="#agent_inspect.models.tools.AnalyzedToolValidation.tool_call_validation" title="Link to this definition"></a></dt>
+<dd><p>The tool call validation result being analyzed.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.AnalyzedValidation">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agent_inspect.models.tools.</span></span><span class="sig-name descname"><span class="pre">AnalyzedValidation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_sample_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base_error</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent_run_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/models/tools/analysis_models.html#AnalyzedValidation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.models.tools.AnalyzedValidation" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Base class for analyzed validation results.</p>
+<dl>
+<dt>Attributes:</dt><dd><p>data_sample_id: The unique identifier of the data sample</p>
+<p>base_error: A description of the identified error</p>
+<p>agent_run_id: Optional unique identifier for the agent run</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data_sample_id</strong> (<em>int</em>)</p></li>
+<li><p><strong>base_error</strong> (<em>str</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>agent_run_id</strong> (<em>int</em><em> | </em><em>None</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.AnalyzedValidation.agent_run_id">
+<span class="sig-name descname"><span class="pre">agent_run_id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#agent_inspect.models.tools.AnalyzedValidation.agent_run_id" title="Link to this definition"></a></dt>
+<dd><p>Unique identifier for the agent run associated with this data sample.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.AnalyzedValidation.base_error">
+<span class="sig-name descname"><span class="pre">base_error</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">]</span></em><a class="headerlink" href="#agent_inspect.models.tools.AnalyzedValidation.base_error" title="Link to this definition"></a></dt>
+<dd><p>A description of the identified error in the validation.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.AnalyzedValidation.data_sample_id">
+<span class="sig-name descname"><span class="pre">data_sample_id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></em><a class="headerlink" href="#agent_inspect.models.tools.AnalyzedValidation.data_sample_id" title="Link to this definition"></a></dt>
+<dd><p>The unique identifier of the data sample that this result originates from.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.ErrorAnalysisDataSample">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agent_inspect.models.tools.</span></span><span class="sig-name descname"><span class="pre">ErrorAnalysisDataSample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_sample_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent_run_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/models/tools/analysis_models.html#ErrorAnalysisDataSample"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.models.tools.ErrorAnalysisDataSample" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Base class for error analysis data samples.</p>
+<dl>
+<dt>Attributes:</dt><dd><p>data_sample_id: Unique identifier for the data sample</p>
+<p>agent_run_id: Optional unique identifier for the agent run</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data_sample_id</strong> (<em>int</em>)</p></li>
+<li><p><strong>agent_run_id</strong> (<em>int</em><em> | </em><em>None</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.ErrorAnalysisDataSample.agent_run_id">
+<span class="sig-name descname"><span class="pre">agent_run_id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#agent_inspect.models.tools.ErrorAnalysisDataSample.agent_run_id" title="Link to this definition"></a></dt>
+<dd><p>Unique identifier for the agent run associated with this data sample.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.ErrorAnalysisDataSample.data_sample_id">
+<span class="sig-name descname"><span class="pre">data_sample_id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></em><a class="headerlink" href="#agent_inspect.models.tools.ErrorAnalysisDataSample.data_sample_id" title="Link to this definition"></a></dt>
+<dd><p>Unique identifier for the data sample. Final results of error analysis will reference this id.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.ErrorAnalysisResult">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agent_inspect.models.tools.</span></span><span class="sig-name descname"><span class="pre">ErrorAnalysisResult</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">analyzed_validations_clustered_by_errors</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/models/tools/analysis_models.html#ErrorAnalysisResult"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.models.tools.ErrorAnalysisResult" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Generic</span></code>[<code class="xref py py-obj docutils literal notranslate"><span class="pre">T</span></code>]</p>
+<p>Base class for error analysis results.</p>
+<dl class="simple">
+<dt>Attributes:</dt><dd><dl class="simple">
+<dt>analyzed_validations_clustered_by_errors: Mapping from error cluster labels</dt><dd><p>to lists of analyzed validations that exhibit those errors</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>analyzed_validations_clustered_by_errors</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>List</em><em>[</em><em>T</em><em>]</em><em>]</em>)</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.ErrorAnalysisResult.analyzed_validations_clustered_by_errors">
+<span class="sig-name descname"><span class="pre">analyzed_validations_clustered_by_errors</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">TypeVar</span></code><span class="pre">(</span><code class="docutils literal notranslate"><span class="pre">T</span></code><span class="pre">,</span> <span class="pre">bound=</span> <a class="reference internal" href="#agent_inspect.models.tools.analysis_models.AnalyzedValidation" title="agent_inspect.models.tools.analysis_models.AnalyzedValidation"><code class="xref py py-class docutils literal notranslate"><span class="pre">AnalyzedValidation</span></code></a><span class="pre">)]]</span></em><a class="headerlink" href="#agent_inspect.models.tools.ErrorAnalysisResult.analyzed_validations_clustered_by_errors" title="Link to this definition"></a></dt>
+<dd><p>A mapping from error cluster labels to lists of analyzed validations that exhibit those errors.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.ErrorCluster">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agent_inspect.models.tools.</span></span><span class="sig-name descname"><span class="pre">ErrorCluster</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cluster_label</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/models/tools/error_cluster.html#ErrorCluster"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.models.tools.ErrorCluster" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
+<p>Base class for error cluster definitions.</p>
+<p>Error clusters represent categories of agent failures. Each cluster has:
+- cluster_label: A short, human-readable name for the error type
+- description: A detailed explanation of when this error occurs</p>
+<p>This dataclass is frozen (immutable) to prevent accidental modification
+of the default cluster definitions.</p>
+<dl class="simple">
+<dt>Attributes:</dt><dd><p>cluster_label: Short name identifying the error type
+description: Detailed explanation of the error category</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cluster_label</strong> (<em>str</em>)</p></li>
+<li><p><strong>description</strong> (<em>str</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.ErrorCluster.cluster_label">
+<span class="sig-name descname"><span class="pre">cluster_label</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#agent_inspect.models.tools.ErrorCluster.cluster_label" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.ErrorCluster.description">
+<span class="sig-name descname"><span class="pre">description</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#agent_inspect.models.tools.ErrorCluster.description" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.ErrorCluster.to_dict">
+<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/models/tools/error_cluster.html#ErrorCluster.to_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.models.tools.ErrorCluster.to_dict" title="Link to this definition"></a></dt>
+<dd><p>Convert cluster to dictionary format for LLM prompts.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></span></p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>Dictionary with cluster_label and description keys</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.FaithfulnessErrorCluster">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agent_inspect.models.tools.</span></span><span class="sig-name descname"><span class="pre">FaithfulnessErrorCluster</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cluster_label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Faithfulness</span> <span class="pre">Error</span> <span class="pre">(Ungrounded)'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&quot;Agent's</span> <span class="pre">response</span> <span class="pre">contradicts</span> <span class="pre">or</span> <span class="pre">is</span> <span class="pre">not</span> <span class="pre">supported</span> <span class="pre">by</span> <span class="pre">the</span> <span class="pre">output</span> <span class="pre">of</span> <span class="pre">the</span> <span class="pre">tools</span> <span class="pre">it</span> <span class="pre">used.&quot;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/models/tools/error_cluster.html#FaithfulnessErrorCluster"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.models.tools.FaithfulnessErrorCluster" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#agent_inspect.models.tools.error_cluster.ErrorCluster" title="agent_inspect.models.tools.error_cluster.ErrorCluster"><code class="xref py py-class docutils literal notranslate"><span class="pre">ErrorCluster</span></code></a></p>
+<p>Agent’s response contradicts or is not supported by the output of the tools it used.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cluster_label</strong> (<em>str</em>)</p></li>
+<li><p><strong>description</strong> (<em>str</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.FaithfulnessErrorCluster.cluster_label">
+<span class="sig-name descname"><span class="pre">cluster_label</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Faithfulness</span> <span class="pre">Error</span> <span class="pre">(Ungrounded)'</span></em><a class="headerlink" href="#agent_inspect.models.tools.FaithfulnessErrorCluster.cluster_label" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.FaithfulnessErrorCluster.description">
+<span class="sig-name descname"><span class="pre">description</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&quot;Agent's</span> <span class="pre">response</span> <span class="pre">contradicts</span> <span class="pre">or</span> <span class="pre">is</span> <span class="pre">not</span> <span class="pre">supported</span> <span class="pre">by</span> <span class="pre">the</span> <span class="pre">output</span> <span class="pre">of</span> <span class="pre">the</span> <span class="pre">tools</span> <span class="pre">it</span> <span class="pre">used.&quot;</span></em><a class="headerlink" href="#agent_inspect.models.tools.FaithfulnessErrorCluster.description" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.IncompleteCommunicationCluster">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agent_inspect.models.tools.</span></span><span class="sig-name descname"><span class="pre">IncompleteCommunicationCluster</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cluster_label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Incomplete</span> <span class="pre">or</span> <span class="pre">Vague</span> <span class="pre">Communication'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&quot;Agent's</span> <span class="pre">response</span> <span class="pre">is</span> <span class="pre">missing</span> <span class="pre">necessary</span> <span class="pre">information</span> <span class="pre">or</span> <span class="pre">is</span> <span class="pre">too</span> <span class="pre">vague</span> <span class="pre">to</span> <span class="pre">be</span> <span class="pre">useful.&quot;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/models/tools/error_cluster.html#IncompleteCommunicationCluster"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.models.tools.IncompleteCommunicationCluster" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#agent_inspect.models.tools.error_cluster.ErrorCluster" title="agent_inspect.models.tools.error_cluster.ErrorCluster"><code class="xref py py-class docutils literal notranslate"><span class="pre">ErrorCluster</span></code></a></p>
+<p>Agent’s response is missing necessary information or is too vague to be useful.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cluster_label</strong> (<em>str</em>)</p></li>
+<li><p><strong>description</strong> (<em>str</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.IncompleteCommunicationCluster.cluster_label">
+<span class="sig-name descname"><span class="pre">cluster_label</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Incomplete</span> <span class="pre">or</span> <span class="pre">Vague</span> <span class="pre">Communication'</span></em><a class="headerlink" href="#agent_inspect.models.tools.IncompleteCommunicationCluster.cluster_label" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.IncompleteCommunicationCluster.description">
+<span class="sig-name descname"><span class="pre">description</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&quot;Agent's</span> <span class="pre">response</span> <span class="pre">is</span> <span class="pre">missing</span> <span class="pre">necessary</span> <span class="pre">information</span> <span class="pre">or</span> <span class="pre">is</span> <span class="pre">too</span> <span class="pre">vague</span> <span class="pre">to</span> <span class="pre">be</span> <span class="pre">useful.&quot;</span></em><a class="headerlink" href="#agent_inspect.models.tools.IncompleteCommunicationCluster.description" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.IncorrectToolInputCluster">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agent_inspect.models.tools.</span></span><span class="sig-name descname"><span class="pre">IncorrectToolInputCluster</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cluster_label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Incorrect</span> <span class="pre">Tool</span> <span class="pre">Input'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Agent</span> <span class="pre">called</span> <span class="pre">a</span> <span class="pre">tool</span> <span class="pre">with</span> <span class="pre">incorrect,</span> <span class="pre">missing,</span> <span class="pre">or</span> <span class="pre">malformed</span> <span class="pre">input</span> <span class="pre">parameters.'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/models/tools/error_cluster.html#IncorrectToolInputCluster"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.models.tools.IncorrectToolInputCluster" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#agent_inspect.models.tools.error_cluster.ErrorCluster" title="agent_inspect.models.tools.error_cluster.ErrorCluster"><code class="xref py py-class docutils literal notranslate"><span class="pre">ErrorCluster</span></code></a></p>
+<p>Agent called a tool with incorrect, missing, or malformed input parameters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cluster_label</strong> (<em>str</em>)</p></li>
+<li><p><strong>description</strong> (<em>str</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.IncorrectToolInputCluster.cluster_label">
+<span class="sig-name descname"><span class="pre">cluster_label</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Incorrect</span> <span class="pre">Tool</span> <span class="pre">Input'</span></em><a class="headerlink" href="#agent_inspect.models.tools.IncorrectToolInputCluster.cluster_label" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.IncorrectToolInputCluster.description">
+<span class="sig-name descname"><span class="pre">description</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Agent</span> <span class="pre">called</span> <span class="pre">a</span> <span class="pre">tool</span> <span class="pre">with</span> <span class="pre">incorrect,</span> <span class="pre">missing,</span> <span class="pre">or</span> <span class="pre">malformed</span> <span class="pre">input</span> <span class="pre">parameters.'</span></em><a class="headerlink" href="#agent_inspect.models.tools.IncorrectToolInputCluster.description" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.IncorrectToolOutputHandlingCluster">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agent_inspect.models.tools.</span></span><span class="sig-name descname"><span class="pre">IncorrectToolOutputHandlingCluster</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cluster_label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Incorrect</span> <span class="pre">Tool</span> <span class="pre">Output</span> <span class="pre">Handling'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Agent</span> <span class="pre">failed</span> <span class="pre">to</span> <span class="pre">correctly</span> <span class="pre">interpret,</span> <span class="pre">parse,</span> <span class="pre">or</span> <span class="pre">use</span> <span class="pre">the</span> <span class="pre">output</span> <span class="pre">returned</span> <span class="pre">by</span> <span class="pre">a</span> <span class="pre">tool.'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/models/tools/error_cluster.html#IncorrectToolOutputHandlingCluster"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.models.tools.IncorrectToolOutputHandlingCluster" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#agent_inspect.models.tools.error_cluster.ErrorCluster" title="agent_inspect.models.tools.error_cluster.ErrorCluster"><code class="xref py py-class docutils literal notranslate"><span class="pre">ErrorCluster</span></code></a></p>
+<p>Agent failed to correctly interpret, parse, or use the output returned by a tool.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cluster_label</strong> (<em>str</em>)</p></li>
+<li><p><strong>description</strong> (<em>str</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.IncorrectToolOutputHandlingCluster.cluster_label">
+<span class="sig-name descname"><span class="pre">cluster_label</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Incorrect</span> <span class="pre">Tool</span> <span class="pre">Output</span> <span class="pre">Handling'</span></em><a class="headerlink" href="#agent_inspect.models.tools.IncorrectToolOutputHandlingCluster.cluster_label" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.IncorrectToolOutputHandlingCluster.description">
+<span class="sig-name descname"><span class="pre">description</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Agent</span> <span class="pre">failed</span> <span class="pre">to</span> <span class="pre">correctly</span> <span class="pre">interpret,</span> <span class="pre">parse,</span> <span class="pre">or</span> <span class="pre">use</span> <span class="pre">the</span> <span class="pre">output</span> <span class="pre">returned</span> <span class="pre">by</span> <span class="pre">a</span> <span class="pre">tool.'</span></em><a class="headerlink" href="#agent_inspect.models.tools.IncorrectToolOutputHandlingCluster.description" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.InstructionFollowingErrorCluster">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agent_inspect.models.tools.</span></span><span class="sig-name descname"><span class="pre">InstructionFollowingErrorCluster</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cluster_label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Instruction</span> <span class="pre">Following</span> <span class="pre">Error'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Agent</span> <span class="pre">failed</span> <span class="pre">to</span> <span class="pre">follow</span> <span class="pre">explicit</span> <span class="pre">instructions</span> <span class="pre">or</span> <span class="pre">constraints</span> <span class="pre">from</span> <span class="pre">the</span> <span class="pre">user.'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/models/tools/error_cluster.html#InstructionFollowingErrorCluster"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.models.tools.InstructionFollowingErrorCluster" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#agent_inspect.models.tools.error_cluster.ErrorCluster" title="agent_inspect.models.tools.error_cluster.ErrorCluster"><code class="xref py py-class docutils literal notranslate"><span class="pre">ErrorCluster</span></code></a></p>
+<p>Agent failed to follow explicit instructions or constraints from the user.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cluster_label</strong> (<em>str</em>)</p></li>
+<li><p><strong>description</strong> (<em>str</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.InstructionFollowingErrorCluster.cluster_label">
+<span class="sig-name descname"><span class="pre">cluster_label</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Instruction</span> <span class="pre">Following</span> <span class="pre">Error'</span></em><a class="headerlink" href="#agent_inspect.models.tools.InstructionFollowingErrorCluster.cluster_label" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.InstructionFollowingErrorCluster.description">
+<span class="sig-name descname"><span class="pre">description</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Agent</span> <span class="pre">failed</span> <span class="pre">to</span> <span class="pre">follow</span> <span class="pre">explicit</span> <span class="pre">instructions</span> <span class="pre">or</span> <span class="pre">constraints</span> <span class="pre">from</span> <span class="pre">the</span> <span class="pre">user.'</span></em><a class="headerlink" href="#agent_inspect.models.tools.InstructionFollowingErrorCluster.description" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.LogicalReasoningErrorCluster">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agent_inspect.models.tools.</span></span><span class="sig-name descname"><span class="pre">LogicalReasoningErrorCluster</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cluster_label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Logical</span> <span class="pre">Reasoning</span> <span class="pre">Error'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&quot;Agent's</span> <span class="pre">reasoning</span> <span class="pre">process</span> <span class="pre">was</span> <span class="pre">flawed,</span> <span class="pre">got</span> <span class="pre">stuck</span> <span class="pre">in</span> <span class="pre">a</span> <span class="pre">loop,</span> <span class="pre">or</span> <span class="pre">gave</span> <span class="pre">up</span> <span class="pre">before</span> <span class="pre">the</span> <span class="pre">task</span> <span class="pre">was</span> <span class="pre">complete.&quot;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/models/tools/error_cluster.html#LogicalReasoningErrorCluster"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.models.tools.LogicalReasoningErrorCluster" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#agent_inspect.models.tools.error_cluster.ErrorCluster" title="agent_inspect.models.tools.error_cluster.ErrorCluster"><code class="xref py py-class docutils literal notranslate"><span class="pre">ErrorCluster</span></code></a></p>
+<p>Agent’s reasoning process was flawed, got stuck in a loop, or gave up before the task was complete.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cluster_label</strong> (<em>str</em>)</p></li>
+<li><p><strong>description</strong> (<em>str</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.LogicalReasoningErrorCluster.cluster_label">
+<span class="sig-name descname"><span class="pre">cluster_label</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Logical</span> <span class="pre">Reasoning</span> <span class="pre">Error'</span></em><a class="headerlink" href="#agent_inspect.models.tools.LogicalReasoningErrorCluster.cluster_label" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.LogicalReasoningErrorCluster.description">
+<span class="sig-name descname"><span class="pre">description</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&quot;Agent's</span> <span class="pre">reasoning</span> <span class="pre">process</span> <span class="pre">was</span> <span class="pre">flawed,</span> <span class="pre">got</span> <span class="pre">stuck</span> <span class="pre">in</span> <span class="pre">a</span> <span class="pre">loop,</span> <span class="pre">or</span> <span class="pre">gave</span> <span class="pre">up</span> <span class="pre">before</span> <span class="pre">the</span> <span class="pre">task</span> <span class="pre">was</span> <span class="pre">complete.&quot;</span></em><a class="headerlink" href="#agent_inspect.models.tools.LogicalReasoningErrorCluster.description" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.MissedToolCallCluster">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agent_inspect.models.tools.</span></span><span class="sig-name descname"><span class="pre">MissedToolCallCluster</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cluster_label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Missed</span> <span class="pre">Tool</span> <span class="pre">Call'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Agent</span> <span class="pre">failed</span> <span class="pre">to</span> <span class="pre">call</span> <span class="pre">a</span> <span class="pre">necessary</span> <span class="pre">tool</span> <span class="pre">to</span> <span class="pre">complete</span> <span class="pre">the</span> <span class="pre">subgoal.'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/models/tools/error_cluster.html#MissedToolCallCluster"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.models.tools.MissedToolCallCluster" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#agent_inspect.models.tools.error_cluster.ErrorCluster" title="agent_inspect.models.tools.error_cluster.ErrorCluster"><code class="xref py py-class docutils literal notranslate"><span class="pre">ErrorCluster</span></code></a></p>
+<p>Agent failed to call a necessary tool to complete the subgoal.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cluster_label</strong> (<em>str</em>)</p></li>
+<li><p><strong>description</strong> (<em>str</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.MissedToolCallCluster.cluster_label">
+<span class="sig-name descname"><span class="pre">cluster_label</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Missed</span> <span class="pre">Tool</span> <span class="pre">Call'</span></em><a class="headerlink" href="#agent_inspect.models.tools.MissedToolCallCluster.cluster_label" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.MissedToolCallCluster.description">
+<span class="sig-name descname"><span class="pre">description</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Agent</span> <span class="pre">failed</span> <span class="pre">to</span> <span class="pre">call</span> <span class="pre">a</span> <span class="pre">necessary</span> <span class="pre">tool</span> <span class="pre">to</span> <span class="pre">complete</span> <span class="pre">the</span> <span class="pre">subgoal.'</span></em><a class="headerlink" href="#agent_inspect.models.tools.MissedToolCallCluster.description" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.StatisticAnalysisResult">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agent_inspect.models.tools.</span></span><span class="sig-name descname"><span class="pre">StatisticAnalysisResult</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_sample_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subgoal_validations</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">judge_expectation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">judge_std</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent_run_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/models/tools/analysis_models.html#StatisticAnalysisResult"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.models.tools.StatisticAnalysisResult" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents the statistical analysis result for a single data sample.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data_sample_id</strong> (<em>int</em>)</p></li>
+<li><p><strong>subgoal_validations</strong> (<em>List</em><em>[</em><a class="reference internal" href="agent_inspect.models.metrics.html#agent_inspect.models.metrics.validation_result.SubGoalValidationResult" title="agent_inspect.models.metrics.validation_result.SubGoalValidationResult"><em>SubGoalValidationResult</em></a><em>]</em>)</p></li>
+<li><p><strong>judge_expectation</strong> (<em>float</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>judge_std</strong> (<em>float</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>agent_run_id</strong> (<em>int</em><em> | </em><em>None</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.StatisticAnalysisResult.agent_run_id">
+<span class="sig-name descname"><span class="pre">agent_run_id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#agent_inspect.models.tools.StatisticAnalysisResult.agent_run_id" title="Link to this definition"></a></dt>
+<dd><p>Unique identifier for the agent run associated with this data sample.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.StatisticAnalysisResult.data_sample_id">
+<span class="sig-name descname"><span class="pre">data_sample_id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></em><a class="headerlink" href="#agent_inspect.models.tools.StatisticAnalysisResult.data_sample_id" title="Link to this definition"></a></dt>
+<dd><p>The unique identifier of the data sample that this statistic analysis result corresponds to.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.StatisticAnalysisResult.judge_expectation">
+<span class="sig-name descname"><span class="pre">judge_expectation</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#agent_inspect.models.tools.StatisticAnalysisResult.judge_expectation" title="Link to this definition"></a></dt>
+<dd><p>The computed expectation (mean) of judge scores across all subgoals in one data sample.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.StatisticAnalysisResult.judge_std">
+<span class="sig-name descname"><span class="pre">judge_std</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#agent_inspect.models.tools.StatisticAnalysisResult.judge_std" title="Link to this definition"></a></dt>
+<dd><p>The computed standard deviation of judge scores across all subgoals in one data sample.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.StatisticAnalysisResult.subgoal_validations">
+<span class="sig-name descname"><span class="pre">subgoal_validations</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code><span class="pre">[</span><a class="reference internal" href="agent_inspect.models.metrics.html#agent_inspect.models.metrics.validation_result.SubGoalValidationResult" title="agent_inspect.models.metrics.validation_result.SubGoalValidationResult"><code class="xref py py-class docutils literal notranslate"><span class="pre">SubGoalValidationResult</span></code></a><span class="pre">]</span></em><a class="headerlink" href="#agent_inspect.models.tools.StatisticAnalysisResult.subgoal_validations" title="Link to this definition"></a></dt>
+<dd><p>A list of subgoal validation results to perform error analysis on.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.SubgoalErrorAnalysisDataSample">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agent_inspect.models.tools.</span></span><span class="sig-name descname"><span class="pre">SubgoalErrorAnalysisDataSample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_sample_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent_run_id=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subgoal_validations=&lt;factory&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/models/tools/analysis_models.html#SubgoalErrorAnalysisDataSample"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.models.tools.SubgoalErrorAnalysisDataSample" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#agent_inspect.models.tools.analysis_models.ErrorAnalysisDataSample" title="agent_inspect.models.tools.analysis_models.ErrorAnalysisDataSample"><code class="xref py py-class docutils literal notranslate"><span class="pre">ErrorAnalysisDataSample</span></code></a></p>
+<p>Represents a single data sample with its associated subgoal validations.</p>
+<p>Note: subgoal_validations is technically optional with an empty default to satisfy
+dataclass inheritance constraints, but in practice should always be provided.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data_sample_id</strong> (<em>int</em>)</p></li>
+<li><p><strong>agent_run_id</strong> (<em>int</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>subgoal_validations</strong> (<em>List</em><em>[</em><a class="reference internal" href="agent_inspect.models.metrics.html#agent_inspect.models.metrics.validation_result.SubGoalValidationResult" title="agent_inspect.models.metrics.validation_result.SubGoalValidationResult"><em>SubGoalValidationResult</em></a><em>]</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.SubgoalErrorAnalysisDataSample.data_sample_id">
+<span class="sig-name descname"><span class="pre">data_sample_id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></em><a class="headerlink" href="#agent_inspect.models.tools.SubgoalErrorAnalysisDataSample.data_sample_id" title="Link to this definition"></a></dt>
+<dd><p>Unique identifier for the data sample. Final results of error analysis will reference this id.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.SubgoalErrorAnalysisDataSample.subgoal_validations">
+<span class="sig-name descname"><span class="pre">subgoal_validations</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code><span class="pre">[</span><a class="reference internal" href="agent_inspect.models.metrics.html#agent_inspect.models.metrics.validation_result.SubGoalValidationResult" title="agent_inspect.models.metrics.validation_result.SubGoalValidationResult"><code class="xref py py-class docutils literal notranslate"><span class="pre">SubGoalValidationResult</span></code></a><span class="pre">]</span></em><a class="headerlink" href="#agent_inspect.models.tools.SubgoalErrorAnalysisDataSample.subgoal_validations" title="Link to this definition"></a></dt>
+<dd><p>A list of ordered subgoal validation results to perform error analysis on.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.SubgoalErrorAnalysisResult">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agent_inspect.models.tools.</span></span><span class="sig-name descname"><span class="pre">SubgoalErrorAnalysisResult</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">analyzed_validations_clustered_by_errors</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">completed_subgoal_validations=&lt;factory&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/models/tools/analysis_models.html#SubgoalErrorAnalysisResult"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.models.tools.SubgoalErrorAnalysisResult" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#agent_inspect.models.tools.analysis_models.ErrorAnalysisResult" title="agent_inspect.models.tools.analysis_models.ErrorAnalysisResult"><code class="xref py py-class docutils literal notranslate"><span class="pre">ErrorAnalysisResult</span></code></a>[<a class="reference internal" href="#agent_inspect.models.tools.analysis_models.AnalyzedSubgoalValidation" title="agent_inspect.models.tools.analysis_models.AnalyzedSubgoalValidation"><code class="xref py py-class docutils literal notranslate"><span class="pre">AnalyzedSubgoalValidation</span></code></a>]</p>
+<p>Represents the overall error analysis result for a set of data samples (subgoal-based).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>analyzed_validations_clustered_by_errors</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>List</em><em>[</em><em>T</em><em>]</em><em>]</em>)</p></li>
+<li><p><strong>completed_subgoal_validations</strong> (<em>List</em><em>[</em><a class="reference internal" href="#agent_inspect.models.tools.analysis_models.AnalyzedSubgoalValidation" title="agent_inspect.models.tools.analysis_models.AnalyzedSubgoalValidation"><em>AnalyzedSubgoalValidation</em></a><em>]</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.SubgoalErrorAnalysisResult.analyzed_validations_clustered_by_errors">
+<span class="sig-name descname"><span class="pre">analyzed_validations_clustered_by_errors</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">TypeVar</span></code><span class="pre">(</span><code class="docutils literal notranslate"><span class="pre">T</span></code><span class="pre">,</span> <span class="pre">bound=</span> <a class="reference internal" href="#agent_inspect.models.tools.analysis_models.AnalyzedValidation" title="agent_inspect.models.tools.analysis_models.AnalyzedValidation"><code class="xref py py-class docutils literal notranslate"><span class="pre">AnalyzedValidation</span></code></a><span class="pre">)]]</span></em><a class="headerlink" href="#agent_inspect.models.tools.SubgoalErrorAnalysisResult.analyzed_validations_clustered_by_errors" title="Link to this definition"></a></dt>
+<dd><p>A mapping from error cluster labels to lists of analyzed validations that exhibit those errors.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.SubgoalErrorAnalysisResult.completed_subgoal_validations">
+<span class="sig-name descname"><span class="pre">completed_subgoal_validations</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code><span class="pre">[</span><a class="reference internal" href="#agent_inspect.models.tools.analysis_models.AnalyzedSubgoalValidation" title="agent_inspect.models.tools.analysis_models.AnalyzedSubgoalValidation"><code class="xref py py-class docutils literal notranslate"><span class="pre">AnalyzedSubgoalValidation</span></code></a><span class="pre">]</span></em><a class="headerlink" href="#agent_inspect.models.tools.SubgoalErrorAnalysisResult.completed_subgoal_validations" title="Link to this definition"></a></dt>
+<dd><p>A list of analyzed subgoal validations consisting of the subgoal validations
+that were marked completed, and thus have no associated errors.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.ToolCallErrorAnalysisDataSample">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agent_inspect.models.tools.</span></span><span class="sig-name descname"><span class="pre">ToolCallErrorAnalysisDataSample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_sample_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent_run_id=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tool_call_validations=&lt;factory&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/models/tools/analysis_models.html#ToolCallErrorAnalysisDataSample"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.models.tools.ToolCallErrorAnalysisDataSample" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#agent_inspect.models.tools.analysis_models.ErrorAnalysisDataSample" title="agent_inspect.models.tools.analysis_models.ErrorAnalysisDataSample"><code class="xref py py-class docutils literal notranslate"><span class="pre">ErrorAnalysisDataSample</span></code></a></p>
+<p>Represents a single data sample with its associated tool call validations.</p>
+<p>Note: tool_call_validations is technically optional with an empty default to satisfy
+dataclass inheritance constraints, but in practice should always be provided.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data_sample_id</strong> (<em>int</em>)</p></li>
+<li><p><strong>agent_run_id</strong> (<em>int</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>tool_call_validations</strong> (<em>List</em><em>[</em><a class="reference internal" href="agent_inspect.models.metrics.html#agent_inspect.models.metrics.validation_result.ToolCallValidationResult" title="agent_inspect.models.metrics.validation_result.ToolCallValidationResult"><em>ToolCallValidationResult</em></a><em>]</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.ToolCallErrorAnalysisDataSample.data_sample_id">
+<span class="sig-name descname"><span class="pre">data_sample_id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></em><a class="headerlink" href="#agent_inspect.models.tools.ToolCallErrorAnalysisDataSample.data_sample_id" title="Link to this definition"></a></dt>
+<dd><p>Unique identifier for the data sample. Final results of error analysis will reference this id.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.ToolCallErrorAnalysisDataSample.tool_call_validations">
+<span class="sig-name descname"><span class="pre">tool_call_validations</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code><span class="pre">[</span><a class="reference internal" href="agent_inspect.models.metrics.html#agent_inspect.models.metrics.validation_result.ToolCallValidationResult" title="agent_inspect.models.metrics.validation_result.ToolCallValidationResult"><code class="xref py py-class docutils literal notranslate"><span class="pre">ToolCallValidationResult</span></code></a><span class="pre">]</span></em><a class="headerlink" href="#agent_inspect.models.tools.ToolCallErrorAnalysisDataSample.tool_call_validations" title="Link to this definition"></a></dt>
+<dd><p>A list of tool call validation results to perform error analysis on.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.ToolCallErrorAnalysisResult">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agent_inspect.models.tools.</span></span><span class="sig-name descname"><span class="pre">ToolCallErrorAnalysisResult</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">analyzed_validations_clustered_by_errors</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/models/tools/analysis_models.html#ToolCallErrorAnalysisResult"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.models.tools.ToolCallErrorAnalysisResult" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#agent_inspect.models.tools.analysis_models.ErrorAnalysisResult" title="agent_inspect.models.tools.analysis_models.ErrorAnalysisResult"><code class="xref py py-class docutils literal notranslate"><span class="pre">ErrorAnalysisResult</span></code></a>[<a class="reference internal" href="#agent_inspect.models.tools.analysis_models.AnalyzedToolValidation" title="agent_inspect.models.tools.analysis_models.AnalyzedToolValidation"><code class="xref py py-class docutils literal notranslate"><span class="pre">AnalyzedToolValidation</span></code></a>]</p>
+<p>Represents the overall error analysis result for a set of tool validation data samples.</p>
+<p>This result only contains failed validations clustered by error type.
+Passed validations are not included as they don’t require error analysis.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>analyzed_validations_clustered_by_errors</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>List</em><em>[</em><em>T</em><em>]</em><em>]</em>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.UnclassifiedErrorCluster">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agent_inspect.models.tools.</span></span><span class="sig-name descname"><span class="pre">UnclassifiedErrorCluster</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cluster_label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Unclassified'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Errors</span> <span class="pre">that</span> <span class="pre">do</span> <span class="pre">not</span> <span class="pre">fit</span> <span class="pre">into</span> <span class="pre">any</span> <span class="pre">of</span> <span class="pre">the</span> <span class="pre">other</span> <span class="pre">predefined</span> <span class="pre">error</span> <span class="pre">categories.</span> <span class="pre">'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/models/tools/error_cluster.html#UnclassifiedErrorCluster"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.models.tools.UnclassifiedErrorCluster" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#agent_inspect.models.tools.error_cluster.ErrorCluster" title="agent_inspect.models.tools.error_cluster.ErrorCluster"><code class="xref py py-class docutils literal notranslate"><span class="pre">ErrorCluster</span></code></a></p>
+<p>Errors that do not fit into any of the other predefined categories.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cluster_label</strong> (<em>str</em>)</p></li>
+<li><p><strong>description</strong> (<em>str</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.UnclassifiedErrorCluster.cluster_label">
+<span class="sig-name descname"><span class="pre">cluster_label</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Unclassified'</span></em><a class="headerlink" href="#agent_inspect.models.tools.UnclassifiedErrorCluster.cluster_label" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.UnclassifiedErrorCluster.description">
+<span class="sig-name descname"><span class="pre">description</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Errors</span> <span class="pre">that</span> <span class="pre">do</span> <span class="pre">not</span> <span class="pre">fit</span> <span class="pre">into</span> <span class="pre">any</span> <span class="pre">of</span> <span class="pre">the</span> <span class="pre">other</span> <span class="pre">predefined</span> <span class="pre">error</span> <span class="pre">categories.</span> <span class="pre">'</span></em><a class="headerlink" href="#agent_inspect.models.tools.UnclassifiedErrorCluster.description" title="Link to this definition"></a></dt>
+<dd><p>Also use this when you cannot identify a clear agent behavior or decision that caused the failure.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.WrongToolSelectionCluster">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agent_inspect.models.tools.</span></span><span class="sig-name descname"><span class="pre">WrongToolSelectionCluster</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cluster_label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Wrong</span> <span class="pre">Tool</span> <span class="pre">Selection'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Agent</span> <span class="pre">selected</span> <span class="pre">the</span> <span class="pre">wrong</span> <span class="pre">tool</span> <span class="pre">for</span> <span class="pre">the</span> <span class="pre">task</span> <span class="pre">or</span> <span class="pre">called</span> <span class="pre">tools</span> <span class="pre">in</span> <span class="pre">an</span> <span class="pre">incorrect</span> <span class="pre">sequence.'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/models/tools/error_cluster.html#WrongToolSelectionCluster"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.models.tools.WrongToolSelectionCluster" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#agent_inspect.models.tools.error_cluster.ErrorCluster" title="agent_inspect.models.tools.error_cluster.ErrorCluster"><code class="xref py py-class docutils literal notranslate"><span class="pre">ErrorCluster</span></code></a></p>
+<p>Agent selected the wrong tool for the task or called tools in an incorrect sequence.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cluster_label</strong> (<em>str</em>)</p></li>
+<li><p><strong>description</strong> (<em>str</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.WrongToolSelectionCluster.cluster_label">
+<span class="sig-name descname"><span class="pre">cluster_label</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Wrong</span> <span class="pre">Tool</span> <span class="pre">Selection'</span></em><a class="headerlink" href="#agent_inspect.models.tools.WrongToolSelectionCluster.cluster_label" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.tools.WrongToolSelectionCluster.description">
+<span class="sig-name descname"><span class="pre">description</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Agent</span> <span class="pre">selected</span> <span class="pre">the</span> <span class="pre">wrong</span> <span class="pre">tool</span> <span class="pre">for</span> <span class="pre">the</span> <span class="pre">task</span> <span class="pre">or</span> <span class="pre">called</span> <span class="pre">tools</span> <span class="pre">in</span> <span class="pre">an</span> <span class="pre">incorrect</span> <span class="pre">sequence.'</span></em><a class="headerlink" href="#agent_inspect.models.tools.WrongToolSelectionCluster.description" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="agent_inspect.models.metrics.html" class="btn btn-neutral float-left" title="agent_inspect.models.metrics package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="agent_inspect.models.user_proxy.html" class="btn btn-neutral float-right" title="agent_inspect.models.user_proxy package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, &#34;&#34;.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

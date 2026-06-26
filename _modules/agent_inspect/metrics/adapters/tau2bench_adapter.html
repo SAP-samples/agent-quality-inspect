@@ -1,0 +1,291 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>agent_inspect.metrics.adapters.tau2bench_adapter &mdash; agent_inspect 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/custom.css?v=eea1f72d" />
+
+  
+      <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../_static/documentation_options.js?v=f2a433a1"></script>
+      <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            agent_inspect
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules.html">agent_inspect</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">agent_inspect</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">agent_inspect.metrics.adapters.tau2bench_adapter</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for agent_inspect.metrics.adapters.tau2bench_adapter</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.metrics.adapters.base_adapter</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseAdapter</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.models.metrics.agent_trace</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">AgentDialogueTrace</span><span class="p">,</span>
+    <span class="n">TurnTrace</span><span class="p">,</span>
+    <span class="n">Step</span><span class="p">,</span>
+    <span class="n">AgentResponse</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.models.metrics.agent_data_sample</span><span class="w"> </span><span class="kn">import</span> <span class="n">ToolInputParameter</span>
+
+
+<div class="viewcode-block" id="Tau2BenchAdapter">
+<a class="viewcode-back" href="../../../../agent_inspect.metrics.adapters.html#agent_inspect.metrics.adapters.tau2bench_adapter.Tau2BenchAdapter">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Tau2BenchAdapter</span><span class="p">(</span><span class="n">BaseAdapter</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Adapter for converting tau2bench conversation format to AgentDialogueTrace format.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Tau2BenchAdapter.convert_to_agent_trace">
+<a class="viewcode-back" href="../../../../agent_inspect.metrics.adapters.html#agent_inspect.metrics.adapters.tau2bench_adapter.Tau2BenchAdapter.convert_to_agent_trace">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">convert_to_agent_trace</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">conversation_data</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]]</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AgentDialogueTrace</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Convert tau2bench conversation format to AgentDialogueTrace format.</span>
+
+<span class="sd">        :param conversation_data: List of conversation turns, each containing role-based messages.</span>
+<span class="sd">        :return: Converted agent trace.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">turns</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">for</span> <span class="n">turn_idx</span><span class="p">,</span> <span class="n">turn_messages</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">conversation_data</span><span class="p">):</span>
+            <span class="n">turn_trace</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_process_turn</span><span class="p">(</span><span class="n">turn_messages</span><span class="p">,</span> <span class="n">turn_idx</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">turn_trace</span><span class="p">:</span>  <span class="c1"># Only add turns with user input</span>
+                <span class="n">turns</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">turn_trace</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">AgentDialogueTrace</span><span class="p">(</span><span class="n">turns</span><span class="o">=</span><span class="n">turns</span><span class="p">)</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_process_turn</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">turn_messages</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]],</span> <span class="n">turn_idx</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">TurnTrace</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Process a single conversation turn into a TurnTrace.</span>
+
+<span class="sd">        :param turn_messages: List of messages in this turn</span>
+<span class="sd">        :param turn_idx: Index of this turn</span>
+<span class="sd">        :return: TurnTrace object or None if no user input found</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">user_input</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_extract_user_input</span><span class="p">(</span><span class="n">turn_messages</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">user_input</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="n">agent_response</span><span class="p">,</span> <span class="n">steps</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_process_agent_messages</span><span class="p">(</span><span class="n">turn_messages</span><span class="p">,</span> <span class="n">turn_idx</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">TurnTrace</span><span class="p">(</span>
+            <span class="nb">id</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;turn_</span><span class="si">{</span><span class="n">turn_idx</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+            <span class="n">agent_input</span><span class="o">=</span><span class="n">user_input</span><span class="p">,</span>
+            <span class="n">agent_response</span><span class="o">=</span><span class="n">agent_response</span><span class="p">,</span>
+            <span class="n">from_id</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;turn_</span><span class="si">{</span><span class="n">turn_idx</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">if</span> <span class="n">turn_idx</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">steps</span><span class="o">=</span><span class="n">steps</span><span class="p">,</span>
+            <span class="n">latency_in_ms</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_extract_user_input</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">turn_messages</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Extract user input from turn messages.</span>
+
+<span class="sd">        :param turn_messages: List of messages in the turn</span>
+<span class="sd">        :return: User input content or None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">message</span> <span class="ow">in</span> <span class="n">turn_messages</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">message</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;role&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;user&quot;</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">message</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;content&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_process_agent_messages</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">turn_messages</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]],</span> <span class="n">turn_idx</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Optional</span><span class="p">[</span><span class="n">AgentResponse</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="n">Step</span><span class="p">]]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Process agent messages to extract response and tool steps.</span>
+
+<span class="sd">        :param turn_messages: List of messages in the turn</span>
+<span class="sd">        :param turn_idx: Index of this turn</span>
+<span class="sd">        :return: Tuple of (agent_response, steps)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">agent_response</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">steps</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">for</span> <span class="n">message</span> <span class="ow">in</span> <span class="n">turn_messages</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">message</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;role&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;agent&quot;</span><span class="p">:</span>
+                <span class="c1"># Process tool calls first</span>
+                <span class="n">tool_calls</span> <span class="o">=</span> <span class="n">message</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;tool_calls&quot;</span><span class="p">,</span> <span class="p">[])</span>
+                <span class="k">if</span> <span class="n">tool_calls</span><span class="p">:</span>
+                    <span class="n">new_steps</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_process_tool_calls</span><span class="p">(</span>
+                        <span class="n">tool_calls</span><span class="p">,</span> <span class="n">turn_messages</span><span class="p">,</span> <span class="n">turn_idx</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">steps</span><span class="p">)</span>
+                    <span class="p">)</span>
+                    <span class="n">steps</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">new_steps</span><span class="p">)</span>
+
+                <span class="c1"># Process agent response content</span>
+                <span class="n">content</span> <span class="o">=</span> <span class="n">message</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;content&quot;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">content</span><span class="p">:</span>
+                    <span class="n">agent_response</span> <span class="o">=</span> <span class="n">AgentResponse</span><span class="p">(</span><span class="n">response</span><span class="o">=</span><span class="n">content</span><span class="p">,</span> <span class="n">status_code</span><span class="o">=</span><span class="s2">&quot;200&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">agent_response</span><span class="p">,</span> <span class="n">steps</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_process_tool_calls</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">tool_calls</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]],</span>
+        <span class="n">turn_messages</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]],</span>
+        <span class="n">turn_idx</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">step_offset</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Step</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Process tool calls into Step objects.</span>
+
+<span class="sd">        :param tool_calls: List of tool call dictionaries</span>
+<span class="sd">        :param turn_messages: All messages in the turn (to find tool responses)</span>
+<span class="sd">        :param turn_idx: Index of the current turn</span>
+<span class="sd">        :param step_offset: Current number of steps (for sequential numbering)</span>
+<span class="sd">        :return: List of Step objects</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">steps</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">for</span> <span class="n">step_idx</span><span class="p">,</span> <span class="n">tool_call</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">tool_calls</span><span class="p">):</span>
+            <span class="n">tool_input_args</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parse_tool_arguments</span><span class="p">(</span><span class="n">tool_call</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;arguments&quot;</span><span class="p">,</span> <span class="p">{}))</span>
+            <span class="n">tool_output</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_find_tool_output</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">tool_call</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">)),</span> <span class="n">turn_messages</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">tool_call</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">)</span>
+                <span class="k">else</span> <span class="kc">None</span>
+            <span class="p">)</span>
+            <span class="n">parent_ids</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_parent_ids</span><span class="p">(</span><span class="n">step_offset</span> <span class="o">+</span> <span class="n">step_idx</span><span class="p">,</span> <span class="n">turn_idx</span><span class="p">,</span> <span class="n">step_offset</span><span class="p">)</span>
+
+            <span class="n">step</span> <span class="o">=</span> <span class="n">Step</span><span class="p">(</span>
+                <span class="nb">id</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;turn_</span><span class="si">{</span><span class="n">turn_idx</span><span class="si">}</span><span class="s2">_step_</span><span class="si">{</span><span class="n">step_offset</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">step_idx</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+                <span class="n">parent_ids</span><span class="o">=</span><span class="n">parent_ids</span><span class="p">,</span>
+                <span class="n">tool</span><span class="o">=</span><span class="n">tool_call</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">),</span>
+                <span class="n">tool_input_args</span><span class="o">=</span><span class="n">tool_input_args</span><span class="p">,</span>
+                <span class="n">tool_output</span><span class="o">=</span><span class="n">tool_output</span><span class="p">,</span>
+                <span class="n">agent_thought</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                <span class="n">input_token_consumption</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                <span class="n">output_token_consumption</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                <span class="n">reasoning_token_consumption</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">steps</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">step</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">steps</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_parse_tool_arguments</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">arguments</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">ToolInputParameter</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Parse tool call arguments into ToolInputParameter objects.</span>
+
+<span class="sd">        :param arguments: Dictionary of tool arguments</span>
+<span class="sd">        :return: List of ToolInputParameter objects</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">tool_input_args</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">arguments</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">tool_input_args</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ToolInputParameter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">value</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">tool_input_args</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_find_tool_output</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">tool_call_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">turn_messages</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Find the tool output for a given tool call ID.</span>
+
+<span class="sd">        :param tool_call_id: ID of the tool call</span>
+<span class="sd">        :param turn_messages: All messages in the turn</span>
+<span class="sd">        :return: Tool output content or None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">message</span> <span class="ow">in</span> <span class="n">turn_messages</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">message</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;role&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;tool&quot;</span> <span class="ow">and</span> <span class="n">message</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;tool_id&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="n">tool_call_id</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">message</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;content&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_parent_ids</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">current_step_idx</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">turn_idx</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">step_offset</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get parent IDs for the current step.</span>
+
+<span class="sd">        :param current_step_idx: Index of current step within the turn</span>
+<span class="sd">        :param turn_idx: Index of the current turn</span>
+<span class="sd">        :param step_offset: Offset for step numbering</span>
+<span class="sd">        :return: List of parent step IDs</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">current_step_idx</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;turn_</span><span class="si">{</span><span class="n">turn_idx</span><span class="si">}</span><span class="s2">_step_</span><span class="si">{</span><span class="n">step_offset</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">current_step_idx</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="p">[]</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, &#34;&#34;.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

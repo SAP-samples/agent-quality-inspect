@@ -1,0 +1,312 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>agent_inspect.models package &mdash; agent_inspect 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=eea1f72d" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=f2a433a1"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="agent_inspect.models.metrics package" href="agent_inspect.models.metrics.html" />
+    <link rel="prev" title="agent_inspect.metrics.validator package" href="agent_inspect.metrics.validator.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            agent_inspect
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">agent_inspect</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">agent_inspect</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">agent_inspect</a></li>
+          <li class="breadcrumb-item"><a href="agent_inspect.html">agent_inspect package</a></li>
+      <li class="breadcrumb-item active">agent_inspect.models package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/agent_inspect.models.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="agent-inspect-models-package">
+<h1>agent_inspect.models package<a class="headerlink" href="#agent-inspect-models-package" title="Link to this heading"></a></h1>
+<section id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Link to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="agent_inspect.models.metrics.html">agent_inspect.models.metrics package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="agent_inspect.models.tools.html">agent_inspect.models.tools package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="agent_inspect.models.user_proxy.html">agent_inspect.models.user_proxy package</a></li>
+</ul>
+</div>
+</section>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-agent_inspect.models.llm_payload">
+<span id="agent-inspect-models-llm-payload-module"></span><h2>agent_inspect.models.llm_payload module<a class="headerlink" href="#module-agent_inspect.models.llm_payload" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="agent_inspect.models.llm_payload.LLMPayload">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agent_inspect.models.llm_payload.</span></span><span class="sig-name descname"><span class="pre">LLMPayload</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_prompt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">system_prompt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">temperature</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_tokens</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">structured_output</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/models/llm_payload.html#LLMPayload"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.models.llm_payload.LLMPayload" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents the payload to be sent to a Language Model (LLM) for processing.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>user_prompt</strong> (<em>str</em>)</p></li>
+<li><p><strong>model</strong> (<em>str</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>system_prompt</strong> (<em>str</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>temperature</strong> (<em>float</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>max_tokens</strong> (<em>int</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>structured_output</strong> (<em>Any</em><em> | </em><em>None</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.llm_payload.LLMPayload.max_tokens">
+<span class="sig-name descname"><span class="pre">max_tokens</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#agent_inspect.models.llm_payload.LLMPayload.max_tokens" title="Link to this definition"></a></dt>
+<dd><p>The maximum number of tokens to be generated in the LLM’s response.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.llm_payload.LLMPayload.model">
+<span class="sig-name descname"><span class="pre">model</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#agent_inspect.models.llm_payload.LLMPayload.model" title="Link to this definition"></a></dt>
+<dd><p>The specific LLM model to be used for processing the prompt.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.llm_payload.LLMPayload.structured_output">
+<span class="sig-name descname"><span class="pre">structured_output</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#agent_inspect.models.llm_payload.LLMPayload.structured_output" title="Link to this definition"></a></dt>
+<dd><p>An optional structured format for the LLM’s output, if applicable.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.llm_payload.LLMPayload.system_prompt">
+<span class="sig-name descname"><span class="pre">system_prompt</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#agent_inspect.models.llm_payload.LLMPayload.system_prompt" title="Link to this definition"></a></dt>
+<dd><p>The system-level prompt that provides context or instructions to the LLM.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.llm_payload.LLMPayload.temperature">
+<span class="sig-name descname"><span class="pre">temperature</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#agent_inspect.models.llm_payload.LLMPayload.temperature" title="Link to this definition"></a></dt>
+<dd><p>The temperature setting for the LLM, influencing the randomness of its output.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.llm_payload.LLMPayload.user_prompt">
+<span class="sig-name descname"><span class="pre">user_prompt</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#agent_inspect.models.llm_payload.LLMPayload.user_prompt" title="Link to this definition"></a></dt>
+<dd><p>The raw text prompt provided by the user to the LLM for processing.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-agent_inspect.models.llm_response">
+<span id="agent-inspect-models-llm-response-module"></span><h2>agent_inspect.models.llm_response module<a class="headerlink" href="#module-agent_inspect.models.llm_response" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="agent_inspect.models.llm_response.LLMResponse">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agent_inspect.models.llm_response.</span></span><span class="sig-name descname"><span class="pre">LLMResponse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">status</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">completion</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">error_message</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/models/llm_response.html#LLMResponse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.models.llm_response.LLMResponse" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents a response from a LLM.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>status</strong> (<em>int</em>)</p></li>
+<li><p><strong>completion</strong> (<em>str</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>error_message</strong> (<em>str</em><em> | </em><em>None</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.llm_response.LLMResponse.completion">
+<span class="sig-name descname"><span class="pre">completion</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#agent_inspect.models.llm_response.LLMResponse.completion" title="Link to this definition"></a></dt>
+<dd><p>Represents the text output generated by the LLM in response to an input prompt. Can be none if there is no output generated from the LLM due to an error.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.llm_response.LLMResponse.error_message">
+<span class="sig-name descname"><span class="pre">error_message</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#agent_inspect.models.llm_response.LLMResponse.error_message" title="Link to this definition"></a></dt>
+<dd><p>Contains error related information from the LLM in response to an input prompt. Can be none if there is no error occurred.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.llm_response.LLMResponse.status">
+<span class="sig-name descname"><span class="pre">status</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></em><a class="headerlink" href="#agent_inspect.models.llm_response.LLMResponse.status" title="Link to this definition"></a></dt>
+<dd><p>Contains the http status code from the LLM.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-agent_inspect.models">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-agent_inspect.models" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="agent_inspect.models.LLMPayload">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agent_inspect.models.</span></span><span class="sig-name descname"><span class="pre">LLMPayload</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_prompt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">system_prompt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">temperature</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_tokens</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">structured_output</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/models/llm_payload.html#LLMPayload"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.models.LLMPayload" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents the payload to be sent to a Language Model (LLM) for processing.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>user_prompt</strong> (<em>str</em>)</p></li>
+<li><p><strong>model</strong> (<em>str</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>system_prompt</strong> (<em>str</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>temperature</strong> (<em>float</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>max_tokens</strong> (<em>int</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>structured_output</strong> (<em>Any</em><em> | </em><em>None</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.LLMPayload.max_tokens">
+<span class="sig-name descname"><span class="pre">max_tokens</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#agent_inspect.models.LLMPayload.max_tokens" title="Link to this definition"></a></dt>
+<dd><p>The maximum number of tokens to be generated in the LLM’s response.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.LLMPayload.model">
+<span class="sig-name descname"><span class="pre">model</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#agent_inspect.models.LLMPayload.model" title="Link to this definition"></a></dt>
+<dd><p>The specific LLM model to be used for processing the prompt.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.LLMPayload.structured_output">
+<span class="sig-name descname"><span class="pre">structured_output</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#agent_inspect.models.LLMPayload.structured_output" title="Link to this definition"></a></dt>
+<dd><p>An optional structured format for the LLM’s output, if applicable.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.LLMPayload.system_prompt">
+<span class="sig-name descname"><span class="pre">system_prompt</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#agent_inspect.models.LLMPayload.system_prompt" title="Link to this definition"></a></dt>
+<dd><p>The system-level prompt that provides context or instructions to the LLM.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.LLMPayload.temperature">
+<span class="sig-name descname"><span class="pre">temperature</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#agent_inspect.models.LLMPayload.temperature" title="Link to this definition"></a></dt>
+<dd><p>The temperature setting for the LLM, influencing the randomness of its output.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.LLMPayload.user_prompt">
+<span class="sig-name descname"><span class="pre">user_prompt</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#agent_inspect.models.LLMPayload.user_prompt" title="Link to this definition"></a></dt>
+<dd><p>The raw text prompt provided by the user to the LLM for processing.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="agent_inspect.models.LLMResponse">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agent_inspect.models.</span></span><span class="sig-name descname"><span class="pre">LLMResponse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">status</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">completion</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">error_message</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/models/llm_response.html#LLMResponse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.models.LLMResponse" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents a response from a LLM.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>status</strong> (<em>int</em>)</p></li>
+<li><p><strong>completion</strong> (<em>str</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>error_message</strong> (<em>str</em><em> | </em><em>None</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.LLMResponse.completion">
+<span class="sig-name descname"><span class="pre">completion</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#agent_inspect.models.LLMResponse.completion" title="Link to this definition"></a></dt>
+<dd><p>Represents the text output generated by the LLM in response to an input prompt. Can be none if there is no output generated from the LLM due to an error.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.LLMResponse.error_message">
+<span class="sig-name descname"><span class="pre">error_message</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#agent_inspect.models.LLMResponse.error_message" title="Link to this definition"></a></dt>
+<dd><p>Contains error related information from the LLM in response to an input prompt. Can be none if there is no error occurred.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.LLMResponse.status">
+<span class="sig-name descname"><span class="pre">status</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></em><a class="headerlink" href="#agent_inspect.models.LLMResponse.status" title="Link to this definition"></a></dt>
+<dd><p>Contains the http status code from the LLM.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="agent_inspect.metrics.validator.html" class="btn btn-neutral float-left" title="agent_inspect.metrics.validator package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="agent_inspect.models.metrics.html" class="btn btn-neutral float-right" title="agent_inspect.models.metrics package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, &#34;&#34;.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

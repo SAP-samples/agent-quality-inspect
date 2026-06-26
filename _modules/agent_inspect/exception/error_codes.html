@@ -1,0 +1,162 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>agent_inspect.exception.error_codes &mdash; agent_inspect 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=eea1f72d" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=f2a433a1"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            agent_inspect
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">agent_inspect</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">agent_inspect</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">agent_inspect.exception.error_codes</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for agent_inspect.exception.error_codes</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">enum</span><span class="w"> </span><span class="kn">import</span> <span class="n">Enum</span><span class="p">,</span> <span class="n">unique</span>
+
+
+<div class="viewcode-block" id="EvaluationComponent">
+<a class="viewcode-back" href="../../../agent_inspect.exception.html#agent_inspect.exception.error_codes.EvaluationComponent">[docs]</a>
+<span class="nd">@unique</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">EvaluationComponent</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+    <span class="n">EVALUATION_ERROR_CODE</span> <span class="o">=</span> <span class="s2">&quot;05&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="UserProxyComponent">
+<a class="viewcode-back" href="../../../agent_inspect.exception.html#agent_inspect.exception.error_codes.UserProxyComponent">[docs]</a>
+<span class="nd">@unique</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">UserProxyComponent</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+    <span class="n">USER_PROXY_ERROR_CODE</span> <span class="o">=</span> <span class="s2">&quot;06&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="ClientComponent">
+<a class="viewcode-back" href="../../../agent_inspect.exception.html#agent_inspect.exception.error_codes.ClientComponent">[docs]</a>
+<span class="nd">@unique</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">ClientComponent</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+    <span class="n">CLIENT_ERROR_CODE</span> <span class="o">=</span> <span class="s2">&quot;07&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="ToolComponent">
+<a class="viewcode-back" href="../../../agent_inspect.exception.html#agent_inspect.exception.error_codes.ToolComponent">[docs]</a>
+<span class="nd">@unique</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">ToolComponent</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+    <span class="n">TOOL_ERROR_CODE</span> <span class="o">=</span> <span class="s2">&quot;08&quot;</span></div>
+
+
+
+<span class="c1"># TODO: reorganize error codes for different purposes</span>
+<div class="viewcode-block" id="ErrorCode">
+<a class="viewcode-back" href="../../../agent_inspect.exception.html#agent_inspect.exception.error_codes.ErrorCode">[docs]</a>
+<span class="nd">@unique</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">ErrorCode</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+    <span class="n">INVALID_LLM_JUDGE_RESULT_ERROR</span> <span class="o">=</span> <span class="s2">&quot;0000&quot;</span>
+    <span class="n">MAX_RETRY_EXCEEDED_ERROR</span> <span class="o">=</span> <span class="s2">&quot;0001&quot;</span>
+    <span class="n">INVALID_JUDGE_TRIALS_ERROR</span> <span class="o">=</span> <span class="s2">&quot;0002&quot;</span>
+    <span class="n">INVALID_JUDGE_RESPONSE_FORMAT_ERROR</span> <span class="o">=</span> <span class="s2">&quot;0003&quot;</span>
+    <span class="n">EMPTY_VALIDATION_RESULT</span> <span class="o">=</span> <span class="s2">&quot;0004&quot;</span>
+    <span class="n">EMPTY_PROGRESS_SCORE</span> <span class="o">=</span> <span class="s2">&quot;0005&quot;</span>
+    <span class="n">AUC_CALCULATION_ERROR</span> <span class="o">=</span> <span class="s2">&quot;0006&quot;</span>
+    <span class="n">INSUFFICIENT_JUDGE_RESPONSES_ERROR</span> <span class="o">=</span> <span class="s2">&quot;0007&quot;</span>
+    <span class="n">MISSING_VALUE</span> <span class="o">=</span> <span class="s2">&quot;0008&quot;</span>
+    <span class="n">INVALID_VALUE</span> <span class="o">=</span> <span class="s2">&quot;0009&quot;</span>
+    <span class="n">INVALID_USER_MESSAGE_REFLECTION</span> <span class="o">=</span> <span class="s2">&quot;0010&quot;</span>
+    <span class="n">INVALID_USER_PROXY_RESPONSE</span> <span class="o">=</span> <span class="s2">&quot;0011&quot;</span>
+    <span class="n">PPT_CALCULATION_ERROR</span> <span class="o">=</span> <span class="s2">&quot;0012&quot;</span>
+    <span class="n">UNSUPPORTED_ATTRIBUTION_TYPE</span> <span class="o">=</span> <span class="s2">&quot;0013&quot;</span>
+    <span class="n">INVALID_JSON_DECODE_ERROR</span> <span class="o">=</span> <span class="s2">&quot;0014&quot;</span>
+    <span class="n">UNSUCCESSFUL_LLM_SUMMARIZATION</span> <span class="o">=</span> <span class="s2">&quot;0015&quot;</span>
+    <span class="n">UNSUCCESSFUL_MAJORITY_VOTING</span> <span class="o">=</span> <span class="s2">&quot;0016&quot;</span>
+    <span class="n">CLIENT_REQUEST_ERROR</span> <span class="o">=</span> <span class="s2">&quot;0017&quot;</span>
+    <span class="n">INVALID_ERROR_ANALYSIS_ERROR_CLUSTERS</span> <span class="o">=</span> <span class="s2">&quot;0018&quot;</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, &#34;&#34;.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

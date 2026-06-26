@@ -1,0 +1,45 @@
+agent\_inspect.models.metrics package
+=====================================
+
+Submodules
+----------
+
+agent\_inspect.models.metrics.agent\_data\_sample module
+--------------------------------------------------------
+
+.. automodule:: agent_inspect.models.metrics.agent_data_sample
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+agent\_inspect.models.metrics.agent\_trace module
+-------------------------------------------------
+
+.. automodule:: agent_inspect.models.metrics.agent_trace
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+agent\_inspect.models.metrics.metric\_score module
+--------------------------------------------------
+
+.. automodule:: agent_inspect.models.metrics.metric_score
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+agent\_inspect.models.metrics.validation\_result module
+-------------------------------------------------------
+
+.. automodule:: agent_inspect.models.metrics.validation_result
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: agent_inspect.models.metrics
+   :members:
+   :undoc-members:
+   :show-inheritance:

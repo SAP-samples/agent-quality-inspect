@@ -1,0 +1,77 @@
+agent\_inspect.metrics.scorer package
+=====================================
+
+Submodules
+----------
+
+agent\_inspect.metrics.scorer.auc module
+----------------------------------------
+
+.. automodule:: agent_inspect.metrics.scorer.auc
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+agent\_inspect.metrics.scorer.llm\_based\_metric module
+-------------------------------------------------------
+
+.. automodule:: agent_inspect.metrics.scorer.llm_based_metric
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+agent\_inspect.metrics.scorer.metric module
+-------------------------------------------
+
+.. automodule:: agent_inspect.metrics.scorer.metric
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+agent\_inspect.metrics.scorer.ppt module
+----------------------------------------
+
+.. automodule:: agent_inspect.metrics.scorer.ppt
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+agent\_inspect.metrics.scorer.progress module
+---------------------------------------------
+
+.. automodule:: agent_inspect.metrics.scorer.progress
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+agent\_inspect.metrics.scorer.success module
+--------------------------------------------
+
+.. automodule:: agent_inspect.metrics.scorer.success
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+agent\_inspect.metrics.scorer.templates module
+----------------------------------------------
+
+.. automodule:: agent_inspect.metrics.scorer.templates
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+agent\_inspect.metrics.scorer.tool\_correctness module
+------------------------------------------------------
+
+.. automodule:: agent_inspect.metrics.scorer.tool_correctness
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: agent_inspect.metrics.scorer
+   :members:
+   :undoc-members:
+   :show-inheritance:

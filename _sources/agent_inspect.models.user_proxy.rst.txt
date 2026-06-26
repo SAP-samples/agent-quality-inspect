@@ -1,0 +1,29 @@
+agent\_inspect.models.user\_proxy package
+=========================================
+
+Submodules
+----------
+
+agent\_inspect.models.user\_proxy.chat module
+---------------------------------------------
+
+.. automodule:: agent_inspect.models.user_proxy.chat
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+agent\_inspect.models.user\_proxy.terminating\_condition module
+---------------------------------------------------------------
+
+.. automodule:: agent_inspect.models.user_proxy.terminating_condition
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: agent_inspect.models.user_proxy
+   :members:
+   :undoc-members:
+   :show-inheritance:

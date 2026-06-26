@@ -1,0 +1,29 @@
+agent\_inspect.clients package
+==============================
+
+Submodules
+----------
+
+agent\_inspect.clients.azure\_openai\_client module
+---------------------------------------------------
+
+.. automodule:: agent_inspect.clients.azure_openai_client
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+agent\_inspect.clients.llm\_client module
+-----------------------------------------
+
+.. automodule:: agent_inspect.clients.llm_client
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: agent_inspect.clients
+   :members:
+   :undoc-members:
+   :show-inheritance:

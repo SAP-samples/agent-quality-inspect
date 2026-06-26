@@ -1,0 +1,45 @@
+agent\_inspect.metrics.observed package
+=======================================
+
+Submodules
+----------
+
+agent\_inspect.metrics.observed.latency module
+----------------------------------------------
+
+.. automodule:: agent_inspect.metrics.observed.latency
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+agent\_inspect.metrics.observed.observed\_metric module
+-------------------------------------------------------
+
+.. automodule:: agent_inspect.metrics.observed.observed_metric
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+agent\_inspect.metrics.observed.token\_count module
+---------------------------------------------------
+
+.. automodule:: agent_inspect.metrics.observed.token_count
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+agent\_inspect.metrics.observed.tool\_call\_count module
+--------------------------------------------------------
+
+.. automodule:: agent_inspect.metrics.observed.tool_call_count
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: agent_inspect.metrics.observed
+   :members:
+   :undoc-members:
+   :show-inheritance:

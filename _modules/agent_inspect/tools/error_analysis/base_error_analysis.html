@@ -1,0 +1,229 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>agent_inspect.tools.error_analysis.base_error_analysis &mdash; agent_inspect 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/custom.css?v=eea1f72d" />
+
+  
+      <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../_static/documentation_options.js?v=f2a433a1"></script>
+      <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            agent_inspect
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules.html">agent_inspect</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">agent_inspect</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">agent_inspect.tools.error_analysis.base_error_analysis</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for agent_inspect.tools.error_analysis.base_error_analysis</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Error Analysis Module - Class Hierarchy</span>
+<span class="sd">========================================</span>
+
+<span class="sd">This module defines the base class for error analysis implementations.</span>
+
+<span class="sd">Class Hierarchy Diagram:</span>
+
+<span class="sd">.. code-block:: text</span>
+
+<span class="sd">                                    ErrorAnalysis (ABC)</span>
+<span class="sd">                                          |</span>
+<span class="sd">                                          | (abstract base)</span>
+<span class="sd">                    ______________________|_______________________</span>
+<span class="sd">                   |                                              |</span>
+<span class="sd">            ToolCallErrorAnalysis (ABC)              SubgoalErrorAnalysis (ABC)</span>
+<span class="sd">            (tool call errors)                       (subgoal errors)</span>
+<span class="sd">                   |                                              |</span>
+<span class="sd">         __________|__________                           _________|_________</span>
+<span class="sd">        |                     |                         |                   |</span>
+<span class="sd">    SemisupervisedTool      DeterministicTool       UnsupervisedSubgoal     SemisupervisedSubgoal</span>
+<span class="sd">    CallErrorAnalysis       CallErrorAnalysis       ErrorAnalysis           ErrorAnalysis</span>
+<span class="sd">    (LLM-based              (Regex-based            (Dynamic clustering     (Predefined clusters</span>
+<span class="sd">    classification)         classification)         with LLM)               with LLM)</span>
+
+
+<span class="sd">Algorithm Types:</span>
+
+<span class="sd">1. **Unsupervised**: Discovers error patterns dynamically without predefined categories</span>
+<span class="sd">   - Uses LLM for error summarization and semantic clustering</span>
+<span class="sd">   - Generates error categories from data</span>
+
+<span class="sd">2. **Semi-supervised**: Classifies errors into predefined error clusters</span>
+<span class="sd">   - Uses LLM with structured prompts for classification</span>
+<span class="sd">   - More consistent and interpretable results</span>
+<span class="sd">   - Supports custom error cluster definitions</span>
+
+<span class="sd">3. **Deterministic**: Rule-based classification using regex patterns</span>
+<span class="sd">   - No LLM required (faster, cheaper)</span>
+<span class="sd">   - Works only for tool call errors with specific explanation formats</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">asyncio</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">ABC</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">concurrent.futures</span><span class="w"> </span><span class="kn">import</span> <span class="n">ThreadPoolExecutor</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Optional</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.clients.llm_client</span><span class="w"> </span><span class="kn">import</span> <span class="n">LLMClient</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.exception.error_codes</span><span class="w"> </span><span class="kn">import</span> <span class="n">ErrorCode</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.exception</span><span class="w"> </span><span class="kn">import</span> <span class="n">ToolError</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.models.llm_payload</span><span class="w"> </span><span class="kn">import</span> <span class="n">LLMPayload</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.metrics.constants</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">STATUS_200</span><span class="p">,</span>
+    <span class="n">MAX_RETRY_JSON_DECODE_ERROR</span><span class="p">,</span>
+    <span class="n">MAX_WORKERS_KEY</span><span class="p">,</span>
+    <span class="n">DEFAULT_MAX_WORKERS</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.core.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_config_or_default</span>
+
+
+<div class="viewcode-block" id="ErrorAnalysis">
+<a class="viewcode-back" href="../../../../agent_inspect.tools.error_analysis.html#agent_inspect.tools.error_analysis.base_error_analysis.ErrorAnalysis">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ErrorAnalysis</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Abstract base class for all error analysis implementations.</span>
+
+<span class="sd">    This class provides common functionality for error analysis operations:</span>
+
+<span class="sd">    - Configuration management via config dictionary</span>
+<span class="sd">    - Thread pool executor for concurrent processing</span>
+<span class="sd">    - Retry logic for LLM requests with JSON decode errors</span>
+
+<span class="sd">    :param config: Optional configuration dictionary. Supported keys:</span>
+
+<span class="sd">        - **max_workers**: Maximum number of concurrent workers (default: 20)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="n">config</span> <span class="ow">or</span> <span class="p">{}</span>
+        <span class="n">max_workers</span> <span class="o">=</span> <span class="n">get_config_or_default</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">,</span> <span class="n">MAX_WORKERS_KEY</span><span class="p">,</span> <span class="n">DEFAULT_MAX_WORKERS</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">executor</span> <span class="o">=</span> <span class="n">ThreadPoolExecutor</span><span class="p">(</span><span class="n">max_workers</span><span class="o">=</span><span class="n">max_workers</span><span class="p">)</span>
+
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">_request_and_parse_json_with_retry</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">llm_client</span><span class="p">:</span> <span class="n">LLMClient</span><span class="p">,</span> <span class="n">payload</span><span class="p">:</span> <span class="n">LLMPayload</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Make an LLM request with retry logic for JSON decode errors.&quot;&quot;&quot;</span>
+        <span class="n">max_retry_json_decode_error</span> <span class="o">=</span> <span class="n">MAX_RETRY_JSON_DECODE_ERROR</span>
+        <span class="n">attempt</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">while</span> <span class="n">attempt</span> <span class="o">&lt;</span> <span class="n">max_retry_json_decode_error</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="c1"># Run blocking LLM call in thread pool to enable concurrent execution</span>
+                <span class="n">response</span> <span class="o">=</span> <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">to_thread</span><span class="p">(</span>
+                    <span class="k">lambda</span><span class="p">:</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">llm_client</span><span class="o">.</span><span class="n">make_request_with_payload</span><span class="p">(</span><span class="n">payload</span><span class="p">))</span>
+                <span class="p">)</span>
+                <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status</span> <span class="o">!=</span> <span class="n">STATUS_200</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="n">ToolError</span><span class="p">(</span>
+                        <span class="n">internal_code</span><span class="o">=</span><span class="n">ErrorCode</span><span class="o">.</span><span class="n">CLIENT_REQUEST_ERROR</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+                        <span class="n">message</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;LLM request failed with status </span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">status</span><span class="si">}</span><span class="s2"> and error: </span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">error_message</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+                    <span class="p">)</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">response</span><span class="o">.</span><span class="n">completion</span><span class="p">:</span>
+                    <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                        <span class="sa">f</span><span class="s2">&quot;JSON decode error on attempt </span><span class="si">{</span><span class="n">attempt</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">max_retry_json_decode_error</span><span class="si">}</span><span class="s2">: &quot;</span>
+                        <span class="sa">f</span><span class="s2">&quot;Empty completion received.&quot;</span>
+                    <span class="p">)</span>
+                    <span class="n">attempt</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="c1"># output the response token count for monitoring purposes</span>
+                    <span class="c1"># TODO: Should check actual tokens rather than splitting on whitespace</span>
+                    <span class="n">input_token_count</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">payload</span><span class="o">.</span><span class="n">user_prompt</span><span class="p">)</span>
+                    <span class="n">completion_token_count</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">completion</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
+                    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                        <span class="sa">f</span><span class="s2">&quot;LLM response received with </span><span class="si">{</span><span class="n">completion_token_count</span><span class="si">}</span><span class="s2"> tokens &quot;</span>
+                        <span class="sa">f</span><span class="s2">&quot;(input prompt had </span><span class="si">{</span><span class="n">input_token_count</span><span class="si">}</span><span class="s2"> tokens). &quot;</span>
+                        <span class="sa">f</span><span class="s2">&quot;Total tokens: </span><span class="si">{</span><span class="n">input_token_count</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">completion_token_count</span><span class="si">}</span><span class="s2">&quot;</span>
+                    <span class="p">)</span>
+                    <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">completion</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+            <span class="k">except</span> <span class="n">json</span><span class="o">.</span><span class="n">JSONDecodeError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;JSON decode error on attempt </span><span class="si">{</span><span class="n">attempt</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">max_retry_json_decode_error</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="p">)</span>
+                <span class="n">attempt</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">raise</span> <span class="n">ToolError</span><span class="p">(</span>
+            <span class="n">internal_code</span><span class="o">=</span><span class="n">ErrorCode</span><span class="o">.</span><span class="n">INVALID_JSON_DECODE_ERROR</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+            <span class="n">message</span><span class="o">=</span><span class="s2">&quot;Maximum retry attempts exceeded for JSON decode error.&quot;</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, &#34;&#34;.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

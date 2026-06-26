@@ -1,0 +1,93 @@
+agent\_inspect.tools.error\_analysis package
+============================================
+
+Submodules
+----------
+
+agent\_inspect.tools.error\_analysis.base\_error\_analysis module
+-----------------------------------------------------------------
+
+.. automodule:: agent_inspect.tools.error_analysis.base_error_analysis
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+agent\_inspect.tools.error\_analysis.deterministic\_tool\_call\_error\_analysis module
+--------------------------------------------------------------------------------------
+
+.. automodule:: agent_inspect.tools.error_analysis.deterministic_tool_call_error_analysis
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+agent\_inspect.tools.error\_analysis.llm\_output\_schemas module
+----------------------------------------------------------------
+
+.. automodule:: agent_inspect.tools.error_analysis.llm_output_schemas
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+agent\_inspect.tools.error\_analysis.llm\_templates module
+----------------------------------------------------------
+
+.. automodule:: agent_inspect.tools.error_analysis.llm_templates
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+agent\_inspect.tools.error\_analysis.semisupervised\_subgoal\_error\_analysis module
+------------------------------------------------------------------------------------
+
+.. automodule:: agent_inspect.tools.error_analysis.semisupervised_subgoal_error_analysis
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+agent\_inspect.tools.error\_analysis.semisupervised\_tool\_call\_error\_analysis module
+---------------------------------------------------------------------------------------
+
+.. automodule:: agent_inspect.tools.error_analysis.semisupervised_tool_call_error_analysis
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+agent\_inspect.tools.error\_analysis.statistic\_analysis module
+---------------------------------------------------------------
+
+.. automodule:: agent_inspect.tools.error_analysis.statistic_analysis
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+agent\_inspect.tools.error\_analysis.subgoal\_error\_analysis module
+--------------------------------------------------------------------
+
+.. automodule:: agent_inspect.tools.error_analysis.subgoal_error_analysis
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+agent\_inspect.tools.error\_analysis.tool\_call\_error\_analysis module
+-----------------------------------------------------------------------
+
+.. automodule:: agent_inspect.tools.error_analysis.tool_call_error_analysis
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+agent\_inspect.tools.error\_analysis.unsupervised\_subgoal\_error\_analysis module
+----------------------------------------------------------------------------------
+
+.. automodule:: agent_inspect.tools.error_analysis.unsupervised_subgoal_error_analysis
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: agent_inspect.tools.error_analysis
+   :members:
+   :undoc-members:
+   :show-inheritance:

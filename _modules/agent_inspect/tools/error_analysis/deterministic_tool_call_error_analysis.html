@@ -1,0 +1,271 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>agent_inspect.tools.error_analysis.deterministic_tool_call_error_analysis &mdash; agent_inspect 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/custom.css?v=eea1f72d" />
+
+  
+      <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../_static/documentation_options.js?v=f2a433a1"></script>
+      <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            agent_inspect
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules.html">agent_inspect</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">agent_inspect</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">agent_inspect.tools.error_analysis.deterministic_tool_call_error_analysis</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for agent_inspect.tools.error_analysis.deterministic_tool_call_error_analysis</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Any</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.models.metrics.validation_result</span><span class="w"> </span><span class="kn">import</span> <span class="n">ToolCallValidationResult</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.exception</span><span class="w"> </span><span class="kn">import</span> <span class="n">InvalidInputValueError</span><span class="p">,</span> <span class="n">ErrorCode</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.tools.error_analysis.tool_call_error_analysis</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">ToolCallErrorAnalysis</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.models.tools.analysis_models</span><span class="w"> </span><span class="kn">import</span> <span class="n">AnalyzedToolValidation</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.models.tools.error_cluster</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">WrongToolSelectionCluster</span><span class="p">,</span>
+    <span class="n">IncorrectToolInputCluster</span><span class="p">,</span>
+    <span class="n">IncorrectToolOutputHandlingCluster</span><span class="p">,</span>
+    <span class="n">DEFAULT_TOOL_CALL_ERROR_CLUSTERS</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">agent_inspect.metrics.validator.constants</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">TOOL_NOT_FOUND_EXPLANATION</span><span class="p">,</span>
+    <span class="n">ARGUMENT_FAILED_EXACT_MATCH_EXPLANATION</span><span class="p">,</span>
+    <span class="n">ARGUMENT_NOT_FOUND_EXPLANATION</span><span class="p">,</span>
+    <span class="n">ARGUMENT_FAILED_LLMJ_EXPLANATION</span><span class="p">,</span>
+    <span class="n">OUTPUT_FAILED_EXACT_MATCH_EXPLANATION</span><span class="p">,</span>
+    <span class="n">OUTPUT_FAILED_LLMJ_EXPLANATION</span><span class="p">,</span>
+<span class="p">)</span>
+
+
+<div class="viewcode-block" id="DeterministicToolCallErrorAnalysis">
+<a class="viewcode-back" href="../../../../agent_inspect.tools.error_analysis.html#agent_inspect.tools.error_analysis.deterministic_tool_call_error_analysis.DeterministicToolCallErrorAnalysis">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">DeterministicToolCallErrorAnalysis</span><span class="p">(</span><span class="n">ToolCallErrorAnalysis</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Deterministic (rule-based) error analysis for tool call validations.</span>
+
+<span class="sd">    This class classifies tool validation failures into predefined error clusters</span>
+<span class="sd">    using regex pattern matching on validation explanations. It provides a fast,</span>
+<span class="sd">    LLM-free alternative to :class:`~agent_inspect.tools.error_analysis.SemisupervisedToolCallErrorAnalysis`.</span>
+
+<span class="sd">    **Cluster Labels (in priority order):**</span>
+
+<span class="sd">        - :obj:`~agent_inspect.models.tools.error_cluster.IncorrectToolInputCluster`</span>
+<span class="sd">        - :obj:`~agent_inspect.models.tools.error_cluster.IncorrectToolOutputHandlingCluster`</span>
+<span class="sd">        - :obj:`~agent_inspect.models.tools.error_cluster.WrongToolSelectionCluster`</span>
+
+<span class="sd">    **Priority Behavior:**</span>
+<span class="sd">    When multiple failures occur (e.g., both argument AND output fail),</span>
+<span class="sd">    the highest priority label is assigned based on the order above.</span>
+
+<span class="sd">    :param config: Optional configuration dictionary. Supported keys:</span>
+
+<span class="sd">        - **max_workers**: Maximum number of concurrent workers (default: 20)</span>
+
+<span class="sd">    Example:</span>
+
+<span class="sd">    &gt;&gt;&gt; from agent_inspect.tools import DeterministicToolCallErrorAnalysis</span>
+<span class="sd">    &gt;&gt;&gt; from agent_inspect.models.tools import ToolCallErrorAnalysisDataSample</span>
+<span class="sd">    &gt;&gt;&gt;</span>
+<span class="sd">    &gt;&gt;&gt; analyzer = DeterministicToolCallErrorAnalysis(config={&quot;max_workers&quot;: 1})</span>
+<span class="sd">    &gt;&gt;&gt; result = analyzer.analyze_batch(tool_validation_data_samples)</span>
+<span class="sd">    &gt;&gt;&gt; for cluster_label, validations in result.analyzed_validations_clustered_by_errors.items():</span>
+<span class="sd">    ...     print(f&quot;{cluster_label}: {len(validations)} errors&quot;)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">error_clusters</span> <span class="o">=</span> <span class="n">DEFAULT_TOOL_CALL_ERROR_CLUSTERS</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_PATTERNS</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_build_patterns_from_constants</span><span class="p">()</span>
+
+    <span class="c1"># ==================== Algorithm-Specific Methods (implementing abstract methods) ====================</span>
+
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">_classify_single_validation</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">validation_result</span><span class="p">:</span> <span class="n">ToolCallValidationResult</span><span class="p">,</span>
+        <span class="n">data_sample_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">agent_run_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">AnalyzedToolValidation</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Classify a single failed tool validation result using deterministic regex matching.</span>
+
+<span class="sd">        :param validation_result: a :obj:`~agent_inspect.models.metrics.validation_result.ToolCallValidationResult` object to classify.</span>
+<span class="sd">        :param data_sample_id: ID of the data sample.</span>
+<span class="sd">        :param agent_run_id: Optional agent run ID.</span>
+<span class="sd">        :return: Tuple of (:obj:`~agent_inspect.models.tools.analysis_models.AnalyzedToolValidation`, cluster_label).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">cluster_label</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_classify_from_explanations</span><span class="p">(</span><span class="n">validation_result</span><span class="o">.</span><span class="n">explanations</span><span class="p">)</span>
+        <span class="n">base_error</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">validation_result</span><span class="o">.</span><span class="n">explanations</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="n">AnalyzedToolValidation</span><span class="p">(</span>
+                <span class="n">tool_call_validation</span><span class="o">=</span><span class="n">validation_result</span><span class="p">,</span>
+                <span class="n">data_sample_id</span><span class="o">=</span><span class="n">data_sample_id</span><span class="p">,</span>
+                <span class="n">base_error</span><span class="o">=</span><span class="n">base_error</span><span class="p">,</span>
+                <span class="n">agent_run_id</span><span class="o">=</span><span class="n">agent_run_id</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="n">cluster_label</span><span class="p">,</span>
+        <span class="p">)</span>
+
+    <span class="c1"># ==================== Deterministic Classification Helpers ====================</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_build_patterns_from_constants</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">Pattern</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Build all regex patterns from the explanation format constants.&quot;&quot;&quot;</span>
+
+        <span class="c1"># Helper to build pattern from format string, matching up to first sentence</span>
+        <span class="k">def</span><span class="w"> </span><span class="nf">build</span><span class="p">(</span><span class="n">fmt_str</span><span class="p">):</span>
+            <span class="c1"># Split on &#39;. &#39; to get first sentence, then convert to regex</span>
+            <span class="n">first_sentence</span> <span class="o">=</span> <span class="n">fmt_str</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;. &quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="c1"># Inline the regex conversion logic to avoid referencing the class</span>
+            <span class="n">pattern</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">escape</span><span class="p">(</span><span class="n">first_sentence</span><span class="p">)</span>
+            <span class="n">pattern</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">{[^}]+</span><span class="se">\\</span><span class="s2">}&quot;</span><span class="p">,</span> <span class="s2">&quot;(.+)&quot;</span><span class="p">,</span> <span class="n">pattern</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">pattern</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s2">&quot;tool_not_found&quot;</span><span class="p">:</span> <span class="n">build</span><span class="p">(</span><span class="n">TOOL_NOT_FOUND_EXPLANATION</span><span class="p">),</span>
+            <span class="s2">&quot;arg_failed_exact&quot;</span><span class="p">:</span> <span class="n">build</span><span class="p">(</span><span class="n">ARGUMENT_FAILED_EXACT_MATCH_EXPLANATION</span><span class="p">),</span>
+            <span class="s2">&quot;arg_not_found&quot;</span><span class="p">:</span> <span class="n">build</span><span class="p">(</span><span class="n">ARGUMENT_NOT_FOUND_EXPLANATION</span><span class="p">),</span>
+            <span class="s2">&quot;arg_failed_llmj&quot;</span><span class="p">:</span> <span class="n">build</span><span class="p">(</span><span class="n">ARGUMENT_FAILED_LLMJ_EXPLANATION</span><span class="p">),</span>
+            <span class="s2">&quot;output_failed_exact&quot;</span><span class="p">:</span> <span class="n">build</span><span class="p">(</span><span class="n">OUTPUT_FAILED_EXACT_MATCH_EXPLANATION</span><span class="p">),</span>
+            <span class="s2">&quot;output_failed_llmj&quot;</span><span class="p">:</span> <span class="n">build</span><span class="p">(</span><span class="n">OUTPUT_FAILED_LLMJ_EXPLANATION</span><span class="p">),</span>
+        <span class="p">}</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_classify_from_explanations</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">explanations</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Classify validation failure from explanation strings.</span>
+
+<span class="sd">        Priority order:</span>
+
+<span class="sd">        1. Tool not found → &quot;Wrong Tool Selection&quot;</span>
+<span class="sd">        2. Argument failed → &quot;Incorrect Tool Input&quot;</span>
+<span class="sd">        3. Output failed → &quot;Incorrect Tool Output Handling&quot;</span>
+
+<span class="sd">        :param explanations: List of validation explanation strings.</span>
+<span class="sd">        :return: Cluster label string.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">tool_not_found</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">arg_failed</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">output_failed</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="k">if</span> <span class="n">explanations</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">explanations</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">InvalidInputValueError</span><span class="p">(</span>
+                <span class="n">internal_code</span><span class="o">=</span><span class="n">ErrorCode</span><span class="o">.</span><span class="n">EMPTY_VALIDATION_RESULT</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+                <span class="n">message</span><span class="o">=</span><span class="s2">&quot;Validation explanations cannot be empty for failed validation&quot;</span><span class="p">,</span>
+            <span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">explanation</span> <span class="ow">in</span> <span class="n">explanations</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_PATTERNS</span><span class="p">[</span><span class="s2">&quot;tool_not_found&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">explanation</span><span class="p">):</span>
+                <span class="n">tool_not_found</span> <span class="o">=</span> <span class="kc">True</span>
+
+            <span class="k">elif</span> <span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_PATTERNS</span><span class="p">[</span><span class="s2">&quot;arg_failed_exact&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">explanation</span><span class="p">)</span>
+                <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_PATTERNS</span><span class="p">[</span><span class="s2">&quot;arg_not_found&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">explanation</span><span class="p">)</span>
+                <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_PATTERNS</span><span class="p">[</span><span class="s2">&quot;arg_failed_llmj&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">explanation</span><span class="p">)</span>
+            <span class="p">):</span>
+                <span class="n">arg_failed</span> <span class="o">=</span> <span class="kc">True</span>
+
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_PATTERNS</span><span class="p">[</span><span class="s2">&quot;output_failed_exact&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">explanation</span><span class="p">)</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_PATTERNS</span><span class="p">[</span>
+                <span class="s2">&quot;output_failed_llmj&quot;</span>
+            <span class="p">]</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">explanation</span><span class="p">):</span>
+                <span class="n">output_failed</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="c1"># Return highest priority error type found</span>
+        <span class="k">if</span> <span class="n">tool_not_found</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">WrongToolSelectionCluster</span><span class="p">()</span><span class="o">.</span><span class="n">cluster_label</span>
+        <span class="k">if</span> <span class="n">arg_failed</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">IncorrectToolInputCluster</span><span class="p">()</span><span class="o">.</span><span class="n">cluster_label</span>
+        <span class="k">if</span> <span class="n">output_failed</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">IncorrectToolOutputHandlingCluster</span><span class="p">()</span><span class="o">.</span><span class="n">cluster_label</span>
+
+        <span class="c1"># Fallback for unexpected validation format</span>
+        <span class="k">raise</span> <span class="n">InvalidInputValueError</span><span class="p">(</span>
+            <span class="n">internal_code</span><span class="o">=</span><span class="n">ErrorCode</span><span class="o">.</span><span class="n">INVALID_JUDGE_RESPONSE_FORMAT_ERROR</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+            <span class="n">message</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Unable to classify validation failure from llm judge explanations: </span><span class="si">{</span><span class="n">explanations</span><span class="si">}</span><span class="s2">. The reason may be that the explanation format has changed and the regex patterns need to be updated accordingly.&quot;</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, &#34;&#34;.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

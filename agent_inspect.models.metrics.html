@@ -1,0 +1,1227 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>agent_inspect.models.metrics package &mdash; agent_inspect 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=eea1f72d" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=f2a433a1"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="agent_inspect.models.tools package" href="agent_inspect.models.tools.html" />
+    <link rel="prev" title="agent_inspect.models package" href="agent_inspect.models.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            agent_inspect
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">agent_inspect</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">agent_inspect</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">agent_inspect</a></li>
+          <li class="breadcrumb-item"><a href="agent_inspect.html">agent_inspect package</a></li>
+          <li class="breadcrumb-item"><a href="agent_inspect.models.html">agent_inspect.models package</a></li>
+      <li class="breadcrumb-item active">agent_inspect.models.metrics package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/agent_inspect.models.metrics.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="agent-inspect-models-metrics-package">
+<h1>agent_inspect.models.metrics package<a class="headerlink" href="#agent-inspect-models-metrics-package" title="Link to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-agent_inspect.models.metrics.agent_data_sample">
+<span id="agent-inspect-models-metrics-agent-data-sample-module"></span><h2>agent_inspect.models.metrics.agent_data_sample module<a class="headerlink" href="#module-agent_inspect.models.metrics.agent_data_sample" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.agent_data_sample.Conversation">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agent_inspect.models.metrics.agent_data_sample.</span></span><span class="sig-name descname"><span class="pre">Conversation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">turn_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expected_response</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/models/metrics/agent_data_sample.html#Conversation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.models.metrics.agent_data_sample.Conversation" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents one back-and-forth exchange between a user and an agent (one turn), containing an input message and an optional expected response.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>turn_id</strong> (<em>int</em>)</p></li>
+<li><p><strong>message</strong> (<em>str</em>)</p></li>
+<li><p><strong>expected_response</strong> (<em>str</em><em> | </em><em>None</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.agent_data_sample.Conversation.expected_response">
+<span class="sig-name descname"><span class="pre">expected_response</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#agent_inspect.models.metrics.agent_data_sample.Conversation.expected_response" title="Link to this definition"></a></dt>
+<dd><p>Expected response from the agent given the agent input message. This can be none during the evaluation with user proxy.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.agent_data_sample.Conversation.message">
+<span class="sig-name descname"><span class="pre">message</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#agent_inspect.models.metrics.agent_data_sample.Conversation.message" title="Link to this definition"></a></dt>
+<dd><p>Input message to the agent.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.agent_data_sample.Conversation.turn_id">
+<span class="sig-name descname"><span class="pre">turn_id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></em><a class="headerlink" href="#agent_inspect.models.metrics.agent_data_sample.Conversation.turn_id" title="Link to this definition"></a></dt>
+<dd><p>ID representing the sequence number of conversation in the list of conversations.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.agent_data_sample.EvaluationSample">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agent_inspect.models.metrics.agent_data_sample.</span></span><span class="sig-name descname"><span class="pre">EvaluationSample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sub_goals</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expected_tool_calls</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">conversation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user_instruction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/models/metrics/agent_data_sample.html#EvaluationSample"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.models.metrics.agent_data_sample.EvaluationSample" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents an item in the evaluation dataset.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sub_goals</strong> (<em>List</em><em>[</em><a class="reference internal" href="#agent_inspect.models.metrics.agent_data_sample.SubGoal" title="agent_inspect.models.metrics.agent_data_sample.SubGoal"><em>SubGoal</em></a><em>]</em>)</p></li>
+<li><p><strong>id</strong> (<em>int</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>expected_tool_calls</strong> (<em>List</em><em>[</em><a class="reference internal" href="#agent_inspect.models.metrics.agent_data_sample.ExpectedToolCall" title="agent_inspect.models.metrics.agent_data_sample.ExpectedToolCall"><em>ExpectedToolCall</em></a><em>] </em><em>| </em><em>None</em>)</p></li>
+<li><p><strong>conversation</strong> (<em>List</em><em>[</em><a class="reference internal" href="#agent_inspect.models.metrics.agent_data_sample.Conversation" title="agent_inspect.models.metrics.agent_data_sample.Conversation"><em>Conversation</em></a><em>] </em><em>| </em><em>None</em>)</p></li>
+<li><p><strong>user_instruction</strong> (<em>str</em><em> | </em><em>None</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.agent_data_sample.EvaluationSample.conversation">
+<span class="sig-name descname"><span class="pre">conversation</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code><span class="pre">[</span><a class="reference internal" href="#agent_inspect.models.metrics.agent_data_sample.Conversation" title="agent_inspect.models.metrics.agent_data_sample.Conversation"><code class="xref py py-class docutils literal notranslate"><span class="pre">Conversation</span></code></a><span class="pre">]]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#agent_inspect.models.metrics.agent_data_sample.EvaluationSample.conversation" title="Link to this definition"></a></dt>
+<dd><p>A list of conversation between an agent and a user/user proxy. The sequence of conversations in this list, matters for metric to understand which comes after next.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.agent_data_sample.EvaluationSample.expected_tool_calls">
+<span class="sig-name descname"><span class="pre">expected_tool_calls</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code><span class="pre">[</span><a class="reference internal" href="#agent_inspect.models.metrics.agent_data_sample.ExpectedToolCall" title="agent_inspect.models.metrics.agent_data_sample.ExpectedToolCall"><code class="xref py py-class docutils literal notranslate"><span class="pre">ExpectedToolCall</span></code></a><span class="pre">]]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#agent_inspect.models.metrics.agent_data_sample.EvaluationSample.expected_tool_calls" title="Link to this definition"></a></dt>
+<dd><p>A list of expected tools that an agent should call or utilize during an evaluation run. (e.g. API calls, calculator, web search, etc.)</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.agent_data_sample.EvaluationSample.id">
+<span class="sig-name descname"><span class="pre">id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#agent_inspect.models.metrics.agent_data_sample.EvaluationSample.id" title="Link to this definition"></a></dt>
+<dd><p>Unique identifier for the evaluation sample.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.agent_data_sample.EvaluationSample.sub_goals">
+<span class="sig-name descname"><span class="pre">sub_goals</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code><span class="pre">[</span><a class="reference internal" href="#agent_inspect.models.metrics.agent_data_sample.SubGoal" title="agent_inspect.models.metrics.agent_data_sample.SubGoal"><code class="xref py py-class docutils literal notranslate"><span class="pre">SubGoal</span></code></a><span class="pre">]</span></em><a class="headerlink" href="#agent_inspect.models.metrics.agent_data_sample.EvaluationSample.sub_goals" title="Link to this definition"></a></dt>
+<dd><p>A list of sub goals which should be achieved by an agent during an evaluation run.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.agent_data_sample.EvaluationSample.user_instruction">
+<span class="sig-name descname"><span class="pre">user_instruction</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#agent_inspect.models.metrics.agent_data_sample.EvaluationSample.user_instruction" title="Link to this definition"></a></dt>
+<dd><p>An instruction/instructions for user proxy how it should behave/response while communicating with the agent during an evaluation run.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.agent_data_sample.ExpectedToolCall">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agent_inspect.models.metrics.agent_data_sample.</span></span><span class="sig-name descname"><span class="pre">ExpectedToolCall</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expected_parameters</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expected_output</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">turn</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/models/metrics/agent_data_sample.html#ExpectedToolCall"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.models.metrics.agent_data_sample.ExpectedToolCall" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents the correct tool invocation an agent is expected to make for a particular task. It serves as the ground-truth tool call for the evaluations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>tool</strong> (<em>str</em>)</p></li>
+<li><p><strong>expected_parameters</strong> (<em>List</em><em>[</em><a class="reference internal" href="#agent_inspect.models.metrics.agent_data_sample.ToolInputParameter" title="agent_inspect.models.metrics.agent_data_sample.ToolInputParameter"><em>ToolInputParameter</em></a><em>] </em><em>| </em><em>None</em>)</p></li>
+<li><p><strong>expected_output</strong> (<a class="reference internal" href="#agent_inspect.models.metrics.agent_data_sample.ToolOutput" title="agent_inspect.models.metrics.agent_data_sample.ToolOutput"><em>ToolOutput</em></a><em> | </em><em>None</em>)</p></li>
+<li><p><strong>turn</strong> (<em>str</em><em> | </em><em>int</em><em> | </em><em>None</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.agent_data_sample.ExpectedToolCall.expected_output">
+<span class="sig-name descname"><span class="pre">expected_output</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><a class="reference internal" href="#agent_inspect.models.metrics.agent_data_sample.ToolOutput" title="agent_inspect.models.metrics.agent_data_sample.ToolOutput"><code class="xref py py-class docutils literal notranslate"><span class="pre">ToolOutput</span></code></a><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#agent_inspect.models.metrics.agent_data_sample.ExpectedToolCall.expected_output" title="Link to this definition"></a></dt>
+<dd><p>Represents the expected output from the tool after the agent invokes it.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.agent_data_sample.ExpectedToolCall.expected_parameters">
+<span class="sig-name descname"><span class="pre">expected_parameters</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code><span class="pre">[</span><a class="reference internal" href="#agent_inspect.models.metrics.agent_data_sample.ToolInputParameter" title="agent_inspect.models.metrics.agent_data_sample.ToolInputParameter"><code class="xref py py-class docutils literal notranslate"><span class="pre">ToolInputParameter</span></code></a><span class="pre">]]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#agent_inspect.models.metrics.agent_data_sample.ExpectedToolCall.expected_parameters" title="Link to this definition"></a></dt>
+<dd><p>A list of parameters with which the tool should be called by the agent during the time of evaluation.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.agent_data_sample.ExpectedToolCall.tool">
+<span class="sig-name descname"><span class="pre">tool</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#agent_inspect.models.metrics.agent_data_sample.ExpectedToolCall.tool" title="Link to this definition"></a></dt>
+<dd><p>Represents a tool that should be called or utilized by the agent at the time of evaluation. Can be a name, a description of the tool, the url of api call, etc.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.agent_data_sample.ExpectedToolCall.turn">
+<span class="sig-name descname"><span class="pre">turn</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code><span class="pre">,</span> <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#agent_inspect.models.metrics.agent_data_sample.ExpectedToolCall.turn" title="Link to this definition"></a></dt>
+<dd><p>Represents which turn(s) should this tool call be considered. Optional and this is only a placeholder for future implementation.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.agent_data_sample.SubGoal">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agent_inspect.models.metrics.agent_data_sample.</span></span><span class="sig-name descname"><span class="pre">SubGoal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">details</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">turn</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/models/metrics/agent_data_sample.html#SubGoal"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.models.metrics.agent_data_sample.SubGoal" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A subgoal is a natural language assertion that defines the success criteria of an agent within a larger task. Subgoals specify intermediate success criteria and can also include the final goal.
+eg:
+“Agent should call search_messages after getting the current timestamp”
+“Agent should inform the user: Your oldest message says ‘Hey kid, you want some GPU?’.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>details</strong> (<em>str</em>)</p></li>
+<li><p><strong>turn</strong> (<em>str</em><em> | </em><em>int</em><em> | </em><em>None</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.agent_data_sample.SubGoal.details">
+<span class="sig-name descname"><span class="pre">details</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#agent_inspect.models.metrics.agent_data_sample.SubGoal.details" title="Link to this definition"></a></dt>
+<dd><p>Details containing the information and criteria used by the metric to determine when the agent has achieved this subgoal.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.agent_data_sample.SubGoal.turn">
+<span class="sig-name descname"><span class="pre">turn</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code><span class="pre">,</span> <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#agent_inspect.models.metrics.agent_data_sample.SubGoal.turn" title="Link to this definition"></a></dt>
+<dd><p>Represents which turn(s) should this subgoal be considered. Optional and this is only a placeholder for future implementation.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.agent_data_sample.ToolInputParameter">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agent_inspect.models.metrics.agent_data_sample.</span></span><span class="sig-name descname"><span class="pre">ToolInputParameter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">check</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/models/metrics/agent_data_sample.html#ToolInputParameter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.models.metrics.agent_data_sample.ToolInputParameter" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents a parameter which the agent should invoke with the tool.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>)</p></li>
+<li><p><strong>value</strong> (<em>Any</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>check</strong> (<em>str</em><em> | </em><em>None</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.agent_data_sample.ToolInputParameter.check">
+<span class="sig-name descname"><span class="pre">check</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#agent_inspect.models.metrics.agent_data_sample.ToolInputParameter.check" title="Link to this definition"></a></dt>
+<dd><p>Represents the llm prompt to check the correctness of the parameter name and the value that the agent invokes with the tool.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.agent_data_sample.ToolInputParameter.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#agent_inspect.models.metrics.agent_data_sample.ToolInputParameter.name" title="Link to this definition"></a></dt>
+<dd><p>Represents the expected name of the parameter (variable name).</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.agent_data_sample.ToolInputParameter.value">
+<span class="sig-name descname"><span class="pre">value</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#agent_inspect.models.metrics.agent_data_sample.ToolInputParameter.value" title="Link to this definition"></a></dt>
+<dd><p>Represents the expected value of the parameter at the moment the tool is invoked. This will be converted to str during metric calculation.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.agent_data_sample.ToolOutput">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agent_inspect.models.metrics.agent_data_sample.</span></span><span class="sig-name descname"><span class="pre">ToolOutput</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">check</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/models/metrics/agent_data_sample.html#ToolOutput"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.models.metrics.agent_data_sample.ToolOutput" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents the expected output from the tool after the agent invokes it.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>value</strong> (<em>Any</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>check</strong> (<em>str</em><em> | </em><em>None</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.agent_data_sample.ToolOutput.check">
+<span class="sig-name descname"><span class="pre">check</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#agent_inspect.models.metrics.agent_data_sample.ToolOutput.check" title="Link to this definition"></a></dt>
+<dd><p>Represents the llm prompt to check the correctness of the output value from the tool after the agent invokes it.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.agent_data_sample.ToolOutput.value">
+<span class="sig-name descname"><span class="pre">value</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#agent_inspect.models.metrics.agent_data_sample.ToolOutput.value" title="Link to this definition"></a></dt>
+<dd><p>Represents the expected output value from the tool after the agent invokes it. This will be converted to str during metric calculation.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-agent_inspect.models.metrics.agent_trace">
+<span id="agent-inspect-models-metrics-agent-trace-module"></span><h2>agent_inspect.models.metrics.agent_trace module<a class="headerlink" href="#module-agent_inspect.models.metrics.agent_trace" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.agent_trace.AgentDialogueTrace">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agent_inspect.models.metrics.agent_trace.</span></span><span class="sig-name descname"><span class="pre">AgentDialogueTrace</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">turns</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/models/metrics/agent_trace.html#AgentDialogueTrace"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.models.metrics.agent_trace.AgentDialogueTrace" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents an agent trace (logs) produced by an agent given an evaluation data sample during an evaluation run.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>turns</strong> (<em>List</em><em>[</em><a class="reference internal" href="#agent_inspect.models.metrics.agent_trace.TurnTrace" title="agent_inspect.models.metrics.agent_trace.TurnTrace"><em>TurnTrace</em></a><em>] </em><em>| </em><em>None</em>)</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.agent_trace.AgentDialogueTrace.turns">
+<span class="sig-name descname"><span class="pre">turns</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code><span class="pre">[</span><a class="reference internal" href="#agent_inspect.models.metrics.agent_trace.TurnTrace" title="agent_inspect.models.metrics.agent_trace.TurnTrace"><code class="xref py py-class docutils literal notranslate"><span class="pre">TurnTrace</span></code></a><span class="pre">]]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#agent_inspect.models.metrics.agent_trace.AgentDialogueTrace.turns" title="Link to this definition"></a></dt>
+<dd><p>A list of turn which contains the subset of agent trace (logs) produced during one back and forth conversation between the agent and the user/user proxy.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.agent_trace.AgentResponse">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agent_inspect.models.metrics.agent_trace.</span></span><span class="sig-name descname"><span class="pre">AgentResponse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">response</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">status_code</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/models/metrics/agent_trace.html#AgentResponse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.models.metrics.agent_trace.AgentResponse" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents an agent response produced by the agent in one turn.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>response</strong> (<em>str</em><em> | </em><em>dict</em>)</p></li>
+<li><p><strong>status_code</strong> (<em>str</em><em> | </em><em>None</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.agent_trace.AgentResponse.response">
+<span class="sig-name descname"><span class="pre">response</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code><span class="pre">]</span></em><a class="headerlink" href="#agent_inspect.models.metrics.agent_trace.AgentResponse.response" title="Link to this definition"></a></dt>
+<dd><p>A response from the agent, which can either be a python str or a python dict. This will be converted to a str during metric calculation if a dict is provided.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.agent_trace.AgentResponse.status_code">
+<span class="sig-name descname"><span class="pre">status_code</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#agent_inspect.models.metrics.agent_trace.AgentResponse.status_code" title="Link to this definition"></a></dt>
+<dd><p>Contains the http status code from agent if any.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.agent_trace.Step">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agent_inspect.models.metrics.agent_trace.</span></span><span class="sig-name descname"><span class="pre">Step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent_ids</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tool</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tool_input_args</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tool_output</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent_thought</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_token_consumption</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_token_consumption</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reasoning_token_consumption</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/models/metrics/agent_trace.html#Step"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.models.metrics.agent_trace.Step" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents a necessary step that the agent takes within a turn to produce the final response(s) back to the user/ user proxy.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>id</strong> (<em>str</em>)</p></li>
+<li><p><strong>parent_ids</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>)</p></li>
+<li><p><strong>tool</strong> (<em>str</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>tool_input_args</strong> (<em>List</em><em>[</em><a class="reference internal" href="#agent_inspect.models.metrics.agent_data_sample.ToolInputParameter" title="agent_inspect.models.metrics.agent_data_sample.ToolInputParameter"><em>ToolInputParameter</em></a><em>] </em><em>| </em><em>None</em>)</p></li>
+<li><p><strong>tool_output</strong> (<em>Any</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>agent_thought</strong> (<em>str</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>input_token_consumption</strong> (<em>int</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>output_token_consumption</strong> (<em>int</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>reasoning_token_consumption</strong> (<em>int</em><em> | </em><em>None</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.agent_trace.Step.agent_thought">
+<span class="sig-name descname"><span class="pre">agent_thought</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#agent_inspect.models.metrics.agent_trace.Step.agent_thought" title="Link to this definition"></a></dt>
+<dd><p>Represent the agent’s thinking process (what the agent is thinking) at the current step.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.agent_trace.Step.id">
+<span class="sig-name descname"><span class="pre">id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#agent_inspect.models.metrics.agent_trace.Step.id" title="Link to this definition"></a></dt>
+<dd><p>Represents an ID assigned to a step, must be a unique identifier.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.agent_trace.Step.input_token_consumption">
+<span class="sig-name descname"><span class="pre">input_token_consumption</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#agent_inspect.models.metrics.agent_trace.Step.input_token_consumption" title="Link to this definition"></a></dt>
+<dd><p>Represents the total number of input tokens consumed in the current step.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.agent_trace.Step.output_token_consumption">
+<span class="sig-name descname"><span class="pre">output_token_consumption</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#agent_inspect.models.metrics.agent_trace.Step.output_token_consumption" title="Link to this definition"></a></dt>
+<dd><p>Represents the total number of output tokens consumed in the current step.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.agent_trace.Step.parent_ids">
+<span class="sig-name descname"><span class="pre">parent_ids</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">]</span></em><a class="headerlink" href="#agent_inspect.models.metrics.agent_trace.Step.parent_ids" title="Link to this definition"></a></dt>
+<dd><p>Contains a list of parent step ID(s) which the agent took before the current step (e.g. ID(s) of the immediate previous steps.)</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.agent_trace.Step.reasoning_token_consumption">
+<span class="sig-name descname"><span class="pre">reasoning_token_consumption</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#agent_inspect.models.metrics.agent_trace.Step.reasoning_token_consumption" title="Link to this definition"></a></dt>
+<dd><p>Represents the total number of tokens consumed for reasoning purposes in the current step.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.agent_trace.Step.tool">
+<span class="sig-name descname"><span class="pre">tool</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#agent_inspect.models.metrics.agent_trace.Step.tool" title="Link to this definition"></a></dt>
+<dd><p>Represents a tool that was called or utilized by the agent during the current step. Can be a name, a description of the tool, the url of api call, etc. Optional if no tool is called in current step.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.agent_trace.Step.tool_input_args">
+<span class="sig-name descname"><span class="pre">tool_input_args</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code><span class="pre">[</span><a class="reference internal" href="#agent_inspect.models.metrics.agent_data_sample.ToolInputParameter" title="agent_inspect.models.metrics.agent_data_sample.ToolInputParameter"><code class="xref py py-class docutils literal notranslate"><span class="pre">ToolInputParameter</span></code></a><span class="pre">]]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#agent_inspect.models.metrics.agent_trace.Step.tool_input_args" title="Link to this definition"></a></dt>
+<dd><p>A list of parameters which the tool was called by the agent during the time of evaluation.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.agent_trace.Step.tool_output">
+<span class="sig-name descname"><span class="pre">tool_output</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#agent_inspect.models.metrics.agent_trace.Step.tool_output" title="Link to this definition"></a></dt>
+<dd><p>Contains the tool output produced by the agent in the current step. Optional and can be none if no output was produced.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.agent_trace.TurnTrace">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agent_inspect.models.metrics.agent_trace.</span></span><span class="sig-name descname"><span class="pre">TurnTrace</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent_input</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent_response</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">from_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">steps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">latency_in_ms</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/models/metrics/agent_trace.html#TurnTrace"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.models.metrics.agent_trace.TurnTrace" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents a turn: one back and forth conversation between the agent and the user/user proxy by encapsulating the agent trace (logs) produced during a turn.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>id</strong> (<em>str</em>)</p></li>
+<li><p><strong>agent_input</strong> (<em>str</em>)</p></li>
+<li><p><strong>agent_response</strong> (<a class="reference internal" href="#agent_inspect.models.metrics.agent_trace.AgentResponse" title="agent_inspect.models.metrics.agent_trace.AgentResponse"><em>AgentResponse</em></a><em> | </em><em>None</em>)</p></li>
+<li><p><strong>from_id</strong> (<em>str</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>steps</strong> (<em>List</em><em>[</em><a class="reference internal" href="#agent_inspect.models.metrics.agent_trace.Step" title="agent_inspect.models.metrics.agent_trace.Step"><em>Step</em></a><em>] </em><em>| </em><em>None</em>)</p></li>
+<li><p><strong>latency_in_ms</strong> (<em>float</em><em> | </em><em>None</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.agent_trace.TurnTrace.agent_input">
+<span class="sig-name descname"><span class="pre">agent_input</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#agent_inspect.models.metrics.agent_trace.TurnTrace.agent_input" title="Link to this definition"></a></dt>
+<dd><p>An input string to the agent from a user/user proxy.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.agent_trace.TurnTrace.agent_response">
+<span class="sig-name descname"><span class="pre">agent_response</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><a class="reference internal" href="#agent_inspect.models.metrics.agent_trace.AgentResponse" title="agent_inspect.models.metrics.agent_trace.AgentResponse"><code class="xref py py-class docutils literal notranslate"><span class="pre">AgentResponse</span></code></a><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#agent_inspect.models.metrics.agent_trace.TurnTrace.agent_response" title="Link to this definition"></a></dt>
+<dd><p>An agent response produced by the agent given the input message (agent_input).</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.agent_trace.TurnTrace.from_id">
+<span class="sig-name descname"><span class="pre">from_id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#agent_inspect.models.metrics.agent_trace.TurnTrace.from_id" title="Link to this definition"></a></dt>
+<dd><p>Represents an ID of the parent turn that produces the current step. Optional and this is only a placeholder for future implementation.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.agent_trace.TurnTrace.id">
+<span class="sig-name descname"><span class="pre">id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#agent_inspect.models.metrics.agent_trace.TurnTrace.id" title="Link to this definition"></a></dt>
+<dd><p>Represents an ID assigned to a turn, must be a unique identifier.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.agent_trace.TurnTrace.latency_in_ms">
+<span class="sig-name descname"><span class="pre">latency_in_ms</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#agent_inspect.models.metrics.agent_trace.TurnTrace.latency_in_ms" title="Link to this definition"></a></dt>
+<dd><p>Represent the total time taken by the agent to produce the output response(s).</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.agent_trace.TurnTrace.steps">
+<span class="sig-name descname"><span class="pre">steps</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code><span class="pre">[</span><a class="reference internal" href="#agent_inspect.models.metrics.agent_trace.Step" title="agent_inspect.models.metrics.agent_trace.Step"><code class="xref py py-class docutils literal notranslate"><span class="pre">Step</span></code></a><span class="pre">]]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#agent_inspect.models.metrics.agent_trace.TurnTrace.steps" title="Link to this definition"></a></dt>
+<dd><p>A list of steps (e.g. tool calls, thinking processes, etc.) that the agent takes to finally produce agent response(s).</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-agent_inspect.models.metrics.metric_score">
+<span id="agent-inspect-models-metrics-metric-score-module"></span><h2>agent_inspect.models.metrics.metric_score module<a class="headerlink" href="#module-agent_inspect.models.metrics.metric_score" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.metric_score.BooleanScore">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agent_inspect.models.metrics.metric_score.</span></span><span class="sig-name descname"><span class="pre">BooleanScore</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">score</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">explanations</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/models/metrics/metric_score.html#BooleanScore"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.models.metrics.metric_score.BooleanScore" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents a boolean score produced by a metric after computation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>score</strong> (<em>bool</em>)</p></li>
+<li><p><strong>explanations</strong> (<em>List</em><em>[</em><em>Any</em><em>] </em><em>| </em><em>None</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.metric_score.BooleanScore.explanations">
+<span class="sig-name descname"><span class="pre">explanations</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code><span class="pre">[</span><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code><span class="pre">]]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#agent_inspect.models.metrics.metric_score.BooleanScore.explanations" title="Link to this definition"></a></dt>
+<dd><p>Contains a list of explanation/reason(s) for why/how this particular score is calculated.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.metric_score.BooleanScore.score">
+<span class="sig-name descname"><span class="pre">score</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></em><a class="headerlink" href="#agent_inspect.models.metrics.metric_score.BooleanScore.score" title="Link to this definition"></a></dt>
+<dd><p>Contains a boolean representation of the final score after calculated by the metric.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.metric_score.NumericalScore">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agent_inspect.models.metrics.metric_score.</span></span><span class="sig-name descname"><span class="pre">NumericalScore</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">score</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sub_scores</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">explanations</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">validation_results</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/models/metrics/metric_score.html#NumericalScore"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.models.metrics.metric_score.NumericalScore" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents a numerical score produced by a metric after computation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>score</strong> (<em>float</em>)</p></li>
+<li><p><strong>sub_scores</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>float</em><em>] </em><em>| </em><em>None</em>)</p></li>
+<li><p><strong>explanations</strong> (<em>List</em><em>[</em><em>Any</em><em>] </em><em>| </em><em>None</em>)</p></li>
+<li><p><strong>validation_results</strong> (<em>List</em><em>[</em><a class="reference internal" href="#agent_inspect.models.metrics.validation_result.ValidationResult" title="agent_inspect.models.metrics.validation_result.ValidationResult"><em>ValidationResult</em></a><em>] </em><em>| </em><em>None</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.metric_score.NumericalScore.explanations">
+<span class="sig-name descname"><span class="pre">explanations</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code><span class="pre">[</span><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code><span class="pre">]]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#agent_inspect.models.metrics.metric_score.NumericalScore.explanations" title="Link to this definition"></a></dt>
+<dd><p>Contains a list of explanation/reason(s) for why/how this particular score is calculated.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.metric_score.NumericalScore.score">
+<span class="sig-name descname"><span class="pre">score</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><a class="headerlink" href="#agent_inspect.models.metrics.metric_score.NumericalScore.score" title="Link to this definition"></a></dt>
+<dd><p>Contains a numerical representation of the final score after calculated by the metric.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.metric_score.NumericalScore.sub_scores">
+<span class="sig-name descname"><span class="pre">sub_scores</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">]]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#agent_inspect.models.metrics.metric_score.NumericalScore.sub_scores" title="Link to this definition"></a></dt>
+<dd><p>Contains a dictionary of intermediate scores used to compute the final score.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.metric_score.NumericalScore.validation_results">
+<span class="sig-name descname"><span class="pre">validation_results</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code><span class="pre">[</span><a class="reference internal" href="#agent_inspect.models.metrics.validation_result.ValidationResult" title="agent_inspect.models.metrics.validation_result.ValidationResult"><code class="xref py py-class docutils literal notranslate"><span class="pre">ValidationResult</span></code></a><span class="pre">]]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#agent_inspect.models.metrics.metric_score.NumericalScore.validation_results" title="Link to this definition"></a></dt>
+<dd><p>Contains a list of validation results for each subgoal associated with this score.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-agent_inspect.models.metrics.validation_result">
+<span id="agent-inspect-models-metrics-validation-result-module"></span><h2>agent_inspect.models.metrics.validation_result module<a class="headerlink" href="#module-agent_inspect.models.metrics.validation_result" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.validation_result.SubGoalValidationResult">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agent_inspect.models.metrics.validation_result.</span></span><span class="sig-name descname"><span class="pre">SubGoalValidationResult</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">is_completed</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">explanations</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sub_goal</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prompt_sent_to_llmj</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/models/metrics/validation_result.html#SubGoalValidationResult"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.models.metrics.validation_result.SubGoalValidationResult" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#agent_inspect.models.metrics.validation_result.ValidationResult" title="agent_inspect.models.metrics.validation_result.ValidationResult"><code class="xref py py-class docutils literal notranslate"><span class="pre">ValidationResult</span></code></a></p>
+<p>Represents a result produced after validation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>is_completed</strong> (<em>bool</em>)</p></li>
+<li><p><strong>explanations</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>)</p></li>
+<li><p><strong>sub_goal</strong> (<a class="reference internal" href="#agent_inspect.models.metrics.agent_data_sample.SubGoal" title="agent_inspect.models.metrics.agent_data_sample.SubGoal"><em>SubGoal</em></a>)</p></li>
+<li><p><strong>prompt_sent_to_llmj</strong> (<em>str</em><em> | </em><em>None</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.validation_result.SubGoalValidationResult.prompt_sent_to_llmj">
+<span class="sig-name descname"><span class="pre">prompt_sent_to_llmj</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#agent_inspect.models.metrics.validation_result.SubGoalValidationResult.prompt_sent_to_llmj" title="Link to this definition"></a></dt>
+<dd><p>The entire prompt that is sent to the LLM-as-a-judge for validation.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.validation_result.SubGoalValidationResult.sub_goal">
+<span class="sig-name descname"><span class="pre">sub_goal</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#agent_inspect.models.metrics.agent_data_sample.SubGoal" title="agent_inspect.models.metrics.agent_data_sample.SubGoal"><code class="xref py py-class docutils literal notranslate"><span class="pre">SubGoal</span></code></a></em><a class="headerlink" href="#agent_inspect.models.metrics.validation_result.SubGoalValidationResult.sub_goal" title="Link to this definition"></a></dt>
+<dd><p>Contains the subgoal that is being validated.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.validation_result.ToolCallValidationResult">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agent_inspect.models.metrics.validation_result.</span></span><span class="sig-name descname"><span class="pre">ToolCallValidationResult</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">is_completed</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">explanations</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expected_tool_call</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/models/metrics/validation_result.html#ToolCallValidationResult"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.models.metrics.validation_result.ToolCallValidationResult" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#agent_inspect.models.metrics.validation_result.ValidationResult" title="agent_inspect.models.metrics.validation_result.ValidationResult"><code class="xref py py-class docutils literal notranslate"><span class="pre">ValidationResult</span></code></a></p>
+<p>Represents a tool correctness result after validation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>is_completed</strong> (<em>bool</em>)</p></li>
+<li><p><strong>explanations</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>)</p></li>
+<li><p><strong>expected_tool_call</strong> (<a class="reference internal" href="#agent_inspect.models.metrics.agent_data_sample.ExpectedToolCall" title="agent_inspect.models.metrics.agent_data_sample.ExpectedToolCall"><em>ExpectedToolCall</em></a>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.validation_result.ToolCallValidationResult.expected_tool_call">
+<span class="sig-name descname"><span class="pre">expected_tool_call</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#agent_inspect.models.metrics.agent_data_sample.ExpectedToolCall" title="agent_inspect.models.metrics.agent_data_sample.ExpectedToolCall"><code class="xref py py-class docutils literal notranslate"><span class="pre">ExpectedToolCall</span></code></a></em><a class="headerlink" href="#agent_inspect.models.metrics.validation_result.ToolCallValidationResult.expected_tool_call" title="Link to this definition"></a></dt>
+<dd><p>The expected ground truth tool call that is being validated against.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.validation_result.ValidationResult">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agent_inspect.models.metrics.validation_result.</span></span><span class="sig-name descname"><span class="pre">ValidationResult</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">is_completed</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">explanations</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/models/metrics/validation_result.html#ValidationResult"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.models.metrics.validation_result.ValidationResult" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents a result produced after validation (e.g. subgoal validation, tool call validation).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>is_completed</strong> (<em>bool</em>)</p></li>
+<li><p><strong>explanations</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.validation_result.ValidationResult.explanations">
+<span class="sig-name descname"><span class="pre">explanations</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">]</span></em><a class="headerlink" href="#agent_inspect.models.metrics.validation_result.ValidationResult.explanations" title="Link to this definition"></a></dt>
+<dd><p>Contains a list of explanation/reason(s) for why/how this particular validation result is produced.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.validation_result.ValidationResult.is_completed">
+<span class="sig-name descname"><span class="pre">is_completed</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></em><a class="headerlink" href="#agent_inspect.models.metrics.validation_result.ValidationResult.is_completed" title="Link to this definition"></a></dt>
+<dd><p>Indicates whether the validation was completed successfully.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-agent_inspect.models.metrics">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-agent_inspect.models.metrics" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.AgentDialogueTrace">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agent_inspect.models.metrics.</span></span><span class="sig-name descname"><span class="pre">AgentDialogueTrace</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">turns</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/models/metrics/agent_trace.html#AgentDialogueTrace"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.models.metrics.AgentDialogueTrace" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents an agent trace (logs) produced by an agent given an evaluation data sample during an evaluation run.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>turns</strong> (<em>List</em><em>[</em><a class="reference internal" href="#agent_inspect.models.metrics.agent_trace.TurnTrace" title="agent_inspect.models.metrics.agent_trace.TurnTrace"><em>TurnTrace</em></a><em>] </em><em>| </em><em>None</em>)</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.AgentDialogueTrace.turns">
+<span class="sig-name descname"><span class="pre">turns</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code><span class="pre">[</span><a class="reference internal" href="#agent_inspect.models.metrics.agent_trace.TurnTrace" title="agent_inspect.models.metrics.agent_trace.TurnTrace"><code class="xref py py-class docutils literal notranslate"><span class="pre">TurnTrace</span></code></a><span class="pre">]]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#agent_inspect.models.metrics.AgentDialogueTrace.turns" title="Link to this definition"></a></dt>
+<dd><p>A list of turn which contains the subset of agent trace (logs) produced during one back and forth conversation between the agent and the user/user proxy.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.AgentResponse">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agent_inspect.models.metrics.</span></span><span class="sig-name descname"><span class="pre">AgentResponse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">response</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">status_code</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/models/metrics/agent_trace.html#AgentResponse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.models.metrics.AgentResponse" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents an agent response produced by the agent in one turn.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>response</strong> (<em>str</em><em> | </em><em>dict</em>)</p></li>
+<li><p><strong>status_code</strong> (<em>str</em><em> | </em><em>None</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.AgentResponse.response">
+<span class="sig-name descname"><span class="pre">response</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code><span class="pre">]</span></em><a class="headerlink" href="#agent_inspect.models.metrics.AgentResponse.response" title="Link to this definition"></a></dt>
+<dd><p>A response from the agent, which can either be a python str or a python dict. This will be converted to a str during metric calculation if a dict is provided.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.AgentResponse.status_code">
+<span class="sig-name descname"><span class="pre">status_code</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#agent_inspect.models.metrics.AgentResponse.status_code" title="Link to this definition"></a></dt>
+<dd><p>Contains the http status code from agent if any.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.BooleanScore">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agent_inspect.models.metrics.</span></span><span class="sig-name descname"><span class="pre">BooleanScore</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">score</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">explanations</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/models/metrics/metric_score.html#BooleanScore"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.models.metrics.BooleanScore" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents a boolean score produced by a metric after computation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>score</strong> (<em>bool</em>)</p></li>
+<li><p><strong>explanations</strong> (<em>List</em><em>[</em><em>Any</em><em>] </em><em>| </em><em>None</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.BooleanScore.explanations">
+<span class="sig-name descname"><span class="pre">explanations</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code><span class="pre">[</span><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code><span class="pre">]]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#agent_inspect.models.metrics.BooleanScore.explanations" title="Link to this definition"></a></dt>
+<dd><p>Contains a list of explanation/reason(s) for why/how this particular score is calculated.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.BooleanScore.score">
+<span class="sig-name descname"><span class="pre">score</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></em><a class="headerlink" href="#agent_inspect.models.metrics.BooleanScore.score" title="Link to this definition"></a></dt>
+<dd><p>Contains a boolean representation of the final score after calculated by the metric.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.Conversation">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agent_inspect.models.metrics.</span></span><span class="sig-name descname"><span class="pre">Conversation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">turn_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expected_response</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/models/metrics/agent_data_sample.html#Conversation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.models.metrics.Conversation" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents one back-and-forth exchange between a user and an agent (one turn), containing an input message and an optional expected response.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>turn_id</strong> (<em>int</em>)</p></li>
+<li><p><strong>message</strong> (<em>str</em>)</p></li>
+<li><p><strong>expected_response</strong> (<em>str</em><em> | </em><em>None</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.Conversation.expected_response">
+<span class="sig-name descname"><span class="pre">expected_response</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#agent_inspect.models.metrics.Conversation.expected_response" title="Link to this definition"></a></dt>
+<dd><p>Expected response from the agent given the agent input message. This can be none during the evaluation with user proxy.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.Conversation.message">
+<span class="sig-name descname"><span class="pre">message</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#agent_inspect.models.metrics.Conversation.message" title="Link to this definition"></a></dt>
+<dd><p>Input message to the agent.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.Conversation.turn_id">
+<span class="sig-name descname"><span class="pre">turn_id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></em><a class="headerlink" href="#agent_inspect.models.metrics.Conversation.turn_id" title="Link to this definition"></a></dt>
+<dd><p>ID representing the sequence number of conversation in the list of conversations.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.EvaluationSample">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agent_inspect.models.metrics.</span></span><span class="sig-name descname"><span class="pre">EvaluationSample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sub_goals</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expected_tool_calls</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">conversation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user_instruction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/models/metrics/agent_data_sample.html#EvaluationSample"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.models.metrics.EvaluationSample" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents an item in the evaluation dataset.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sub_goals</strong> (<em>List</em><em>[</em><a class="reference internal" href="#agent_inspect.models.metrics.agent_data_sample.SubGoal" title="agent_inspect.models.metrics.agent_data_sample.SubGoal"><em>SubGoal</em></a><em>]</em>)</p></li>
+<li><p><strong>id</strong> (<em>int</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>expected_tool_calls</strong> (<em>List</em><em>[</em><a class="reference internal" href="#agent_inspect.models.metrics.agent_data_sample.ExpectedToolCall" title="agent_inspect.models.metrics.agent_data_sample.ExpectedToolCall"><em>ExpectedToolCall</em></a><em>] </em><em>| </em><em>None</em>)</p></li>
+<li><p><strong>conversation</strong> (<em>List</em><em>[</em><a class="reference internal" href="#agent_inspect.models.metrics.agent_data_sample.Conversation" title="agent_inspect.models.metrics.agent_data_sample.Conversation"><em>Conversation</em></a><em>] </em><em>| </em><em>None</em>)</p></li>
+<li><p><strong>user_instruction</strong> (<em>str</em><em> | </em><em>None</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.EvaluationSample.conversation">
+<span class="sig-name descname"><span class="pre">conversation</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code><span class="pre">[</span><a class="reference internal" href="#agent_inspect.models.metrics.agent_data_sample.Conversation" title="agent_inspect.models.metrics.agent_data_sample.Conversation"><code class="xref py py-class docutils literal notranslate"><span class="pre">Conversation</span></code></a><span class="pre">]]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#agent_inspect.models.metrics.EvaluationSample.conversation" title="Link to this definition"></a></dt>
+<dd><p>A list of conversation between an agent and a user/user proxy. The sequence of conversations in this list, matters for metric to understand which comes after next.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.EvaluationSample.expected_tool_calls">
+<span class="sig-name descname"><span class="pre">expected_tool_calls</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code><span class="pre">[</span><a class="reference internal" href="#agent_inspect.models.metrics.agent_data_sample.ExpectedToolCall" title="agent_inspect.models.metrics.agent_data_sample.ExpectedToolCall"><code class="xref py py-class docutils literal notranslate"><span class="pre">ExpectedToolCall</span></code></a><span class="pre">]]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#agent_inspect.models.metrics.EvaluationSample.expected_tool_calls" title="Link to this definition"></a></dt>
+<dd><p>A list of expected tools that an agent should call or utilize during an evaluation run. (e.g. API calls, calculator, web search, etc.)</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.EvaluationSample.id">
+<span class="sig-name descname"><span class="pre">id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#agent_inspect.models.metrics.EvaluationSample.id" title="Link to this definition"></a></dt>
+<dd><p>Unique identifier for the evaluation sample.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.EvaluationSample.sub_goals">
+<span class="sig-name descname"><span class="pre">sub_goals</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code><span class="pre">[</span><a class="reference internal" href="#agent_inspect.models.metrics.agent_data_sample.SubGoal" title="agent_inspect.models.metrics.agent_data_sample.SubGoal"><code class="xref py py-class docutils literal notranslate"><span class="pre">SubGoal</span></code></a><span class="pre">]</span></em><a class="headerlink" href="#agent_inspect.models.metrics.EvaluationSample.sub_goals" title="Link to this definition"></a></dt>
+<dd><p>A list of sub goals which should be achieved by an agent during an evaluation run.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.EvaluationSample.user_instruction">
+<span class="sig-name descname"><span class="pre">user_instruction</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#agent_inspect.models.metrics.EvaluationSample.user_instruction" title="Link to this definition"></a></dt>
+<dd><p>An instruction/instructions for user proxy how it should behave/response while communicating with the agent during an evaluation run.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.ExpectedToolCall">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agent_inspect.models.metrics.</span></span><span class="sig-name descname"><span class="pre">ExpectedToolCall</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expected_parameters</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expected_output</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">turn</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/models/metrics/agent_data_sample.html#ExpectedToolCall"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.models.metrics.ExpectedToolCall" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents the correct tool invocation an agent is expected to make for a particular task. It serves as the ground-truth tool call for the evaluations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>tool</strong> (<em>str</em>)</p></li>
+<li><p><strong>expected_parameters</strong> (<em>List</em><em>[</em><a class="reference internal" href="#agent_inspect.models.metrics.agent_data_sample.ToolInputParameter" title="agent_inspect.models.metrics.agent_data_sample.ToolInputParameter"><em>ToolInputParameter</em></a><em>] </em><em>| </em><em>None</em>)</p></li>
+<li><p><strong>expected_output</strong> (<a class="reference internal" href="#agent_inspect.models.metrics.agent_data_sample.ToolOutput" title="agent_inspect.models.metrics.agent_data_sample.ToolOutput"><em>ToolOutput</em></a><em> | </em><em>None</em>)</p></li>
+<li><p><strong>turn</strong> (<em>str</em><em> | </em><em>int</em><em> | </em><em>None</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.ExpectedToolCall.expected_output">
+<span class="sig-name descname"><span class="pre">expected_output</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><a class="reference internal" href="#agent_inspect.models.metrics.agent_data_sample.ToolOutput" title="agent_inspect.models.metrics.agent_data_sample.ToolOutput"><code class="xref py py-class docutils literal notranslate"><span class="pre">ToolOutput</span></code></a><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#agent_inspect.models.metrics.ExpectedToolCall.expected_output" title="Link to this definition"></a></dt>
+<dd><p>Represents the expected output from the tool after the agent invokes it.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.ExpectedToolCall.expected_parameters">
+<span class="sig-name descname"><span class="pre">expected_parameters</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code><span class="pre">[</span><a class="reference internal" href="#agent_inspect.models.metrics.agent_data_sample.ToolInputParameter" title="agent_inspect.models.metrics.agent_data_sample.ToolInputParameter"><code class="xref py py-class docutils literal notranslate"><span class="pre">ToolInputParameter</span></code></a><span class="pre">]]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#agent_inspect.models.metrics.ExpectedToolCall.expected_parameters" title="Link to this definition"></a></dt>
+<dd><p>A list of parameters with which the tool should be called by the agent during the time of evaluation.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.ExpectedToolCall.tool">
+<span class="sig-name descname"><span class="pre">tool</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#agent_inspect.models.metrics.ExpectedToolCall.tool" title="Link to this definition"></a></dt>
+<dd><p>Represents a tool that should be called or utilized by the agent at the time of evaluation. Can be a name, a description of the tool, the url of api call, etc.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.ExpectedToolCall.turn">
+<span class="sig-name descname"><span class="pre">turn</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code><span class="pre">,</span> <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#agent_inspect.models.metrics.ExpectedToolCall.turn" title="Link to this definition"></a></dt>
+<dd><p>Represents which turn(s) should this tool call be considered. Optional and this is only a placeholder for future implementation.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.NumericalScore">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agent_inspect.models.metrics.</span></span><span class="sig-name descname"><span class="pre">NumericalScore</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">score</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sub_scores</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">explanations</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">validation_results</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/models/metrics/metric_score.html#NumericalScore"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.models.metrics.NumericalScore" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents a numerical score produced by a metric after computation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>score</strong> (<em>float</em>)</p></li>
+<li><p><strong>sub_scores</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>float</em><em>] </em><em>| </em><em>None</em>)</p></li>
+<li><p><strong>explanations</strong> (<em>List</em><em>[</em><em>Any</em><em>] </em><em>| </em><em>None</em>)</p></li>
+<li><p><strong>validation_results</strong> (<em>List</em><em>[</em><a class="reference internal" href="#agent_inspect.models.metrics.validation_result.ValidationResult" title="agent_inspect.models.metrics.validation_result.ValidationResult"><em>ValidationResult</em></a><em>] </em><em>| </em><em>None</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.NumericalScore.explanations">
+<span class="sig-name descname"><span class="pre">explanations</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code><span class="pre">[</span><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code><span class="pre">]]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#agent_inspect.models.metrics.NumericalScore.explanations" title="Link to this definition"></a></dt>
+<dd><p>Contains a list of explanation/reason(s) for why/how this particular score is calculated.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.NumericalScore.score">
+<span class="sig-name descname"><span class="pre">score</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><a class="headerlink" href="#agent_inspect.models.metrics.NumericalScore.score" title="Link to this definition"></a></dt>
+<dd><p>Contains a numerical representation of the final score after calculated by the metric.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.NumericalScore.sub_scores">
+<span class="sig-name descname"><span class="pre">sub_scores</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">]]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#agent_inspect.models.metrics.NumericalScore.sub_scores" title="Link to this definition"></a></dt>
+<dd><p>Contains a dictionary of intermediate scores used to compute the final score.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.NumericalScore.validation_results">
+<span class="sig-name descname"><span class="pre">validation_results</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code><span class="pre">[</span><a class="reference internal" href="#agent_inspect.models.metrics.validation_result.ValidationResult" title="agent_inspect.models.metrics.validation_result.ValidationResult"><code class="xref py py-class docutils literal notranslate"><span class="pre">ValidationResult</span></code></a><span class="pre">]]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#agent_inspect.models.metrics.NumericalScore.validation_results" title="Link to this definition"></a></dt>
+<dd><p>Contains a list of validation results for each subgoal associated with this score.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.Step">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agent_inspect.models.metrics.</span></span><span class="sig-name descname"><span class="pre">Step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent_ids</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tool</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tool_input_args</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tool_output</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent_thought</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_token_consumption</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_token_consumption</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reasoning_token_consumption</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/models/metrics/agent_trace.html#Step"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.models.metrics.Step" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents a necessary step that the agent takes within a turn to produce the final response(s) back to the user/ user proxy.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>id</strong> (<em>str</em>)</p></li>
+<li><p><strong>parent_ids</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>)</p></li>
+<li><p><strong>tool</strong> (<em>str</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>tool_input_args</strong> (<em>List</em><em>[</em><a class="reference internal" href="#agent_inspect.models.metrics.agent_data_sample.ToolInputParameter" title="agent_inspect.models.metrics.agent_data_sample.ToolInputParameter"><em>ToolInputParameter</em></a><em>] </em><em>| </em><em>None</em>)</p></li>
+<li><p><strong>tool_output</strong> (<em>Any</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>agent_thought</strong> (<em>str</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>input_token_consumption</strong> (<em>int</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>output_token_consumption</strong> (<em>int</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>reasoning_token_consumption</strong> (<em>int</em><em> | </em><em>None</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.Step.agent_thought">
+<span class="sig-name descname"><span class="pre">agent_thought</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#agent_inspect.models.metrics.Step.agent_thought" title="Link to this definition"></a></dt>
+<dd><p>Represent the agent’s thinking process (what the agent is thinking) at the current step.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.Step.id">
+<span class="sig-name descname"><span class="pre">id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#agent_inspect.models.metrics.Step.id" title="Link to this definition"></a></dt>
+<dd><p>Represents an ID assigned to a step, must be a unique identifier.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.Step.input_token_consumption">
+<span class="sig-name descname"><span class="pre">input_token_consumption</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#agent_inspect.models.metrics.Step.input_token_consumption" title="Link to this definition"></a></dt>
+<dd><p>Represents the total number of input tokens consumed in the current step.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.Step.output_token_consumption">
+<span class="sig-name descname"><span class="pre">output_token_consumption</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#agent_inspect.models.metrics.Step.output_token_consumption" title="Link to this definition"></a></dt>
+<dd><p>Represents the total number of output tokens consumed in the current step.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.Step.parent_ids">
+<span class="sig-name descname"><span class="pre">parent_ids</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">]</span></em><a class="headerlink" href="#agent_inspect.models.metrics.Step.parent_ids" title="Link to this definition"></a></dt>
+<dd><p>Contains a list of parent step ID(s) which the agent took before the current step (e.g. ID(s) of the immediate previous steps.)</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.Step.reasoning_token_consumption">
+<span class="sig-name descname"><span class="pre">reasoning_token_consumption</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#agent_inspect.models.metrics.Step.reasoning_token_consumption" title="Link to this definition"></a></dt>
+<dd><p>Represents the total number of tokens consumed for reasoning purposes in the current step.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.Step.tool">
+<span class="sig-name descname"><span class="pre">tool</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#agent_inspect.models.metrics.Step.tool" title="Link to this definition"></a></dt>
+<dd><p>Represents a tool that was called or utilized by the agent during the current step. Can be a name, a description of the tool, the url of api call, etc. Optional if no tool is called in current step.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.Step.tool_input_args">
+<span class="sig-name descname"><span class="pre">tool_input_args</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code><span class="pre">[</span><a class="reference internal" href="#agent_inspect.models.metrics.agent_data_sample.ToolInputParameter" title="agent_inspect.models.metrics.agent_data_sample.ToolInputParameter"><code class="xref py py-class docutils literal notranslate"><span class="pre">ToolInputParameter</span></code></a><span class="pre">]]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#agent_inspect.models.metrics.Step.tool_input_args" title="Link to this definition"></a></dt>
+<dd><p>A list of parameters which the tool was called by the agent during the time of evaluation.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.Step.tool_output">
+<span class="sig-name descname"><span class="pre">tool_output</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#agent_inspect.models.metrics.Step.tool_output" title="Link to this definition"></a></dt>
+<dd><p>Contains the tool output produced by the agent in the current step. Optional and can be none if no output was produced.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.SubGoal">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agent_inspect.models.metrics.</span></span><span class="sig-name descname"><span class="pre">SubGoal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">details</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">turn</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/models/metrics/agent_data_sample.html#SubGoal"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.models.metrics.SubGoal" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A subgoal is a natural language assertion that defines the success criteria of an agent within a larger task. Subgoals specify intermediate success criteria and can also include the final goal.
+eg:
+“Agent should call search_messages after getting the current timestamp”
+“Agent should inform the user: Your oldest message says ‘Hey kid, you want some GPU?’.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>details</strong> (<em>str</em>)</p></li>
+<li><p><strong>turn</strong> (<em>str</em><em> | </em><em>int</em><em> | </em><em>None</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.SubGoal.details">
+<span class="sig-name descname"><span class="pre">details</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#agent_inspect.models.metrics.SubGoal.details" title="Link to this definition"></a></dt>
+<dd><p>Details containing the information and criteria used by the metric to determine when the agent has achieved this subgoal.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.SubGoal.turn">
+<span class="sig-name descname"><span class="pre">turn</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code><span class="pre">,</span> <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#agent_inspect.models.metrics.SubGoal.turn" title="Link to this definition"></a></dt>
+<dd><p>Represents which turn(s) should this subgoal be considered. Optional and this is only a placeholder for future implementation.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.SubGoalValidationResult">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agent_inspect.models.metrics.</span></span><span class="sig-name descname"><span class="pre">SubGoalValidationResult</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">is_completed</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">explanations</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sub_goal</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prompt_sent_to_llmj</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/models/metrics/validation_result.html#SubGoalValidationResult"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.models.metrics.SubGoalValidationResult" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#agent_inspect.models.metrics.validation_result.ValidationResult" title="agent_inspect.models.metrics.validation_result.ValidationResult"><code class="xref py py-class docutils literal notranslate"><span class="pre">ValidationResult</span></code></a></p>
+<p>Represents a result produced after validation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>is_completed</strong> (<em>bool</em>)</p></li>
+<li><p><strong>explanations</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>)</p></li>
+<li><p><strong>sub_goal</strong> (<a class="reference internal" href="#agent_inspect.models.metrics.agent_data_sample.SubGoal" title="agent_inspect.models.metrics.agent_data_sample.SubGoal"><em>SubGoal</em></a>)</p></li>
+<li><p><strong>prompt_sent_to_llmj</strong> (<em>str</em><em> | </em><em>None</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.SubGoalValidationResult.explanations">
+<span class="sig-name descname"><span class="pre">explanations</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">]</span></em><a class="headerlink" href="#agent_inspect.models.metrics.SubGoalValidationResult.explanations" title="Link to this definition"></a></dt>
+<dd><p>Contains a list of explanation/reason(s) for why/how this particular validation result is produced.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.SubGoalValidationResult.is_completed">
+<span class="sig-name descname"><span class="pre">is_completed</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></em><a class="headerlink" href="#agent_inspect.models.metrics.SubGoalValidationResult.is_completed" title="Link to this definition"></a></dt>
+<dd><p>Indicates whether the validation was completed successfully.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.SubGoalValidationResult.prompt_sent_to_llmj">
+<span class="sig-name descname"><span class="pre">prompt_sent_to_llmj</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#agent_inspect.models.metrics.SubGoalValidationResult.prompt_sent_to_llmj" title="Link to this definition"></a></dt>
+<dd><p>The entire prompt that is sent to the LLM-as-a-judge for validation.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.SubGoalValidationResult.sub_goal">
+<span class="sig-name descname"><span class="pre">sub_goal</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#agent_inspect.models.metrics.agent_data_sample.SubGoal" title="agent_inspect.models.metrics.agent_data_sample.SubGoal"><code class="xref py py-class docutils literal notranslate"><span class="pre">SubGoal</span></code></a></em><a class="headerlink" href="#agent_inspect.models.metrics.SubGoalValidationResult.sub_goal" title="Link to this definition"></a></dt>
+<dd><p>Contains the subgoal that is being validated.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.ToolCallValidationResult">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agent_inspect.models.metrics.</span></span><span class="sig-name descname"><span class="pre">ToolCallValidationResult</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">is_completed</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">explanations</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expected_tool_call</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/models/metrics/validation_result.html#ToolCallValidationResult"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.models.metrics.ToolCallValidationResult" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#agent_inspect.models.metrics.validation_result.ValidationResult" title="agent_inspect.models.metrics.validation_result.ValidationResult"><code class="xref py py-class docutils literal notranslate"><span class="pre">ValidationResult</span></code></a></p>
+<p>Represents a tool correctness result after validation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>is_completed</strong> (<em>bool</em>)</p></li>
+<li><p><strong>explanations</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>)</p></li>
+<li><p><strong>expected_tool_call</strong> (<a class="reference internal" href="#agent_inspect.models.metrics.agent_data_sample.ExpectedToolCall" title="agent_inspect.models.metrics.agent_data_sample.ExpectedToolCall"><em>ExpectedToolCall</em></a>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.ToolCallValidationResult.expected_tool_call">
+<span class="sig-name descname"><span class="pre">expected_tool_call</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#agent_inspect.models.metrics.agent_data_sample.ExpectedToolCall" title="agent_inspect.models.metrics.agent_data_sample.ExpectedToolCall"><code class="xref py py-class docutils literal notranslate"><span class="pre">ExpectedToolCall</span></code></a></em><a class="headerlink" href="#agent_inspect.models.metrics.ToolCallValidationResult.expected_tool_call" title="Link to this definition"></a></dt>
+<dd><p>The expected ground truth tool call that is being validated against.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.ToolCallValidationResult.explanations">
+<span class="sig-name descname"><span class="pre">explanations</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">]</span></em><a class="headerlink" href="#agent_inspect.models.metrics.ToolCallValidationResult.explanations" title="Link to this definition"></a></dt>
+<dd><p>Contains a list of explanation/reason(s) for why/how this particular validation result is produced.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.ToolCallValidationResult.is_completed">
+<span class="sig-name descname"><span class="pre">is_completed</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></em><a class="headerlink" href="#agent_inspect.models.metrics.ToolCallValidationResult.is_completed" title="Link to this definition"></a></dt>
+<dd><p>Indicates whether the validation was completed successfully.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.ToolInputParameter">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agent_inspect.models.metrics.</span></span><span class="sig-name descname"><span class="pre">ToolInputParameter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">check</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/models/metrics/agent_data_sample.html#ToolInputParameter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.models.metrics.ToolInputParameter" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents a parameter which the agent should invoke with the tool.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>)</p></li>
+<li><p><strong>value</strong> (<em>Any</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>check</strong> (<em>str</em><em> | </em><em>None</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.ToolInputParameter.check">
+<span class="sig-name descname"><span class="pre">check</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#agent_inspect.models.metrics.ToolInputParameter.check" title="Link to this definition"></a></dt>
+<dd><p>Represents the llm prompt to check the correctness of the parameter name and the value that the agent invokes with the tool.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.ToolInputParameter.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#agent_inspect.models.metrics.ToolInputParameter.name" title="Link to this definition"></a></dt>
+<dd><p>Represents the expected name of the parameter (variable name).</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.ToolInputParameter.value">
+<span class="sig-name descname"><span class="pre">value</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#agent_inspect.models.metrics.ToolInputParameter.value" title="Link to this definition"></a></dt>
+<dd><p>Represents the expected value of the parameter at the moment the tool is invoked. This will be converted to str during metric calculation.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.ToolOutput">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agent_inspect.models.metrics.</span></span><span class="sig-name descname"><span class="pre">ToolOutput</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">check</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/models/metrics/agent_data_sample.html#ToolOutput"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.models.metrics.ToolOutput" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents the expected output from the tool after the agent invokes it.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>value</strong> (<em>Any</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>check</strong> (<em>str</em><em> | </em><em>None</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.ToolOutput.check">
+<span class="sig-name descname"><span class="pre">check</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#agent_inspect.models.metrics.ToolOutput.check" title="Link to this definition"></a></dt>
+<dd><p>Represents the llm prompt to check the correctness of the output value from the tool after the agent invokes it.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.ToolOutput.value">
+<span class="sig-name descname"><span class="pre">value</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#agent_inspect.models.metrics.ToolOutput.value" title="Link to this definition"></a></dt>
+<dd><p>Represents the expected output value from the tool after the agent invokes it. This will be converted to str during metric calculation.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.TurnTrace">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agent_inspect.models.metrics.</span></span><span class="sig-name descname"><span class="pre">TurnTrace</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent_input</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent_response</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">from_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">steps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">latency_in_ms</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/models/metrics/agent_trace.html#TurnTrace"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.models.metrics.TurnTrace" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents a turn: one back and forth conversation between the agent and the user/user proxy by encapsulating the agent trace (logs) produced during a turn.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>id</strong> (<em>str</em>)</p></li>
+<li><p><strong>agent_input</strong> (<em>str</em>)</p></li>
+<li><p><strong>agent_response</strong> (<a class="reference internal" href="#agent_inspect.models.metrics.agent_trace.AgentResponse" title="agent_inspect.models.metrics.agent_trace.AgentResponse"><em>AgentResponse</em></a><em> | </em><em>None</em>)</p></li>
+<li><p><strong>from_id</strong> (<em>str</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>steps</strong> (<em>List</em><em>[</em><a class="reference internal" href="#agent_inspect.models.metrics.agent_trace.Step" title="agent_inspect.models.metrics.agent_trace.Step"><em>Step</em></a><em>] </em><em>| </em><em>None</em>)</p></li>
+<li><p><strong>latency_in_ms</strong> (<em>float</em><em> | </em><em>None</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.TurnTrace.agent_input">
+<span class="sig-name descname"><span class="pre">agent_input</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#agent_inspect.models.metrics.TurnTrace.agent_input" title="Link to this definition"></a></dt>
+<dd><p>An input string to the agent from a user/user proxy.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.TurnTrace.agent_response">
+<span class="sig-name descname"><span class="pre">agent_response</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><a class="reference internal" href="#agent_inspect.models.metrics.agent_trace.AgentResponse" title="agent_inspect.models.metrics.agent_trace.AgentResponse"><code class="xref py py-class docutils literal notranslate"><span class="pre">AgentResponse</span></code></a><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#agent_inspect.models.metrics.TurnTrace.agent_response" title="Link to this definition"></a></dt>
+<dd><p>An agent response produced by the agent given the input message (agent_input).</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.TurnTrace.from_id">
+<span class="sig-name descname"><span class="pre">from_id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#agent_inspect.models.metrics.TurnTrace.from_id" title="Link to this definition"></a></dt>
+<dd><p>Represents an ID of the parent turn that produces the current step. Optional and this is only a placeholder for future implementation.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.TurnTrace.id">
+<span class="sig-name descname"><span class="pre">id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#agent_inspect.models.metrics.TurnTrace.id" title="Link to this definition"></a></dt>
+<dd><p>Represents an ID assigned to a turn, must be a unique identifier.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.TurnTrace.latency_in_ms">
+<span class="sig-name descname"><span class="pre">latency_in_ms</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#agent_inspect.models.metrics.TurnTrace.latency_in_ms" title="Link to this definition"></a></dt>
+<dd><p>Represent the total time taken by the agent to produce the output response(s).</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.TurnTrace.steps">
+<span class="sig-name descname"><span class="pre">steps</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code><span class="pre">[</span><a class="reference internal" href="#agent_inspect.models.metrics.agent_trace.Step" title="agent_inspect.models.metrics.agent_trace.Step"><code class="xref py py-class docutils literal notranslate"><span class="pre">Step</span></code></a><span class="pre">]]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#agent_inspect.models.metrics.TurnTrace.steps" title="Link to this definition"></a></dt>
+<dd><p>A list of steps (e.g. tool calls, thinking processes, etc.) that the agent takes to finally produce agent response(s).</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.ValidationResult">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agent_inspect.models.metrics.</span></span><span class="sig-name descname"><span class="pre">ValidationResult</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">is_completed</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">explanations</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agent_inspect/models/metrics/validation_result.html#ValidationResult"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agent_inspect.models.metrics.ValidationResult" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents a result produced after validation (e.g. subgoal validation, tool call validation).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>is_completed</strong> (<em>bool</em>)</p></li>
+<li><p><strong>explanations</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.ValidationResult.explanations">
+<span class="sig-name descname"><span class="pre">explanations</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">]</span></em><a class="headerlink" href="#agent_inspect.models.metrics.ValidationResult.explanations" title="Link to this definition"></a></dt>
+<dd><p>Contains a list of explanation/reason(s) for why/how this particular validation result is produced.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agent_inspect.models.metrics.ValidationResult.is_completed">
+<span class="sig-name descname"><span class="pre">is_completed</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></em><a class="headerlink" href="#agent_inspect.models.metrics.ValidationResult.is_completed" title="Link to this definition"></a></dt>
+<dd><p>Indicates whether the validation was completed successfully.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="agent_inspect.models.html" class="btn btn-neutral float-left" title="agent_inspect.models package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="agent_inspect.models.tools.html" class="btn btn-neutral float-right" title="agent_inspect.models.tools package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, &#34;&#34;.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

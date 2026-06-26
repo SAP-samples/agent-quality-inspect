@@ -1,0 +1,39 @@
+agent\_inspect.models package
+=============================
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 1
+
+   agent_inspect.models.metrics
+   agent_inspect.models.tools
+   agent_inspect.models.user_proxy
+
+Submodules
+----------
+
+agent\_inspect.models.llm\_payload module
+-----------------------------------------
+
+.. automodule:: agent_inspect.models.llm_payload
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+agent\_inspect.models.llm\_response module
+------------------------------------------
+
+.. automodule:: agent_inspect.models.llm_response
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: agent_inspect.models
+   :members:
+   :undoc-members:
+   :show-inheritance:

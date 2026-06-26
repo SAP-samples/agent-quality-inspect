@@ -1,0 +1,37 @@
+agent\_inspect.metrics.multi\_samples package
+=============================================
+
+Submodules
+----------
+
+agent\_inspect.metrics.multi\_samples.multi\_sample\_metric module
+------------------------------------------------------------------
+
+.. automodule:: agent_inspect.metrics.multi_samples.multi_sample_metric
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+agent\_inspect.metrics.multi\_samples.pass\_at\_k module
+--------------------------------------------------------
+
+.. automodule:: agent_inspect.metrics.multi_samples.pass_at_k
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+agent\_inspect.metrics.multi\_samples.pass\_hat\_k module
+---------------------------------------------------------
+
+.. automodule:: agent_inspect.metrics.multi_samples.pass_hat_k
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: agent_inspect.metrics.multi_samples
+   :members:
+   :undoc-members:
+   :show-inheritance:
